@@ -37,7 +37,7 @@ Local $Paused
 HotKeySet("{ESC}", "Terminate")
 HotKeySet("{F2}", "Togglepause")
 
-
+#cs
 ;µã»÷Ê÷ĞÎÁĞ±íµ½universeÑ¡ÖĞ×´Ì¬
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
@@ -296,7 +296,7 @@ Send("{enter}")
 
 WinWait("Ìí¼ÓÍ¨µÀ")
 ControlClick( "Ìí¼ÓÍ¨µÀ", "", "Edit2")
-Send("D9104B")
+Send("D9104B01")
 
 
 $hListView5 = ControlGetHandle ( "Ìí¼ÓÍ¨µÀ", "List1", "SysListView321")
@@ -1181,7 +1181,7 @@ Send("{enter}")
 
 WinWait("Ìí¼ÓÍ¨µÀ")
 ControlClick( "Ìí¼ÓÍ¨µÀ", "", "Edit2")
-Send("D9104001")
+Send("D910401")
 
 
 $hListView5 = ControlGetHandle ( "Ìí¼ÓÍ¨µÀ", "List1", "SysListView321")
@@ -1250,7 +1250,7 @@ $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹ã¶«Ê¡")
-$2 =_GUICtrlTreeView_FindItem($1, "¹ãÖİÊĞ")
+$2 =_GUICtrlTreeView_FindItem($1, "¹ãÎ÷Ê¡")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
@@ -1272,7 +1272,7 @@ Send("000000000000000010")
 ControlClick( "Ìí¼ÓÉè±¸ĞÅÏ¢", "È·¶¨", "Button3")
 
 $hListView4=ControlGetHandle ( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "List1", "SysListView3222")
-_GUICtrlListView_ClickItem($hListView4, 1, "left", True, 1)
+_GUICtrlListView_ClickItem($hListView4, 0, "left", True, 1)
 
 
 ;Í¨µÀ
@@ -1375,7 +1375,7 @@ $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹ã¶«Ê¡")
-$2 =_GUICtrlTreeView_FindItem($1, "¹ãÖİÊĞ")
+$2 =_GUICtrlTreeView_FindItem($1, "¹ãÎ÷Ê¡")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
@@ -1492,7 +1492,9 @@ ControlClick( "Ìí¼ÓÍ¨µÀ", "È·¶¨", "Button1")
          $j=$j+1
     $i = $i + 1
 Until $i = 16
+#ce
 
+;---------------------ÒµÎñ¹ÜÀí-----------------------------------------------
 Func Terminate()
 	Exit 0
 EndFunc
