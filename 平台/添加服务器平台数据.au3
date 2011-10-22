@@ -37,7 +37,7 @@ Local $Paused
 HotKeySet("{ESC}", "Terminate")
 HotKeySet("{F2}", "Togglepause")
 
-#cs
+
 ;µã»÷Ê÷ĞÎÁĞ±íµ½universeÑ¡ÖĞ×´Ì¬
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
@@ -259,6 +259,7 @@ Sleep(1000)
 ;¹ã¶«Ê¡
 ;D9104B Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Éè±¸¹ÜÀí", "Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -266,8 +267,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "¹ã¶«Ê¡")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -360,6 +359,7 @@ Until $i = 4
 ;Öéº£
 ;D9108 Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -368,8 +368,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "Öéº£ÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -471,6 +469,7 @@ Until $i = 7
 ;Öéº£ÏãÖŞ
 ;D9108B Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -480,7 +479,6 @@ $2 =_GUICtrlTreeView_FindItem($1, "ÏãÖŞÇø")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -584,6 +582,7 @@ Until $i = 7
 ;Öéº£Ïã¶·ÃÅ
 ;D9604L Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹ã¶«Ê¡")
@@ -591,7 +590,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "¶·ÃÅÇø")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -681,6 +679,7 @@ Until $i = 4
 ;ÉîÛÚÊĞ
 ;D9604B Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -689,7 +688,6 @@ $2 =_GUICtrlTreeView_FindItem($1, "ÉîÛÚÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -779,6 +777,7 @@ Until $i = 4
 ;ÉÇÍ·ÊĞ
 ;D9608L Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -786,8 +785,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "ÉÇÍ·ÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -890,6 +887,8 @@ Until $i = 7
 ;½­ÃÅÊĞ
 ;D9216H Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -897,8 +896,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "½­ÃÅÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -1017,6 +1014,7 @@ Until $i = 16
 ;¹ãÖİÊĞ
 ;D9316H Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -1025,7 +1023,6 @@ $2 =_GUICtrlTreeView_FindItem($1, "¹ãÖİÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -1144,6 +1141,7 @@ Until $i = 16
 ;¶«İ¸ÊĞ
 ;D9104 Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -1151,8 +1149,6 @@ ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹
 $2 =_GUICtrlTreeView_FindItem($1, "¶«İ¸ÊĞ")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
-
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -1246,6 +1242,7 @@ Until $i = 4
 ;¹ãÎ÷Ê¡
 ;D9616L Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -1254,7 +1251,6 @@ $2 =_GUICtrlTreeView_FindItem($1, "¹ãÎ÷Ê¡")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -1371,6 +1367,7 @@ Until $i = 16
 ;---------------------------------------------------------------
 ;D9616L Ö÷
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
 
 ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
@@ -1379,7 +1376,6 @@ $2 =_GUICtrlTreeView_FindItem($1, "¹ãÎ÷Ê¡")
 _GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
 
 
-ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Éè±¸¹ÜÀí","Button35")
 
 WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
 $hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl325")
@@ -1492,9 +1488,438 @@ ControlClick( "Ìí¼ÓÍ¨µÀ", "È·¶¨", "Button1")
          $j=$j+1
     $i = $i + 1
 Until $i = 16
-#ce
+
 
 ;---------------------ÒµÎñ¹ÜÀí-----------------------------------------------
+;ÓÃ»§ÅäÖÃ
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶Ë","Í¨µÀ¹ÜÀí","Button36")
+$1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe|¹ã¶«Ê¡")
+$2 =_GUICtrlTreeView_FindItem($1, "universe")
+_GUICtrlTreeView_ClickItem($1,$2,"left",True,1,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl322")
+_GUICtrlTab_ClickTab($hTab, 0, "left", True, 1)
+Sleep(1000)
+
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysListView3210","right",1,339, 689)
+Send("{down}")
+Send("{enter}")
+WinWait("¿Í»§ĞÅÏ¢")
+ControlClick( "¿Í»§ĞÅÏ¢", "", "Edit1")
+Send("LK")
+ControlClick( "¿Í»§ĞÅÏ¢", "", "Edit2")
+Send("°²Áª")
+ControlClick( "¿Í»§ĞÅÏ¢", "È·¶¨", "Button5")
+
+;ÓÃ»§1
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hListView7=ControlGetHandle ( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "List1", "SysListView3210")
+_GUICtrlListView_ClickItem($hListView7, 0, "left", True, 1)
+
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysListView3211","right",1,674, 711)
+Send("{down}")
+Send("{enter}")
+
+WinWait("Ìí¼ÓÓÃ»§")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit1")
+Send("1");username
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit2")
+Send("1");password
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button1")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button4")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit4","left",2)
+Send("0")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button6")
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl321")
+_GUICtrlTab_ClickTab($hTab, 0, "left", True, 1)
+
+WinActivate("Ìí¼ÓÓÃ»§")
+ControlTreeView ("Ìí¼ÓÓÃ»§", "Tree1", "SysTreeView326", "Check", "universe")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button13")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÉèÖÃ", "Button29")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÍË³ö", "Button7")
+
+;ÓÃ»§2
+$hListView8=ControlGetHandle ( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "List1", "SysListView3211")
+_GUICtrlListView_ClickItem($hListView8, 0, "right", True, 1)
+Send("{down}")
+Send("{enter}")
+
+WinWait("Ìí¼ÓÓÃ»§")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit1")
+Send("chtybox");username
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit2")
+Send("1");password
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button1")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button4")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit4","left",2)
+Send("0")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button6")
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl321")
+_GUICtrlTab_ClickTab($hTab, 0, "left", True, 1)
+
+WinActivate("Ìí¼ÓÓÃ»§")
+ControlTreeView ("Ìí¼ÓÓÃ»§", "Tree1", "SysTreeView326", "Check", "universe")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button13")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÉèÖÃ", "Button29")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÍË³ö", "Button7")
+
+;ÓÃ»§3
+$hListView8=ControlGetHandle ( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "List1", "SysListView3211")
+_GUICtrlListView_ClickItem($hListView8, 0, "right", True, 1)
+Send("{down}")
+Send("{enter}")
+
+WinWait("Ìí¼ÓÓÃ»§")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit1")
+Send("xiao");username
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit2")
+Send("1");password
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button1")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button4")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Edit4","left",2)
+Send("0")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button6")
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl321")
+_GUICtrlTab_ClickTab($hTab, 0, "left", True, 1)
+
+WinActivate("Ìí¼ÓÓÃ»§")
+ControlTreeView ("Ìí¼ÓÓÃ»§", "Tree1", "SysTreeView326", "Check", "universe")
+ControlClick( "Ìí¼ÓÓÃ»§", "", "Button13")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÉèÖÃ", "Button29")
+Sleep(1000)
+ControlClick( "Ìí¼ÓÓÃ»§", "ÍË³ö", "Button7")
+
+;-----------------------------------------------------------------------------------------
+;Â¼Ïñ²ßÂÔ
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$hTab = ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTabControl322")
+_GUICtrlTab_ClickTab($hTab, 1, "left", True, 1)
+
+$1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321");»ñÈ¡Ê÷ĞÎÁĞ±í¿Ø¼ş¾ä±ú
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321", "Expand", "universe")
+$2 =_GUICtrlTreeView_FindItem($1, "universe")
+_GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);µã»÷Ê÷ĞÎÁĞ±íÏîÄ¿
+
+;----------------------------------------------------------------------------------------------------
+;9104B
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9104B0" & $k)
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9104B0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9104B0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+
+;----------------------------------------------------------------------------------------------------
+;9108
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D91080" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D91080" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D910809" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D910809|Â¼Ïñ·şÎñÆ÷")
+
+$i = 0
+Do
+If $k <=16 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9108" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9108" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;9108B
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9108B0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9108B0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9108B09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9108B09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=16 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9108B" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9108B" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;D9604L
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9604L0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9604L0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;D9604B
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9604B0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9604B0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;D9608L
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9608L0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9608L0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9608L09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9608L09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=16 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9608L" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9608L" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;D9216H
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9216H0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9216H0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9216H09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9216H09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=32 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9216H" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9216H" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 24
+
+;----------------------------------------------------------------------------------------------------
+;D9316H
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9316H0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9316H0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9316H09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9316H09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=32 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9316H" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9316H" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 24
+
+;----------------------------------------------------------------------------------------------------
+;D9104
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D91040" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D91040" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+;----------------------------------------------------------------------------------------------------
+;D9616L
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9616L0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9616L0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9616L09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9616L09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=32 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9616L" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9616L" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 24
+
+;----------------------------------------------------------------------------------------------------
+;D9016H
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í")
+$k=1
+$i = 0
+Do
+If $k <=8 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9016H0" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9016H0" & $k & "|Â¼Ïñ·şÎñÆ÷")
+   
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 8
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+$k=9
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9016H09" )
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9016H09|Â¼Ïñ·şÎñÆ÷")
+$i = 0
+Do
+If $k <=32 Then 
+	ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9016H" & $k)
+   ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Check", "Í¨µÀÁĞ±í|D9016H" & $k & "|Â¼Ïñ·şÎñÆ÷")
+     
+   $k=$k+1
+EndIf
+    $i = $i + 1
+Until $i = 24
+
+;¶¨Ê±Â¼Ïñ
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlTreeView ("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView324", "Expand", "Í¨µÀÁĞ±í|D9104B01")
+  $1= ControlGetHandle("RVMSÆ½Ì¨--¹ÜÀí¶Ë", "", "SysTreeView321")
+   $2 =_GUICtrlTreeView_FindItem($1, "Â¼Ïñ·şÎñÆ÷")
+  _GUICtrlTreeView_ClickItem($1,$2,"left",True,1,2)
+  
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎÒ»:", "Button15")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶Î¶ş:", "Button16")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎÈı:", "Button17")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎËÄ:", "Button18")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ó¦ÓÃÓÚÃ¿Ò»Ìì", "Button27")
+
+WinWait("RVMSÆ½Ì¨--¹ÜÀí¶ËÌáÊ¾ĞÅÏ¢")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶ËÌáÊ¾ĞÅÏ¢","È·¶¨","Button1")
+
+WinActivate("RVMSÆ½Ì¨--¹ÜÀí¶Ë")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎÒ»:", "Button19")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶Î¶ş:", "Button20")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎÈı:", "Button21")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ê±¼ä¶ÎËÄ:", "Button22")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "Ó¦ÓÃÓÚÃ¿Ò»Ìì", "Button28")
+
+WinWait("RVMSÆ½Ì¨--¹ÜÀí¶ËÌáÊ¾ĞÅÏ¢")
+ControlClick("RVMSÆ½Ì¨--¹ÜÀí¶ËÌáÊ¾ĞÅÏ¢","È·¶¨","Button1")
+ControlClick( "RVMSÆ½Ì¨--¹ÜÀí¶Ë", "È·¶¨", "Button29")
+
 Func Terminate()
 	Exit 0
 EndFunc
