@@ -885,7 +885,7 @@ Until $i = 7
 
 ;----------------------------------------------------------------------------------------------
 ;江门市
-;D9216H 主
+;D9216H 从
 WinActivate("RVMS平台--管理端")
 
 ControlClick("RVMS平台--管理端","设备管理","Button35")
@@ -925,7 +925,8 @@ Send("{enter}")
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9216H01")
-
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -944,6 +945,8 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send("0")
 Send($j)
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -961,6 +964,8 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send("09")
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -979,28 +984,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send($j)
 Send("{down}")
-$hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
- _GUICtrlListView_SetItemChecked($hListView5, 0)
-ControlClick( "添加通道", "确定", "Button1")
-         $j=$j+1
-    $i = $i + 1
-Until $i = 7
-
-;D9216H 从
-
-$j=17
-$i = 0
-Do
-	WinActivate("RVMS平台--管理端")
-$hListView6 = ControlGetHandle ( "RVMS平台--管理端", "List1", "SysListView3223")
-_GUICtrlListView_ClickItem($hListView6, 0, "right", True, 1)
-Send("{down}")
-Send("{enter}")
-
-WinWait("添加通道")
-ControlClick( "添加通道", "", "Edit2")
-Send("D9216H")
-Send($j)
 ControlClick("添加通道","","ComboBox1","left",2)
 Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
@@ -1008,11 +991,11 @@ $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
 ControlClick( "添加通道", "确定", "Button1")
          $j=$j+1
     $i = $i + 1
-Until $i = 16
+Until $i = 7
 
 ;-------------------------------------------------------------------------------------------------------------
 ;广州市
-;D9316H 主
+;D9316H 从
 WinActivate("RVMS平台--管理端")
 ControlClick("RVMS平台--管理端","设备管理","Button35")
 $1= ControlGetHandle("RVMS平台--管理端", "", "SysTreeView321");获取树形列表控件句柄
@@ -1052,7 +1035,8 @@ Send("{enter}")
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9316H01")
-
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1071,6 +1055,8 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9316H")
 Send("0")
 Send($j)
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1088,6 +1074,8 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9316H")
 Send("09")
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1106,28 +1094,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9316H")
 Send($j)
 Send("{down}")
-$hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
- _GUICtrlListView_SetItemChecked($hListView5, 0)
-ControlClick( "添加通道", "确定", "Button1")
-         $j=$j+1
-    $i = $i + 1
-Until $i = 7
-
-;D9216H 从
-
-$j=17
-$i = 0
-Do
-	WinActivate("RVMS平台--管理端")
-$hListView6 = ControlGetHandle ( "RVMS平台--管理端", "List1", "SysListView3223")
-_GUICtrlListView_ClickItem($hListView6, 0, "right", True, 1)
-Send("{down}")
-Send("{enter}")
-
-WinWait("添加通道")
-ControlClick( "添加通道", "", "Edit2")
-Send("D9316H")
-Send($j)
 ControlClick("添加通道","","ComboBox1","left",2)
 Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
@@ -1135,8 +1101,7 @@ $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
 ControlClick( "添加通道", "确定", "Button1")
          $j=$j+1
     $i = $i + 1
-Until $i = 16
-
+Until $i = 7
 ;-------------------------------------------------------------------------------------------------
 ;东莞市
 ;D9104 主
@@ -1365,7 +1330,7 @@ ControlClick( "添加通道", "确定", "Button1")
 Until $i = 16
 
 ;---------------------------------------------------------------
-;D9616L 主
+;D9016H 从
 WinActivate("RVMS平台--管理端")
 ControlClick("RVMS平台--管理端","设备管理","Button35")
 $1= ControlGetHandle("RVMS平台--管理端", "", "SysTreeView321");获取树形列表控件句柄
@@ -1405,7 +1370,8 @@ Send("{enter}")
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9016H01")
-
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1424,6 +1390,8 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send("0")
 Send($j)
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1441,6 +1409,8 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send("09")
+ControlClick("添加通道","","ComboBox1","left",2)
+Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1459,27 +1429,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send($j)
 Send("{down}")
-$hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
- _GUICtrlListView_SetItemChecked($hListView5, 0)
-ControlClick( "添加通道", "确定", "Button1")
-         $j=$j+1
-    $i = $i + 1
-Until $i = 7
-
-;D9016H 从
-$j=17
-$i = 0
-Do
-	WinActivate("RVMS平台--管理端")
-$hListView6 = ControlGetHandle ( "RVMS平台--管理端", "List1", "SysListView3223")
-_GUICtrlListView_ClickItem($hListView6, 0, "right", True, 1)
-Send("{down}")
-Send("{enter}")
-
-WinWait("添加通道")
-ControlClick( "添加通道", "", "Edit2")
-Send("D9016H")
-Send($j)
 ControlClick("添加通道","","ComboBox1","left",2)
 Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
@@ -1487,7 +1436,7 @@ $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
 ControlClick( "添加通道", "确定", "Button1")
          $j=$j+1
     $i = $i + 1
-Until $i = 16
+Until $i = 7
 
 
 ;---------------------业务管理-----------------------------------------------
@@ -1757,7 +1706,6 @@ Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;D9216H
-
 WinActivate("RVMS平台--管理端")
 ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表")
 $k=1
@@ -1777,14 +1725,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D
 ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9216H09|录像服务器")
 $i = 0
 Do
-If $k <=32 Then 
+If $k <=16 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9216H" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9216H" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 24
-
+Until $i = 8
 ;----------------------------------------------------------------------------------------------------
 ;D9316H
 
@@ -1807,13 +1754,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D
 ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9316H09|录像服务器")
 $i = 0
 Do
-If $k <=32 Then 
+If $k <=16 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9316H" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9316H" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 24
+Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;D9104
@@ -1883,14 +1830,14 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D
 ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9016H09|录像服务器")
 $i = 0
 Do
-If $k <=32 Then 
+If $k <=16 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9016H" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9016H" & $k & "|录像服务器")
      
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 24
+Until $i = 8
 
 ;定时录像
 WinActivate("RVMS平台--管理端")
