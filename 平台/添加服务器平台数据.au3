@@ -885,7 +885,7 @@ Until $i = 7
 
 ;----------------------------------------------------------------------------------------------
 ;江门市
-;D9216H 从
+;D9216H 主
 WinActivate("RVMS平台--管理端")
 
 ControlClick("RVMS平台--管理端","设备管理","Button35")
@@ -925,8 +925,7 @@ Send("{enter}")
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9216H01")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
+
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -945,8 +944,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send("0")
 Send($j)
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -964,8 +961,6 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send("09")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -984,8 +979,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9216H")
 Send($j)
 Send("{down}")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -995,7 +988,7 @@ Until $i = 7
 
 ;-------------------------------------------------------------------------------------------------------------
 ;广州市
-;D9316H 从
+;D9316H 主
 WinActivate("RVMS平台--管理端")
 ControlClick("RVMS平台--管理端","设备管理","Button35")
 $1= ControlGetHandle("RVMS平台--管理端", "", "SysTreeView321");获取树形列表控件句柄
@@ -1017,7 +1010,7 @@ Send("{down}")
 Send("{enter}")
 WinWait("添加设备信息")
 ControlClick( "添加设备信息", "", "Edit1")
-Send("D9316H")
+Send("ID9316H")
 ControlClick( "添加设备信息", "", "Edit2")
 Send("000000000000000009")
 ControlClick( "添加设备信息", "确定", "Button3")
@@ -1034,9 +1027,8 @@ Send("{enter}")
 
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
-Send("D9316H01")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
+Send("ID9316H01")
+
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1052,11 +1044,9 @@ Send("{enter}")
 
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
-Send("D9316H")
+Send("ID9316H")
 Send("0")
 Send($j)
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1072,10 +1062,8 @@ Send("{enter}")
 
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
-Send("D9316H")
+Send("ID9316H")
 Send("09")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1091,10 +1079,8 @@ Send("{enter}")
 
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
-Send("D9316H")
+Send("ID9316H")
 Send($j)
-Send("{down}")
-ControlClick("添加通道","","ComboBox1","left",2)
 Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1330,7 +1316,7 @@ ControlClick( "添加通道", "确定", "Button1")
 Until $i = 16
 
 ;---------------------------------------------------------------
-;D9016H 从
+;D9016H 主
 WinActivate("RVMS平台--管理端")
 ControlClick("RVMS平台--管理端","设备管理","Button35")
 $1= ControlGetHandle("RVMS平台--管理端", "", "SysTreeView321");获取树形列表控件句柄
@@ -1370,8 +1356,6 @@ Send("{enter}")
 WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9016H01")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1390,8 +1374,6 @@ ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send("0")
 Send($j)
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1409,8 +1391,6 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send("09")
-ControlClick("添加通道","","ComboBox1","left",2)
-Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
 ControlClick( "添加通道", "确定", "Button1")
@@ -1428,8 +1408,6 @@ WinWait("添加通道")
 ControlClick( "添加通道", "", "Edit2")
 Send("D9016H")
 Send($j)
-Send("{down}")
-ControlClick("添加通道","","ComboBox1","left",2)
 Send("{down}")
 $hListView5 = ControlGetHandle ( "添加通道", "List1", "SysListView321")
  _GUICtrlListView_SetItemChecked($hListView5, 0)
@@ -1572,14 +1550,14 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表")
 $k=1
 $i = 0
 Do
-If $k <=8 Then 
+If $k <=4 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9104B0" & $k)
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9104B0" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9104B0" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 8
+Until $i = 4
 
 
 ;----------------------------------------------------------------------------------------------------
@@ -1598,20 +1576,20 @@ EndIf
     $i = $i + 1
 Until $i = 8
 
-WinActivate("RVMS平台--管理端")
-$k=9
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D910809" )
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D910809|录像服务器")
+;~ WinActivate("RVMS平台--管理端")
+;~ $k=9
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D910809" )
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D910809|录像服务器")
 
-$i = 0
-Do
-If $k <=16 Then 
-	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108" & $k)
-   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108" & $k & "|录像服务器")
-   $k=$k+1
-EndIf
-    $i = $i + 1
-Until $i = 8
+;~ $i = 0
+;~ Do
+;~ If $k <=16 Then 
+;~ 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108" & $k)
+;~    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108" & $k & "|录像服务器")
+;~    $k=$k+1
+;~ EndIf
+;~     $i = $i + 1
+;~ Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;9108B
@@ -1630,19 +1608,19 @@ EndIf
     $i = $i + 1
 Until $i = 8
 
-WinActivate("RVMS平台--管理端")
-$k=9
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108B09" )
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108B09|录像服务器")
-$i = 0
-Do
-If $k <=16 Then 
-	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108B" & $k)
-   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108B" & $k & "|录像服务器")
-   $k=$k+1
-EndIf
-    $i = $i + 1
-Until $i = 8
+;~ WinActivate("RVMS平台--管理端")
+;~ $k=9
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108B09" )
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108B09|录像服务器")
+;~ $i = 0
+;~ Do
+;~ If $k <=16 Then 
+;~ 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9108B" & $k)
+;~    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9108B" & $k & "|录像服务器")
+;~    $k=$k+1
+;~ EndIf
+;~     $i = $i + 1
+;~ Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;D9604L
@@ -1651,13 +1629,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表")
 $k=1
 $i = 0
 Do
-If $k <=8 Then 
+If $k <=4 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9604L0" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9604L0" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 8
+Until $i = 4
 
 ;----------------------------------------------------------------------------------------------------
 ;D9604B
@@ -1666,13 +1644,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表")
 $k=1
 $i = 0
 Do
-If $k <=8 Then 
+If $k <=4 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9604B0" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9604B0" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 8
+Until $i = 4
 
 ;----------------------------------------------------------------------------------------------------
 ;D9608L
@@ -1690,19 +1668,19 @@ EndIf
     $i = $i + 1
 Until $i = 8
 
-WinActivate("RVMS平台--管理端")
-$k=9
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9608L09" )
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9608L09|录像服务器")
-$i = 0
-Do
-If $k <=16 Then 
-	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9608L" & $k)
-   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9608L" & $k & "|录像服务器")
-   $k=$k+1
-EndIf
-    $i = $i + 1
-Until $i = 8
+;~ WinActivate("RVMS平台--管理端")
+;~ $k=9
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9608L09" )
+;~ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9608L09|录像服务器")
+;~ $i = 0
+;~ Do
+;~ If $k <=16 Then 
+;~ 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9608L" & $k)
+;~    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9608L" & $k & "|录像服务器")
+;~    $k=$k+1
+;~ EndIf
+;~     $i = $i + 1
+;~ Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;D9216H
@@ -1741,8 +1719,8 @@ $k=1
 $i = 0
 Do
 If $k <=8 Then 
-	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9316H0" & $k)
-   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9316H0" & $k & "|录像服务器")
+	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|ID9316H0" & $k)
+   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|ID9316H0" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
@@ -1750,13 +1728,13 @@ Until $i = 8
 
 WinActivate("RVMS平台--管理端")
 $k=9
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9316H09" )
-ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9316H09|录像服务器")
+ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|ID9316H09" )
+ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|ID9316H09|录像服务器")
 $i = 0
 Do
 If $k <=16 Then 
-	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9316H" & $k)
-   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9316H" & $k & "|录像服务器")
+	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|ID9316H" & $k)
+   ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|ID9316H" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
@@ -1769,13 +1747,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表")
 $k=1
 $i = 0
 Do
-If $k <=8 Then 
+If $k <=4 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D91040" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D91040" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 8
+Until $i = 4
 
 ;----------------------------------------------------------------------------------------------------
 ;D9616L
@@ -1799,13 +1777,13 @@ ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D
 ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9616L09|录像服务器")
 $i = 0
 Do
-If $k <=32 Then 
+If $k <=16 Then 
 	ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Expand", "通道列表|D9616L" & $k)
    ControlTreeView ("RVMS平台--管理端", "", "SysTreeView324", "Check", "通道列表|D9616L" & $k & "|录像服务器")
    $k=$k+1
 EndIf
     $i = $i + 1
-Until $i = 24
+Until $i = 8
 
 ;----------------------------------------------------------------------------------------------------
 ;D9016H
