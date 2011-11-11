@@ -6,7 +6,8 @@
 #Region ### START Koda GUI section ### Form=
 $Form1 = GUICreate("配置文件初始化工具(每天总数相加)", 315, 172, 187, 124)
 $Input2 = GUICtrlCreateInput("", 112, 88, 169, 21)
-$Button1 = GUICtrlCreateButton("确定", 64, 128, 65, 25)
+$Button1 = GUICtrlCreateButton("确定", 64, 128, 65, 25,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
 $Button2 = GUICtrlCreateButton("取消", 188, 128, 65, 25)
 $Label1 = GUICtrlCreateLabel("         请把本软件放到配置文件下面使用或者" & @CRLF & "         放到“每天总数相加”程序下面使用",  0, 8, 308, 25)
 ;$Input1 = GUICtrlCreateInput("", 112, 56, 169, 21)
