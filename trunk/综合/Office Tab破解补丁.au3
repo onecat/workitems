@@ -11,12 +11,15 @@
 #Region ### START Koda GUI section ### Form=
 Opt("TrayIconHide",1)
 $I1 = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DE469D65-1DEB-4058-BF95-C642D733668D}_is1", "InstallLocation")
-$Form1_1 = GUICreate("Office Tab破解补丁",  315, 184, 332, 189)
+$Form1_1 = GUICreate("Office Tab破解补丁",  330, 205, 332, 189)
 $Input2 = GUICtrlCreateInput($I1,  120, 96, 169, 21)
 $Button1 = GUICtrlCreateButton("确定", 64, 136, 65, 25)
 $Button2 = GUICtrlCreateButton("取消", 188, 136, 65, 25)
 $Label3 = GUICtrlCreateLabel("Office Tab  路径", 12, 100, 96, 17)
-$Label1 = GUICtrlCreateLabel("1 如果路径获取失败请手动添加路径" & @CRLF & "2 使用本补丁之前记得要保存office文件" & @CRLF & "3 退出office文件本补丁才能生效" & @CRLF & "4 Excel,PowerPoint,Word,Access本补丁会自    动关闭,数据没保存后果自负", 24, 16, 248, 80)
+$Label1 = GUICtrlCreateLabel("1 如果路径获取失败请手动添加路径" & @CRLF & "2 使用本补丁之前记得要保存office文件" & @CRLF & "3 退出office文件本补丁才能生效" & @CRLF & "4 Excel,PowerPoint,Word,Access本补丁会自    动关闭,数据没保存后果自负", 24, 16, 248, 65)
+$Label2 = GUICtrlCreateLabel("小站制作:破解文件来源于网络", 8, 176, 163, 17)
+;$Pic1 = GUICtrlCreatePic("C:\Users\chtyfox\Desktop\1\Penguins.jpg", 0, 0, 329, 201, BitOR($SS_NOTIFY,$WS_GROUP,$WS_CLIPSIBLINGS));在GUI上创建一个图片控件
+;GUICtrlSetCursor (-1, 0)  ;特定控件指定一个鼠标指针
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 While 1
