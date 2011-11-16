@@ -11,7 +11,7 @@ EndFunc
 ;注册表cpu型号获取
 Func _CpuGet()
 	$readcpu = RegRead('HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0','ProcessorNameString')
-	Return $readcpui 
+	Return $readcpu
 EndFunc
 
 
