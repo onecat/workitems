@@ -33,7 +33,7 @@
 Dim $h=MsgBox(1, "请注意", "确定要删除SVN信息,是否在副本下运行本程序，不是点取消，请复制成副本，在运行")
     if  $h<>1  Then
     Exit 0
-EndIf
+EndIf 
 
 DirRemove(@ScriptDir & "\.svn",1)
 DirRemove(@ScriptDir & "\Aut2Exe\.svn",1)
