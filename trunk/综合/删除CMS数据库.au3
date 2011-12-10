@@ -31,4 +31,4 @@
 #ce �ߣߣߣߣߣߣߣߣߣߣߣߣߣߣ߽ű���ʼ�ߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣ�
 
 
-FileDelete ("C:\Users\" & @ComputerName & "chtyal\AppData\Roaming\Video Client\SysConfig.mdb")
+FileDelete ("C:\Users\" &  StringReplace(@ComputerName, "-PC", "") & "\AppData\Roaming\Video Client\SysConfig.mdb")
