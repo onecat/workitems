@@ -1,10 +1,10 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
 #AutoIt3Wrapper_icon=J:\android-sdk-windows\AVD Manager.exe|-1
-#AutoIt3Wrapper_Outfile=C:\Users\chtyfox\Desktop\待测试\Android模拟器辅助工具.exe
+#AutoIt3Wrapper_Outfile=C:\Users\chtyfox\Desktop\Android模拟器辅助工具.exe
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_Res_Comment=xz00311制作
 #AutoIt3Wrapper_Res_Description=xz00311制作
-#AutoIt3Wrapper_Res_Fileversion=1.2.1.2
+#AutoIt3Wrapper_Res_Fileversion=2.0.0.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=xz00311
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -45,6 +45,7 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
+#include <WinapiEX.au3>
 #Region ### START Koda GUI section ### Form=
 $SDK = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "SDK-platform-tools路径","")
 $APKLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "安装和复制的APK文件路径","")
@@ -156,12 +157,12 @@ Func sdSDK();手动设置路径 SDK文件路径
 		If @error Then
 			MsgBox(4096,"","没有选择文件夹!")
 		Else
-			GUICtrlSetData($Input1, $SDKT  & "\")
+			GUICtrlSetData($Input1, _WinAPI_PathAddBackslash($SDKT))
 		EndIf
 		
 	EndFunc
 	
-Func sdAPK();手动设置路径 APK文件路径
+Func sdAPK();手动设置路径 APK文件名路径
 		$APKT  = FileOpenDialog("请指定FT-200W文件所在路径", "", "可执行文件(*.apk)|所有文件(*.*)", 3, "")
 		If @error Then
 			MsgBox(4096,"","没有选择文件!")
@@ -176,13 +177,7 @@ Func sdDNLJ();手动设置路径 电脑保存路径
 		If @error Then
 			MsgBox(4096,"","没有选择文件夹!")
 		Else
-			GUICtrlSetData($Input4, $DNLJT  & "\")
-;~ 			#Include <WinAPIEx.au3>
-;~ _WinAPI_PathSearchAndQualify
-;~ 这是api的方法
-;~ 			$2 = stringreplace($DNLJT,'\\','\')
-;~ 			MsgBox(0,0,$2)
-;~ 			GUICtrlSetData($Input4,$2)
+			GUICtrlSetData($Input4, _WinAPI_PathAddBackslash($DNLJT))
 		EndIf
 		
 	EndFunc

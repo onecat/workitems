@@ -35,6 +35,7 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
+#include <WinapiEX.au3>
 #Region ### START Koda GUI section ### Form=
 $SDK = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "SDK-platform-tools路径","")
 $APKLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "安装和复制的APK文件路径","")
@@ -83,9 +84,6 @@ While 1
 			GUISetState(@SW_HIDE,$Form)
 			csh()
 			Exit
-		Case $nMsg = $Radio1
-			GUICtrlSetState($Radio1, BitAND(BitOR($gui_checked, $gui_unchecked), BitNOT(GUICtrlRead($Radio1))))
-			consolewrite(GUICtrlRead($Radio1)&@cr)
 	EndSelect
 WEnd
 
@@ -150,7 +148,7 @@ Func sdSDK();手动设置路径 SDK文件路径
 		If @error Then
 			MsgBox(4096,"","没有选择文件夹!")
 		Else
-			GUICtrlSetData($Input1, $SDKT  & "\")
+			GUICtrlSetData($Input1, _WinAPI_PathAddBackslash($SDKT))
 		EndIf
 		
 	EndFunc
@@ -170,13 +168,7 @@ Func sdDNLJ();手动设置路径 电脑保存路径
 		If @error Then
 			MsgBox(4096,"","没有选择文件夹!")
 		Else
-			GUICtrlSetData($Input4, $DNLJT  & "\")
-;~ 			#Include <WinAPIEx.au3>
-;~ _WinAPI_PathSearchAndQualify
-;~ 这是api的方法
-;~ 			$2 = stringreplace($DNLJT,'\\','\')
-;~ 			MsgBox(0,0,$2)
-;~ 			GUICtrlSetData($Input4,$2)
+			GUICtrlSetData($Input4, _WinAPI_PathAddBackslash($DNLJT))
 		EndIf
 		
 	EndFunc
