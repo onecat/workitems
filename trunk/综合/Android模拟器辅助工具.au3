@@ -1,3 +1,13 @@
+#Region ;**** ²ÎÊı´´½¨ÓÚ ACNWrapper_GUI ****
+#AutoIt3Wrapper_icon=J:\android-sdk-windows\AVD Manager.exe|-1
+#AutoIt3Wrapper_Outfile=C:\Users\chtyfox\Desktop\´ı²âÊÔ\AndroidÄ£ÄâÆ÷¸¨Öú¹¤¾ß.exe
+#AutoIt3Wrapper_Compression=4
+#AutoIt3Wrapper_Res_Comment=xz00311ÖÆ×÷
+#AutoIt3Wrapper_Res_Description=xz00311ÖÆ×÷
+#AutoIt3Wrapper_Res_Fileversion=1.2.1.2
+#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
+#AutoIt3Wrapper_Res_LegalCopyright=xz00311
+#EndRegion ;**** ²ÎÊı´´½¨ÓÚ ACNWrapper_GUI ****
 #Region ACNÔ¤´¦Àí³ÌĞò²ÎÊı(³£ÓÃ²ÎÊı)
 #PRE_Icon= 										;Í¼±ê,Ö§³ÖEXE,DLL,ICO
 #PRE_OutFile=									;Êä³öÎÄ¼şÃû
@@ -41,28 +51,28 @@ $APKLJ = IniRead(@scriptdir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "°²×°ºÍ¸´ÖÆµÄAPKÎ
 $WJM = IniRead(@scriptdir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "AndroidÄ£ÄâÆ÷APKÎÄ¼şÃû","")
 $DNLJ = IniRead(@scriptdir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "µçÄÔ±£´æÂ·¾¶","")
 
-$Form = GUICreate("AndroidÄ£ÄâÆ÷¹¤¾ß", 430, 403, 900, 276)
+$Form = GUICreate("AndroidÄ£ÄâÆ÷¹¤¾ß", 431, 400, 900, 276)
 $Label1 = GUICtrlCreateLabel("AndroidÄ£ÄâÆ÷°²×°ºÍ¸´ÖÆAPKÎÄ¼ş", 88, 8, 180, 17)
 $Label2 = GUICtrlCreateLabel("´´½¨AndroidÄ£ÄâÆ÷Ê±±ØĞë´´½¨SD¿¨", 88, 40, 188, 17)
 $Checkbox1 = GUICtrlCreateCheckbox("AndroidÄ£ÄâÆ÷°²×°APK", 96, 64, 169, 17)
 $Checkbox2 = GUICtrlCreateCheckbox("¸´ÖÆÎÄ¼şµ½AndroidÄ£ÄâÆ÷", 96, 97, 169, 17)
-$Label3 = GUICtrlCreateLabel("SDK-platform-toolsÂ·¾¶",  12, 172, 132, 17)
-$Label4 = GUICtrlCreateLabel("°²×°ºÍ¸´ÖÆµÄAPKÎÄ¼şÂ·¾¶",  12, 212, 138, 17 )
-$Label5 = GUICtrlCreateLabel("AndroidÄ£ÄâÆ÷APKÎÄ¼şÃû", 12, 260, 136, 17)
-$Label6 = GUICtrlCreateLabel("×¢Òâ:APKÎÄ¼ş²»ÄÜÓÃ" & @CRLF & "ÖĞÎÄÖ»ÄÜÓÃÊı×ÖºÍ×Ö" & @CRLF & "Ä¸ÈçQQ.apk" , 304, 32, 174, 75)
-$Label7 = GUICtrlCreateLabel("µçÄÔ±£´æÂ·¾¶", 12, 300, 138, 17)
-$Input1 = GUICtrlCreateInput($SDK, 160, 168, 169, 21)
-$Input2 = GUICtrlCreateInput($APKLJ, 160, 208, 169, 21)
-$Input3 = GUICtrlCreateInput($WJM, 160, 256, 169, 21)
-$Input4 = GUICtrlCreateInput($DNLJ, 160, 296, 169, 21)
+$Checkbox3 = GUICtrlCreateCheckbox("AndroidÄ£ÄâÆ÷¸´ÖÆµ½µçÄÔ", 96, 232, 249, 17)
+$Label3 = GUICtrlCreateLabel("SDK-platform-toolsÂ·¾¶", 12, 132, 132, 17)
+$Label4 = GUICtrlCreateLabel("°²×°ºÍ¸´ÖÆµÄAPKÎÄ¼şÂ·¾¶", 12, 172, 138, 17)
+$Label5 = GUICtrlCreateLabel("AndroidÄ£ÄâÆ÷APKÎÄ¼şÃû", 12, 270, 136, 17)
+$Label6 = GUICtrlCreateLabel("×¢Òâ:APKÎÄ¼ş²»ÄÜÓÃ" & @CRLF & "ÖĞÎÄÖ»ÄÜÓÃÊı×ÖºÍ×Ö" & @CRLF & "Ä¸ÈçQQ.apk¡£ÈçQQ°æ" & @CRLF & "±¾Îª1.1ÒÑ°²×°,Ïë°²" & @CRLF & "×°QQ1.2±ØĞëÏÈÉ¾³ı" & @CRLF & "QQ1.1" , 304, 32, 174, 75)
+$Label7 = GUICtrlCreateLabel("µçÄÔ±£´æÂ·¾¶", 12, 308, 138, 17)
+$Input1 = GUICtrlCreateInput($SDK, 160, 128, 169, 21)
+$Input2 = GUICtrlCreateInput($APKLJ, 160, 168, 169, 21)
+$Input3 = GUICtrlCreateInput($WJM, 160, 266, 169, 21)
+$Input4 = GUICtrlCreateInput($DNLJ, 160, 304, 169, 21)
 $Button1 = GUICtrlCreateButton("È·¶¨", 72, 360, 105, 25,$WS_GROUP)
 GUICtrlSetState(-1, $GUI_DEFBUTTON)
 $Button2 = GUICtrlCreateButton("È¡Ïû", 253, 360, 105, 25)
-$Button3 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 166, 81, 25)
-$Button4 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 206, 81, 25)
-$Button5 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 294, 81, 25)
-$Radio1 = GUICtrlCreateRadio("AndroidÄ£ÄâÆ÷¸´ÖÆµ½µçÄÔ", 96, 128, 161, 17)
-$Group1 = GUICtrlCreateGroup("AndroidÄ£ÄâÆ÷¸´ÖÆµ½µçÄÔ", 8, 232, 417, 113)
+$Button3 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 126, 81, 25)
+$Button4 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 166, 81, 25)
+$Button5 = GUICtrlCreateButton("ÊÖ¶¯ÉèÖÃÂ·¾¶", 336, 302, 81, 25)
+$Group1 = GUICtrlCreateGroup("AndroidÄ£ÄâÆ÷¸´ÖÆµ½µçÄÔ", 8, 208, 417, 137)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
@@ -83,9 +93,6 @@ While 1
 			GUISetState(@SW_HIDE,$Form)
 			csh()
 			Exit
-		Case $nMsg = $Radio1
-			GUICtrlSetState($Radio1, BitAND(BitOR($gui_checked, $gui_unchecked), BitNOT(GUICtrlRead($Radio1))))
-			consolewrite(GUICtrlRead($Radio1)&@cr)
 	EndSelect
 WEnd
 
@@ -107,7 +114,7 @@ Func csh()
 		Sleep(1000)
 		_APKFZ()
 	EndIf
- 	If BitAND(GUICtrlRead($Radio1), $GUI_CHECKED) Then ;BitAnd ±È½ÏÇ°ºóÁ½¸öÖµ	
+	If BitAND(GUICtrlRead($Checkbox3), $GUI_CHECKED) Then ;BitAnd ±È½ÏÇ°ºóÁ½¸öÖµ	
  		IniWrite(@ScriptDir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "AndroidÄ£ÄâÆ÷APKÎÄ¼şÃû",GUICtrlRead ($Input3))	
  		IniWrite(@ScriptDir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "µçÄÔ±£´æÂ·¾¶",GUICtrlRead ($Input4))
  		Sleep(1000)
@@ -122,7 +129,7 @@ Func _SDK()
 	RunWait(@ComSpec & ' /c ' & StringLeft($SDK, StringInStr($SDK, '\')), '', @SW_HIDE)
 	RunWait(@ComSpec & ' /c ' & 'cd ' & $SDK, '', @SW_HIDE)
 	RunWait(@ComSpec & ' /c ' & 'adb install ' & $APKLJ, '', @SW_HIDE)
-	MsgBox(0,0,"SDK")
+	MsgBox(0,"APKÎÄ¼ş","°²×°³É¹¦")
 EndFunc	
 		
 Func _APKFZ()
@@ -133,15 +140,14 @@ Func _APKFZ()
 	RunWait(@ComSpec & ' /c ' & StringLeft($SDK, StringInStr($SDK, '\')), '', @SW_HIDE)
 	RunWait(@ComSpec & ' /c ' & 'cd ' & $SDK, '', @SW_HIDE)
 	RunWait(@ComSpec & ' /c ' & 'adb push '& $APKLJ &  ' /sdcard/' & $array[$num], '', @SW_HIDE)
-	MsgBox(0,0,"APK")
+	MsgBox(0,"APKÎÄ¼ş¸´ÖÆ","¸´ÖÆ³É¹¦")
 EndFunc	
 
 Func _DNLJ()
 	$WJM = IniRead(@scriptdir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "AndroidÄ£ÄâÆ÷APKÎÄ¼şÃû","")
 	$DNLJ = IniRead(@scriptdir & "\AndroidÄ£ÄâÆ÷.ini", "Android", "µçÄÔ±£´æÂ·¾¶","")
 	RunWait(@ComSpec & ' /c ' & 'adb pull /sdcard/' & $WJM & ' ' & $DNLJ & $WJM, '', @SW_HIDE)
-	;RunWait(@ComSpec & ' /c ' & 'adb pull /sdcard/b.apk k:\b.apk', '', @SW_HIDE)
-	MsgBox(0,0,'DNLJ')
+	MsgBox(0,"APKÎÄ¼ş¸´ÖÆ","¸´ÖÆ³É¹¦")
 EndFunc	
 
 
