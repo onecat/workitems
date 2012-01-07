@@ -36,7 +36,7 @@ Dim $h=MsgBox(1, "请注意", "确定你已经右键添加自定义组才能运行本程序")
 EndIf 
 WinActivate("自定义组设置")
 ControlClick("自定义组设置","","Edit1","left",2)
-ControlSetText ( "自定义组设置", "", "Edit1", "服务器平台") 
+ControlSetText ( "自定义组设置", "", "Edit1", "苹果端") 
 Sleep(500)
 ControlClick("自定义组设置","","Button3")
  WinWaitActive("选择联系人")
