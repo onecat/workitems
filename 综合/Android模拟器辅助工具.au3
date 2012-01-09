@@ -4,7 +4,7 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_Res_Comment=xz00311制作
 #AutoIt3Wrapper_Res_Description=xz00311制作
-#AutoIt3Wrapper_Res_Fileversion=2.2.0.1
+#AutoIt3Wrapper_Res_Fileversion=2.3.0.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=xz00311
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -133,6 +133,7 @@ Func csh()
  	EndIf
 	If BitAND(GUICtrlRead($Checkbox4), $GUI_CHECKED) Then ;BitAnd 比较前后两个值	
  		IniWrite(@ScriptDir & "\Android模拟器.ini", "Android", "修改AVD存储路径",GUICtrlRead ($Input5))	
+		DirCreate(GUICtrlRead ($Input5))
  		Sleep(1000)
  		_AVDLJT()
  	EndIf
@@ -208,8 +209,8 @@ Func sdAVDLJT();手动设置路径 修改AVD存储路径(创建Android系统存放路径)
 		If @error Then
 			MsgBox(4096,"","没有选择文件夹!")
 		Else
-			GUICtrlSetData($Input5, $AVDLJT)
 			;GUICtrlSetData($Input5, _WinAPI_PathAddBackslash($AVDLJT)); & "Android-AVD")
+			GUICtrlSetData($Input5, $AVDLJT)
 		EndIf
 		
 	EndFunc
