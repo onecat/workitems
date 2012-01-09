@@ -4,7 +4,7 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_Res_Comment=xz00311制作
 #AutoIt3Wrapper_Res_Description=xz00311制作
-#AutoIt3Wrapper_Res_Fileversion=2.0.0.1
+#AutoIt3Wrapper_Res_Fileversion=2.2.0.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=xz00311
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -45,35 +45,43 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
+#include <GuiEdit.au3>
 #include <WinapiEX.au3>
 #Region ### START Koda GUI section ### Form=
 $SDK = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "SDK-platform-tools路径","")
 $APKLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "安装和复制的APK文件路径","")
 $WJM = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "Android模拟器APK文件名","")
 $DNLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "电脑保存路径","")
+$AVDLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "修改AVD存储路径","")
 
-$Form = GUICreate("Android模拟器工具", 431, 400, 900, 276)
-$Label1 = GUICtrlCreateLabel("Android模拟器安装和复制APK文件", 88, 8, 180, 17)
-$Label2 = GUICtrlCreateLabel("创建Android模拟器时必须创建SD卡", 88, 40, 188, 17)
+$Form = GUICreate("Android模拟器工具", 433, 526, 304, 145)
 $Checkbox1 = GUICtrlCreateCheckbox("Android模拟器安装APK", 96, 64, 169, 17)
 $Checkbox2 = GUICtrlCreateCheckbox("复制文件到Android模拟器", 96, 97, 169, 17)
 $Checkbox3 = GUICtrlCreateCheckbox("Android模拟器复制到电脑", 96, 232, 249, 17)
+$Checkbox4 = GUICtrlCreateCheckbox("创建Android系统存放路径", 96, 384, 161, 17)
+$Label1 = GUICtrlCreateLabel("Android模拟器安装和复制APK文件", 88, 8, 180, 17)
+$Label2 = GUICtrlCreateLabel("创建Android模拟器时必须创建SD卡", 88, 40, 188, 17)
 $Label3 = GUICtrlCreateLabel("SDK-platform-tools路径", 12, 132, 132, 17)
 $Label4 = GUICtrlCreateLabel("安装和复制的APK文件路径", 12, 172, 138, 17)
 $Label5 = GUICtrlCreateLabel("Android模拟器APK文件名", 12, 270, 136, 17)
 $Label6 = GUICtrlCreateLabel("注意:APK文件不能用" & @CRLF & "中文只能用数字和字" & @CRLF & "母如QQ.apk。如QQ版" & @CRLF & "本为1.1已安装,想安" & @CRLF & "装QQ1.2必须先删除" & @CRLF & "QQ1.1" , 304, 32, 174, 75)
 $Label7 = GUICtrlCreateLabel("电脑保存路径", 12, 308, 138, 17)
+$Label8 = GUICtrlCreateLabel("创建Android系统存放路径", 16, 428, 144, 17)
 $Input1 = GUICtrlCreateInput($SDK, 160, 128, 169, 21)
 $Input2 = GUICtrlCreateInput($APKLJ, 160, 168, 169, 21)
 $Input3 = GUICtrlCreateInput($WJM, 160, 266, 169, 21)
 $Input4 = GUICtrlCreateInput($DNLJ, 160, 304, 169, 21)
-$Button1 = GUICtrlCreateButton("确定", 72, 360, 105, 25,$WS_GROUP)
+$Input5 = GUICtrlCreateInput($AVDLJ, 160, 424, 169, 21)
+$Button1 = GUICtrlCreateButton("确定", 72, 482, 105, 25,$WS_GROUP)
 GUICtrlSetState(-1, $GUI_DEFBUTTON)
-$Button2 = GUICtrlCreateButton("取消", 253, 360, 105, 25)
+$Button2 = GUICtrlCreateButton("取消", 253, 482, 105, 25)
 $Button3 = GUICtrlCreateButton("手动设置路径", 336, 126, 81, 25)
 $Button4 = GUICtrlCreateButton("手动设置路径", 336, 166, 81, 25)
 $Button5 = GUICtrlCreateButton("手动设置路径", 336, 302, 81, 25)
+$Button6 = GUICtrlCreateButton("手动设置路径", 336, 422, 81, 25)
 $Group1 = GUICtrlCreateGroup("Android模拟器复制到电脑", 8, 208, 417, 137)
+$Group2 = GUICtrlCreateGroup("修改AVD存储路径(创建Android系统存放路径)", 8, 360, 417, 105)
+$Edit1 = GUICtrlCreateEdit(" 建议使用Android-AVD文件夹", 255, 383, 161, 17, $ES_READONLY)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
@@ -84,7 +92,9 @@ While 1
 			Exit
 		Case $nMsg = $Button2
 			Exit
-			Case $nMsg = $Button5
+		Case $nMsg = $Button6
+			sdAVDLJT()
+		Case $nMsg = $Button5
 			sdDNLJ()
 		Case $nMsg = $Button4
 			sdAPK()
@@ -120,7 +130,12 @@ Func csh()
  		IniWrite(@ScriptDir & "\Android模拟器.ini", "Android", "电脑保存路径",GUICtrlRead ($Input4))
  		Sleep(1000)
  		_DNLJ()
- 	EndIf	
+ 	EndIf
+	If BitAND(GUICtrlRead($Checkbox4), $GUI_CHECKED) Then ;BitAnd 比较前后两个值	
+ 		IniWrite(@ScriptDir & "\Android模拟器.ini", "Android", "修改AVD存储路径",GUICtrlRead ($Input5))	
+ 		Sleep(1000)
+ 		_AVDLJT()
+ 	EndIf
 EndFunc
 
 
@@ -151,6 +166,12 @@ Func _DNLJ()
 	MsgBox(0,"APK文件复制","复制成功")
 EndFunc	
 
+Func _AVDLJT()
+	$AVDLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "修改AVD存储路径","")
+	_EnvCreate("ANDROID_SDK_HOME",$AVDLJ)
+	EnvUpdate()
+	MsgBox(0,"修改存储路径","修改AVD存储路径成功")
+EndFunc	
 
 Func sdSDK();手动设置路径 SDK文件路径
 		$SDKT  = FileSelectFolder("请指定Android模拟器所在路径", "")
@@ -181,6 +202,48 @@ Func sdDNLJ();手动设置路径 电脑保存路径
 		EndIf
 		
 	EndFunc
+	
+Func sdAVDLJT();手动设置路径 修改AVD存储路径(创建Android系统存放路径)
+		$AVDLJT  = FileSelectFolder("请指定Android模拟器所在路径", "")
+		If @error Then
+			MsgBox(4096,"","没有选择文件夹!")
+		Else
+			GUICtrlSetData($Input5, $AVDLJT)
+			;GUICtrlSetData($Input5, _WinAPI_PathAddBackslash($AVDLJT)); & "Android-AVD")
+		EndIf
+		
+	EndFunc
+	
+;系统环境变量写入
+#cs===========================================
+;_EnvCreate(名称,值)
+_EnvCreate("test","This is test")
+;_EnvSet(名称,值)
+_EnvSet("test","is trim")
+;_EnvDel(名称)
+_EnvSet("test")
+#ce===========================================
+Func _EnvCreate($_EnvName,$_EnvValue)
+$strComputer = "."
+$objWMIService = ObjGet("winmgmts:\\" & $strComputer & "\root\cimv2")
+$objVariable = $objWMIService.Get("Win32_Environment").SpawnInstance_   ;使用spawninstance_方法，创建空白环境变量
+;设置环境变量属性
+$objVariable.Name = $_EnvName
+$objVariable.UserName = "<System>"
+$objVariable.VariableValue = $_EnvValue
+$objVariable.Put_  ;提交完成
+Return SetError(-1)
+EndFunc
+
+Func _EnvSet($_EnvName,$_EnvValue)
+RegWrite("HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment",$_EnvName,"REG_SZ",$_EnvValue)
+Return SetError(@error)
+EndFunc
+
+Func _EnvDel($_EnvName)
+RegDelete("HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment",$_EnvName)
+Return SetError(@error)
+EndFunc
 #cs	
 安装文件
 k:
@@ -226,4 +289,4 @@ $array = StringSplit($path, '\')
 $num = $array[0] ;第一个元素($array[0])保存拆分后子串的数量
 MsgBox(0, '', $array[$num])
 
-	#ce		
+#ce		
