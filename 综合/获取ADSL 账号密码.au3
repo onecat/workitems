@@ -5,6 +5,8 @@ Global Const $tagLSAUNICODE = "ushort Length;ushort MaxLength;ptr Wbuffer"
 Global Const $tagLSAOBJATTR = "ulong Length;hWnd RootDir;ptr objName;ulong Attr;ptr SecurDescr;ptr SecurQuality"
 
 MsgBox(0, "ADSL 账号密码", _FINDADSL()); 失败返回0，成功返回ADSL用户名及密码
+;$file = FileOpen("ADSL 账号密码.txt", 1)
+;FileWrite($file, _FINDADSL())
 
 Func _FINDADSL()
 	Dim $pSid = _LookupAccountName(@UserName) ; 获取用户SID指针。
