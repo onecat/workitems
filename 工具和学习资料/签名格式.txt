@@ -1,0 +1,3 @@
+文件：exe dll ocx cab stl cat
+证书：spc cer crt
+私钥：pvk
