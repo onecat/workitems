@@ -30,5 +30,12 @@
 
 #ce �ߣߣߣߣߣߣߣߣߣߣߣߣߣߣ߽ű���ʼ�ߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣ�
 
+	FileDelete (@AppDataDir & "\Video Client\SysConfig.mdb")
 
-FileDelete ("C:\Users\" &  StringReplace(@ComputerName, "-PC", "") & "\AppData\Roaming\Video Client\SysConfig.mdb")
+	DirRemove(StringLeft(@MyDocumentsDir, StringInStr(@MyDocumentsDir, '\')-1) & @HomePath & "\Video Client",1)
+
+
+
+
+
+
