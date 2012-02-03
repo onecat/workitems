@@ -32,10 +32,18 @@
 
 	FileDelete (@AppDataDir & "\Video Client\SysConfig.mdb")
 
-	DirRemove(StringLeft(@MyDocumentsDir, StringInStr(@MyDocumentsDir, '\')-1) & @HomePath & "\Video Client",1)
+	DirRemove(@UserProfileDir & "\Video Client",1)
+	;DirRemove(StringLeft(@MyDocumentsDir, StringInStr(@MyDocumentsDir, '\')-1) & @HomePath & "\Video Client",1)
 
 
 
 
+If FileExists(@AppDataDir & "\Video Client\SysConfig.mdb") Then
+If FileExists(@UserProfileDir & "\Video Client")  Then
+    MsgBox(4096, "CMS", "删除不成功")
+Else
+    MsgBox(4096, "CMS", "删除成功")
+EndIf
+EndIf
 
 
