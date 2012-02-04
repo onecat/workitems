@@ -36,14 +36,20 @@
 
 
 
-
-If FileExists(@AppDataDir & "\Video Client\SysConfig.mdb") Then
-	MsgBox(4096, "CMS", "SysConfig.mdb删除不成功")
-ElseIf FileExists(@UserProfileDir & "\Video Client")  Then
-    MsgBox(4096, "CMS", "Video Client删除不成功")
+If Not (FileExists(@AppDataDir & "\Video Client\SysConfig.mdb") Or FileExists(@UserProfileDir & "\Video Client")) Then
+	MsgBox(4096, "CMS", "删除成功")
 Else
-    MsgBox(4096, "CMS", "删除成功")
-
+	If FileExists(@AppDataDir & "\Video Client\SysConfig.mdb") Then MsgBox(4096, "CMS", "SysConfig.mdb删除不成功")
+	If FileExists(@UserProfileDir & "\Video Client") Then MsgBox(4096, "CMS", "Video Client删除不成功")
 EndIf
+;~ If FileExists(@AppDataDir & "\Video Client\SysConfig.mdb") Then
+;~ 	MsgBox(4096, "CMS", "SysConfig.mdb删除不成功")
+;~ ElseIf FileExists(@UserProfileDir & "\Video Client")  Then
+;~     MsgBox(4096, "CMS", "Video Client删除不成功")
+;~ Else
+;~     MsgBox(4096, "CMS", "删除成功")
+
+;~ EndIf
+
 
 
