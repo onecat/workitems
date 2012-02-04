@@ -40,13 +40,13 @@ ProcessClose("WmiPrvSE.exe")
 
 
 If Not (ProcessExists("vmnat.exe") Or ProcessExists("vmware-authd.exe") Or ProcessExists("vmware-hostd.exe") Or ProcessExists("vmware-tray.exe") Or ProcessExists("vmware-usbarbitrator.exe") Or ProcessExists("vmnetdhcp.exe") Or ProcessExists("wmiprvse.exe") Or ProcessExists("wmiprvse.exe")) Then
-	MsgBox(4096, "CMS", "全部删除成功")
+	MsgBox(4096, "虚拟机", "所有进程结束成功")
 Else
-	If ProcessExists("vmnat.exe") Then MsgBox(4096, "CMS", "vmnat删除不成功")
-	If ProcessExists("vmware-authd.exe") Then MsgBox(4096, "CMS", "vmware-authd删除不成功")
-	If ProcessExists("vmware-hostd.exe") Then MsgBox(4096, "CMS", "vmware-hostd删除不成功")
-	If ProcessExists("vmware-tray.exe") Then MsgBox(4096, "CMS", "vmware-tray删除不成功")
-	If ProcessExists("vmware-usbarbitrator.exe") Then MsgBox(4096, "CMS", "vmware-usbarbitrator删除不成功")
-	If ProcessExists("vmnetdhcp.exe") Then MsgBox(4096, "CMS", "vmnetdhcp删除不成功")
-	If ProcessExists("WmiPrvSE.exe") Then MsgBox(4096, "CMS", "WmiPrvSE删除不成功")
+	If ProcessExists("vmnat.exe") Then MsgBox(4096, "虚拟机", "vmnat结束进程不成功")
+	If ProcessExists("vmware-authd.exe") Then MsgBox(4096, "虚拟机", "vmware-authd结束进程不成功")
+	If ProcessExists("vmware-hostd.exe") Then MsgBox(4096, "虚拟机", "vmware-hostd结束进程不成功")
+	If ProcessExists("vmware-tray.exe") Then MsgBox(4096, "虚拟机", "vmware-tray结束进程不成功")
+	If ProcessExists("vmware-usbarbitrator.exe") Then MsgBox(4096, "虚拟机", "vmware-usbarbitrator结束进程不成功")
+	If ProcessExists("vmnetdhcp.exe") Then MsgBox(4096, "虚拟机", "vmnetdhcp结束进程不成功")
+	If ProcessExists("WmiPrvSE.exe") Then MsgBox(4096, "虚拟机", "WmiPrvSE结束进程不成功")
 EndIf
