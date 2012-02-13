@@ -57,12 +57,17 @@ If $a Then
 GUICtrlSetState($Checkbox1,$GUI_UNCHECKED)	
 GUICtrlSetState($Checkbox2,$GUI_UNCHECKED)	
 GUICtrlSetState($Checkbox3,$GUI_UNCHECKED)	
-		$a = Not $a			
+		$a = Not $a		
+GUICtrlSetState ( $Radio1, $GUI_UNCHECKED )
+		
 Else				
 GUICtrlSetState($Checkbox1,$GUI_CHECKED)	
 GUICtrlSetState($Checkbox2,$GUI_CHECKED)	
 GUICtrlSetState($Checkbox3,$GUI_CHECKED)	
 	$a = Not $a		
+
+
+
 
 
 EndIf	
