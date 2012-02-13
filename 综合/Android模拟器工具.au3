@@ -35,7 +35,7 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
-#include <WinapiEX.au3>
+#include <Winapiex.au3>
 #Region ### START Koda GUI section ### Form=
 $SDK = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "SDK-platform-tools路径","")
 $APKLJ = IniRead(@scriptdir & "\Android模拟器.ini", "Android", "安装和复制的APK文件路径","")
@@ -109,6 +109,8 @@ Func csh()
  		IniWrite(@ScriptDir & "\Android模拟器.ini", "Android", "Android模拟器APK文件名",GUICtrlRead ($Input3))	
  		IniWrite(@ScriptDir & "\Android模拟器.ini", "Android", "电脑保存路径",GUICtrlRead ($Input4))
  		Sleep(1000)
+
+
  		_DNLJ()
  	EndIf	
 EndFunc
