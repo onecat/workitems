@@ -1,10 +1,11 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=删除CMS数据库.exe|-1
+#PRE_icon=C:\Users\chtyfox\Desktop\删除CMS数据库.exe|-1
 #PRE_Outfile=C:\Users\chtyfox\Desktop\删除CMS数据库(去掉字符串的方法).exe
 #PRE_Compression=4
+#PRE_UseUpx=n
 #PRE_Res_Comment=安联
 #PRE_Res_Description=安联
-#PRE_Res_Fileversion=1.0.0.0
+#PRE_Res_Fileversion=1.0.0.1
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=安联
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -29,7 +30,8 @@
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 
-	FileDelete (@AppDataDir & "\Video Client\SysConfig.mdb")
+	;FileDelete (@AppDataDir & "\Video Client\SysConfig.mdb");删除数据库
+	FileRecycle (@AppDataDir & "\Video Client\SysConfig.mdb");把数据库移到回收站
 
 	DirRemove(@UserProfileDir & "\Video Client",1)
 	;DirRemove(StringLeft(@MyDocumentsDir, StringInStr(@MyDocumentsDir, '\')-1) & @HomePath & "\Video Client",1)
