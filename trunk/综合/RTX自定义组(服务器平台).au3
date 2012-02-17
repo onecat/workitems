@@ -41,6 +41,7 @@ Sleep(500)
 ControlClick("自定义组设置","","Button3")
  WinWaitActive("选择联系人")
 WinActivate("选择联系人","")  ;激活指定的窗口(设置焦点到该窗口,使其成为活动窗口)
+ControlClick("选择联系人","","Button2")
 edit()
 Send("20299");陈海照
 Sleep(500)
