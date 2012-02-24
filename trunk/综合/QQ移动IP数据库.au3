@@ -1,15 +1,14 @@
+#Region ;**** 参数创建于 ACNWrapper_GUI ****
+#PRE_Icon=L:\工具\综合软件\3D风格ICO图标\paint.ico
+#PRE_Outfile=C:\Users\chtyfox\Desktop\QQ移动IP数据库.exe
+#PRE_Compression=4
+#PRE_Res_Comment=小站制作
+#PRE_Res_Description=小站制作
+#PRE_Res_Fileversion=1.0.0.0
+#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_Res_LegalCopyright=小站制作
+#EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=							;文件版本
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
 ;#PRE_Run_Tidy=                   				;脚本整理
 ;#PRE_Run_Obfuscator=      						;代码迷惑
@@ -31,5 +30,5 @@
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 
 $2 = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Tencent\QQ2009","Install") & "\Bin\HKDlls"
-FileMove ("Share_MSDN.rar",RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Tencent\QQ2009","Install") & "\Bin\HKDlls",1);CoralWry.dat
+FileMove ("CoralWry.dat",RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Tencent\QQ2009","Install") & "\Bin\HKDlls",1);CoralWry.dat
 MsgBox(0,"CoralWry文件","剪切成功")
