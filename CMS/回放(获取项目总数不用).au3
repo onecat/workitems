@@ -31,39 +31,18 @@
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 ;#include<MsgBoxDJS.au3>
 #Include <GuiTreeView.au3>
+#Include <WinAPIEx.au3>
 HotKeySet("{ESC}", "Terminate")
 HotKeySet("{F2}", "Togglepause")
 
 Local $Paused ,$h
 
-$i = 0
-Do
 WinActivate("Video surveillance client")
 $1= ControlGetHandle("Video surveillance client", "", "SysTreeView321");获取树形列表控件句柄
-$4=_GUICtrlTreeView_GetText($1)
-ControlTreeView ("Video surveillance client", "", "SysTreeView321", "Expand", $4)
-ControlTreeView ("Video surveillance client", "", "SysTreeView321", "Expand", $4 & "|181")
-$2 =_GUICtrlTreeView_FindItem($1, "181")
-;$2=_GUICtrlTreeView_FindItemEx($1, "珠海市|D9616L (17/17)|监控点 (17/17)|1001");找到要点击的树形的 根|根项目名字如 1|2,这是获取项目句柄
-_GUICtrlTreeView_ClickItem($1,$2,"right",True,1,2);点击树形列表项目
-Send("{down 4}")
-Sleep(1000)
-Send("{enter}")
-Sleep(1000)
-$2 =_GUICtrlTreeView_FindItem($1, "181")
-;$2=_GUICtrlTreeView_FindItemEx($1, "珠海市|D9616L (17/17)|监控点 (17/17)|1001");找到要点击的树形的 根|根项目名字如 1|2,这是获取项目句柄
-_GUICtrlTreeView_ClickItem($1,$2,"right",True,1,2);点击树形列表项目
-Send("{down 5}")
-Send("{enter}")
-
-;~ WinWait("Remote Setup(125.89.62.181)")
-;~ Sleep(1000)
-;~ WinClose("Remote Setup(125.89.62.181)")
-
-;$msg = MsgBoxDJS(0 + 48 + 4, '界面是否全部出现', '界面全部实现请点击确定，' & @CRLF & '是否继续？', 5, 2)
-$i = $i + 1
-Until $i = 100
-
+$2=_GUICtrlTreeView_GetChildCount($1,"")
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", "Device list(1/" & $2 & ")")
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", "Device list(1/" & $2 & ")" & "|181")
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Check", "Device list(1/" & $2 & ")" & "|181" & "|CH02")
 
 
 Func Terminate()
@@ -82,11 +61,3 @@ EndFunc
 
 
 
-;If $4 = False Then
-;	ControlTreeView ("Video surveillance client", "", "SysTreeView325", "Select", "珠海市|D9616L (17/17)|监控点 (17/17)")
-;ElseIf 	$4 = True  Then
-;$2=_GUICtrlTreeView_FindItemEx($1, "珠海市|D9616L (17/17)|监控点 (17/17)|1001");找到要点击的树形的 根|根项目名字如 1|2,这是获取项目句柄
-;_GUICtrlTreeView_ClickItem($1,$2,"left",True,2,2);点击树形列表项目
-
-
-;EndIf
