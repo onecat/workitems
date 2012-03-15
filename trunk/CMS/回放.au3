@@ -38,10 +38,10 @@ Local $Paused ,$h
 
 WinActivate("Video surveillance client")
 $1= ControlGetHandle("Video surveillance client", "", "SysTreeView321");获取树形列表控件句柄
-MsgBox(0,0,$1)
-ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", "Device list(1/1)")
-ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", "Device list(1/1)|181")
-ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Check", "Device list(1/1)|181|CH02")
+$2=_GUICtrlTreeView_GetText($1)
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", $2)
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Expand", $2 & "|181")
+ControlTreeView ("RSPLAYBACKWND20120308", "RSPlayback20120308", "SysTreeView321", "Check",  $2 & "|181" & "|CH02")
 
 
 Func Terminate()
