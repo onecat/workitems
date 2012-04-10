@@ -63,14 +63,14 @@ $6 =_GUICtrlTreeView_FindItem($1, $5)
 
 _GUICtrlTreeView_ClickItem($1,$6,"right",True,1,2);点击树形列表项目
 Send("{down}")
-Sleep(500)
+Sleep(2000)
 Send("{enter}")
-Sleep(500)
+Sleep(2000)
 _GUICtrlTreeView_ClickItem($1,$6,"right",True,1,2);点击树形列表项目
 Send("{down 4}")
-Sleep(500)
+Sleep(2000)
 Send("{enter}")
-Sleep(500)
+Sleep(2000)
 
 ControlClick("Video surveillance client","","Button7")
 $7= ControlGetHandle("Video surveillance client", "", "SysTreeView322");获取树形列表控件句柄
@@ -84,7 +84,7 @@ $12 =_GUICtrlTreeView_FindItem($7, $11)
 
 _GUICtrlTreeView_ClickItem($7,$12,"right",True,1,2);点击树形列表项目Send("{down}")
 Send("{down}")
-Sleep(500)
+Sleep(2000)
 Send("{enter}")
-Sleep(500)
+Sleep(2000)
 EndFunc
