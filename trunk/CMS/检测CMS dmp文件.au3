@@ -4,7 +4,7 @@
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作
 #PRE_Res_Description=小站制作
-#PRE_Res_Fileversion=2.2.0.0
+#PRE_Res_Fileversion=2.3.0.0
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=小站制作
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
