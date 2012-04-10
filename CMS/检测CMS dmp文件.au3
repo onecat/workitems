@@ -1,5 +1,5 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Icon=..\..\..\Windows\system32\SHELL32.dll
+#PRE_icon=C:\Windows\system32\SHELL32.dll|-269
 #PRE_Outfile=C:\Users\chtyfox\Desktop\检测CMS dmp文件.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作
@@ -37,7 +37,7 @@ While $i >= 0
 			$i= $i+1
 			DvrClient()
 	EndIf
-	Sleep(100)
+	Sleep(120*1000)
 WEnd
 
 Func DvrClient()
