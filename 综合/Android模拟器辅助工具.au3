@@ -185,7 +185,7 @@ Func sdSDK();手动设置路径 SDK文件路径
 	EndFunc
 	
 Func sdAPK();手动设置路径 APK文件名路径
-		$APKT  = FileOpenDialog("请指定FT-200W文件所在路径", "", "可执行文件(*.apk)|所有文件(*.*)", 3, "")
+		$APKT  = FileOpenDialog("请指定APK文件所在路径", "", "可执行文件(*.apk)|所有文件(*.*)", 3, "")
 		If @error Then
 			MsgBox(4096,"","没有选择文件!")
 		Else
