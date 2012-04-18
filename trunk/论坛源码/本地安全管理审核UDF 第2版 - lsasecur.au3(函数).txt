@@ -1,0 +1,868 @@
+
+本帖最后由 pusofalse 于 2011-4-24 14:22 编辑
+
+
+第2版的lsasecur包括第1版LocalSecurityAuthority的所有功能，并添加了一些新特性（带*星号的为新功能）：
+
+1， 读取或设置文件、服务、注册表、共享文件、内核对象的安全信息。
+
+2， 提升进程权限，模拟SYSTEM登录，或创建任意用户场景下的用户进程。
+
+3， 添加、删除用户或用户组。
+
+4， 读取、设置用户或用户组的各种信息。
+
+5， 添加、删除用户权限。
+
+6， 存取私有数据，或读取系统安全数据库中的各种密码。
+
+7， *验证文件散列、数字签名。
+
+8， *利用空白U盘备份用户密码。
+
+9， *备份及导入“安全描述符”。
+
+10，*截取程序异常，并恢复程序运行。
+
+11，*调用DPAPI加解密数据。
+
+12，*自定义次数的进程实例。
+
+13，*模拟进程文件路径。
+
+14，还有很多，非常多。
+
+复制代码 高亮切换
+
+
+函数列表：
+1:; ___SeReleaseSemaphoreInstance
+
+2:; ___SeSEHDefaultHandler
+
+3:; __SeCertCloseStore
+
+4:; __SeCertFindCertificateInStore
+
+5:; __SeCertGetNameText
+
+6:; __SeCertNameToText
+
+7:; __SeCreateSemaphore
+
+8:; __SeCreateThread
+
+9:; __SeDecodeObject
+
+10:; __SeFileTimeToSystemTime
+
+11:; __SeGetExitCodeThread
+
+12:; __SeGetProcAddress
+
+13:; __SeLongPtrToBytes
+
+14:; __SeMsgClose
+
+15:; __SeMsgGetParam
+
+16:; __SeQueryObject
+
+17:; __SeReleaseSemaphore
+
+18:; __SeSEHDefaultHandler
+
+19:; __SeStringToBytesA
+
+20:; __SeTreeResetSecurityCallBack
+
+21:; __SeVirtualAlloc
+
+22:; __SeWaitForObject
+
+23:; _SeAddAccessAllowedAceEx
+
+24:; _SeAddAccessDeniedAceEx
+
+25:; _SeAddAccountRight
+
+26:; _SeAddAce
+
+27:; _SeAddAuditAccessAceEx
+
+28:; _SeAddLocalGroupMembers
+
+29:; _SeAdjustTokenPrivs
+
+30:; _SeAllocAndInitSid
+
+31:; _SeAllocGUID
+
+32:; _SeAllocLUID
+
+33:; _SeApiBufferFree
+
+34:; _SeAreAllAccessesGranted
+
+35:; _SeAreAnyAccessesGranted
+
+36:; _SeBackupPassword
+
+37:; _SeBinaryToString
+
+38:; _SeCheckTokenMembership
+
+39:; _SeCipherDes16
+
+40:; _SeCloseHandle
+
+41:; _SeClosePolicy
+
+42:; _SeCompareUserRight
+
+43:; _SeCompareUserRightEx
+
+44:; _SeConvertDesiredAccess
+
+45:; _SeConvertSDToStringSD
+
+46:; _SeConvertSidToSSid
+
+47:; _SeConvertSSidToSid
+
+48:; _SeConvertStringSDToSD
+
+49:; _SeCopyMemory
+
+50:; _SeCopySid
+
+51:; _SeCreateAce
+
+52:; _SeCreateBuffer
+
+53:; _SeCreateLocalGroup
+
+54:; _SeCreateLocalUser
+
+55:; _SeCreateLogonProcess
+
+56:; _SeCreateSecret
+
+57:; _SeCreateSecurityDescriptor
+
+58:; _SeCreateServiceSid
+
+59:; _SeCreateSystemProcess
+
+60:; _SeCreateUserProcess
+
+61:; _SeCreateWellKnownSid
+
+62:; _SeDeleteAce
+
+63:; _SeDeleteLocalGroup
+
+64:; _SeDeleteLocalGroupMembers
+
+65:; _SeDeleteLocalUser
+
+66:; _SeDuplicateAcl
+
+67:; _SeDuplicateHandle
+
+68:; _SeDuplicateSD
+
+69:; _SeDuplicateToken
+
+70:; _SeDuplicateTokenEx
+
+71:; _SeEnumAccountRights
+
+72:; _SeEnumAccounts
+
+73:; _SeEnumAccountsWithUserRight
+
+74:; _SeEnumEntriesFromAcl
+
+75:; _SeEnumExplicitEntriesFromAcl
+
+76:; _SeEnumInheritedEntriesFromAcl
+
+77:; _SeEnumLocalGroupMembers
+
+78:; _SeEnumLocalGroups
+
+79:; _SeEnumLocalUsers
+
+80:; _SeEnumPrivateData
+
+81:; _SeEnumPrivs
+
+82:; _SeEnumTokenGroups
+
+83:; _SeEnumTokenPrivs
+
+84:; _SeEnumUserLocalGroups
+
+85:; _SeEnumWellKnownSids
+
+86:; _SeEqualDomainSid
+
+87:; _SeEqualPrefixSid
+
+88:; _SeEqualSid
+
+89:; _SeEqualToken
+
+90:; _SeExportSecurityDescriptor
+
+91:; _SeFillMemory
+
+92:; _SeFormatMsg
+
+93:; _SeFreeMemory
+
+94:; _SeFreeSid
+
+95:; _SeGenRandom
+
+96:; _SeGetAce
+
+97:; _SeGetAceDetails
+
+98:; _SeGetAclInformation
+
+99:; _SeGetEffectiveRightsFromAcl
+
+100:; _SeGetFileSecurity
+
+101:; _SeGetFileSignature
+
+102:; _SeGetInheritanceSource
+
+103:; _SeGetKernelObjectSecurity
+
+104:; _SeGetLengthSid
+
+105:; _SeGetLocalGroupInfo
+
+106:; _SeGetLocalUserInfo
+
+107:; _SeGetNamedAccessRights
+
+108:; _SeGetNamedSecurityInfo
+
+109:; _SeGetRegKeySecurity
+
+110:; _SeGetSecretSecurity
+
+111:; _SeGetSecurityDescriptorControl
+
+112:; _SeGetSecurityDescriptorDacl
+
+113:; _SeGetSecurityDescriptorGroup
+
+114:; _SeGetSecurityDescriptorLength
+
+115:; _SeGetSecurityDescriptorOwner
+
+116:; _SeGetSecurityDescriptorSacl
+
+117:; _SeGetSecurityInfo
+
+118:; _SeGetServiceSecurity
+
+119:; _SeGetShareObjectDacl
+
+120:; _SeGetSidIdentifierAuthority
+
+121:; _SeGetSidSubAuthority
+
+122:; _SeGetSidSubAuthorityCount
+
+123:; _SeGetTokenInformation
+
+124:; _SeGetTokenType
+
+125:; _SeGetTokenUser
+
+126:; _SeGetUserAccountSid
+
+127:; _SeGetUserModals
+
+128:; _SeGetUserName
+
+129:; _SeGetWellKnownAccountSid
+
+130:; _SeHashCertificate
+
+131:; _SeHashFile
+
+132:; _SeHeapAlloc
+
+133:; _SeHeapFree
+
+134:; _SeHeapSize
+
+135:; _SeImpersonateLoggedOnUser
+
+136:; _SeImpersonateProcessPath
+
+137:; _SeImpersonateSystemContext
+
+138:; _SeImportSecurityDescriptor
+
+139:; _SeInitAcl
+
+140:; _SeInitBufferW
+
+141:; _SeInitExplicitEntries
+
+142:; _SeInitObjAttrib
+
+143:; _SeInitSecurityDescriptor
+
+144:; _SeInitSecurityQos
+
+145:; _SeInitSid
+
+146:; _SeIsEntryInheritable
+
+147:; _SeIsPrivEnabled
+
+148:; _SeIsPrivsEnabled
+
+149:; _SeIsSelfRelativeSD
+
+150:; _SeIsTokenRestricted
+
+151:; _SeIsUserAdmin
+
+152:; _SeIsUserAdminEx
+
+153:; _SeIsValidAce
+
+154:; _SeIsValidAcl
+
+155:; _SeIsValidHandle
+
+156:; _SeIsValidSecurityDescriptor
+
+157:; _SeIsValidSid
+
+158:; _SeIsWellKnownSid
+
+159:; _SeLastError
+
+160:; _SeLocalFree
+
+161:; _SeLogonUser
+
+162:; _SeLongToDWORD
+
+163:; _SeLookupAccountName
+
+164:; _SeLookupAccountSid
+
+165:; _SeLookupPrivDescription
+
+166:; _SeLookupPrivName
+
+167:; _SeLookupPrivsFromDacl
+
+168:; _SeLookupPrivValue
+
+169:; _SeMakeAbsoluteSD
+
+170:; _SeMakeSelfRelativeSD
+
+171:; _SeNetBuffer
+
+172:; _SeNetBufferSize
+
+173:; _SeOpenPolicy
+
+174:; _SeOpenProcess
+
+175:; _SeOpenProcessToken
+
+176:; _SeOpenRegKey
+
+177:; _SeOpenSecret
+
+178:; _SeOpenService
+
+179:; _SeOpenUserBrowser
+
+180:; _SePolicyQueryAuditEvent
+
+181:; _SePolicyQueryInformation
+
+182:; _SePolicyQueryLsaServerRole
+
+183:; _SePolicySetAuditEvent
+
+184:; _SePolicySetInformation
+
+185:; _SeProcessHeap
+
+186:; _SeProtectData
+
+187:; _SeProtectMemory
+
+188:; _SeProtectObjectFromClose
+
+189:; _SeQuerySecret
+
+190:; _SeReadBytes
+
+191:; _SeReadProcessMemory
+
+192:; _SeRegisterExceptionHandler
+
+193:; _SeRegisterMemoryNotify
+
+194:; _SeRemoveAccountRight
+
+195:; _SeRetrievePrivateData
+
+196:; _SeRevertToSelf
+
+197:; _SeSetEntriesInAcl
+
+198:; _SeSetEntriesInAcl1
+
+199:; _SeSetEntriesOrder
+
+200:; _SeSetFileInheritSecurity
+
+201:; _SeSetFileSecurity
+
+202:; _SeSetKernelObjectSecurity
+
+203:; _SeSetLocalUserInfo
+
+204:; _SeSetNamedSecurityInfo
+
+205:; _SeSetRegKeySecurity
+
+206:; _SeSetSecret
+
+207:; _SeSetSecurityDescriptorControl
+
+208:; _SeSetSecurityDescriptorDacl
+
+209:; _SeSetSecurityDescriptorGroup
+
+210:; _SeSetSecurityDescriptorOwner
+
+211:; _SeSetSecurityDescriptorSacl
+
+212:; _SeSetSecurityInfo
+
+213:; _SeSetServiceSecurity
+
+214:; _SeSetShareObjectDacl
+
+215:; _SeSetTokenInformation
+
+216:; _SeSetUserModals
+
+217:; _SeSingletonEx
+
+218:; _SeStorePrivateData
+
+219:; _SeStringToBinary
+
+220:; _SeTreeResetNamedSecurityInfo
+
+221:; _SeTreeResetNamedSecurityInfoEx
+
+222:; _SeUnprotectData
+
+223:; _SeUnprotectMemory
+
+224:; _SeWriteBytes
+
+225:; _SeWriteProcessMemory
+
+226:; snts
+
+复制代码 高亮切换
+
+
+所有_Se*开头的函数都是用户可以调用的函数，除此之外，其他以__Se*或___Se*开头的函数仅为内部调用。
+
+几个函数的示例：
+1、_SeBackupPassword - 利用空白U盘备份用户密码。
+#include <lsasecur.au3>
+
+ 
+
+_SeBackupPassword(0, 0) ; 同步方式备份用户密码。
+
+ 
+
+$hBackupThread = _SeBackupPassword(0, 1) ; 异步方式。
+
+ 
+
+; 等待备份完成。
+
+If $hBackupThread Then
+
+        While __SeWaitForObject($hBackupThread, 2)
+
+        WEnd
+
+EndIf
+
+复制代码 高亮切换
+
+
+2、_SeCreateSystemProcess - 创建系统级进程（仅支持于32位系统）。
+#include <lsasecur.au3>
+
+ 
+
+$sFilePath = @WindowsDir & "\regedit.exe"
+
+ 
+
+$tProcess = _SeCreateSystemProcess($sFilePath)
+
+MsgBox(0, _SeFormatMsg(), _
+
+        "Process Id: " & DllStructGetData($tProcess, "ProcessId") & @CRLF & _
+
+        "Thread Id: " & DllStructGetData($tProcess, "ThreadId"))
+
+复制代码 高亮切换
+
+
+3、_SeGetFileSignature - 获取文件签名。
+#include <lsasecur.au3>
+
+ 
+
+$sFilePath = @AutoItExe & "\..\Au3Info.exe"
+
+$aSignature = _SeGetFileSignature($sFilePath)
+
+_ArrayDisplay($aSignature, _SeFormatMsg())
+
+复制代码 高亮切换
+
+
+4、_SeHashFile - 验证文件散列。
+#include <lsasecur.au3>
+
+ 
+
+$sOutput = "File path:  %s\n\nCRC:      %s\nMD5:        %s\nMD4:        %s\nSHA1:       %s"
+
+ 
+
+$sFilePath = @SystemDir & "\cmd.exe"
+
+ 
+
+$bCrc = _SeHashFile($sFilePath, $SE_CALG_CRC32)
+
+$bMd5 = _SeHashFile($sFilePath, $SE_CALG_MD5)
+
+$bMd4 = _SeHashFile($sFilePath, $SE_CALG_MD4)
+
+$bSha = _SeHashFile($sFilePath, $SE_CALG_SHA)
+
+ 
+
+MsgBox(0, "Hashing", StringFormat($sOutput, $sFilePath, $bCrc, $bMd5, $bMd4, $bSha))
+
+复制代码 高亮切换
+
+
+5、_SeImpersonateProcessPath - 模拟构造进程路径。
+#include <lsasecur.au3>
+
+ 
+
+MsgBox(0, "_SeImpersonateProcessPath", "@AutoItExe=" & @AutoItExe)
+
+_SeImpersonateProcessPath(@WindowsDir & "\regedit.exe")
+
+ 
+
+MsgBox(0, "_SeImpersonateProcessPath", "@AutoItExe=" & @AutoItExe)
+
+复制代码 高亮切换
+
+
+6、_SeImpersonateSystemContext - 模拟SYSTEM用户登录。
+#include <lsasecur.au3>
+
+ 
+
+$hToken = _SeImpersonateSystemContext()
+
+MsgBox(0, "@UserName=" & @UserName, _SeFormatMsg("_SeImpersonateSystemContext"))
+
+ 
+
+; Do something with SYSTEM privilege.
+
+ 
+
+_SeCloseHandle($hToken)
+
+_SeRevertToSelf()
+
+MsgBox(0, "@UserName=" & @UserName, _SeFormatMsg("_SeRevertToSelf"))
+
+复制代码 高亮切换
+
+
+7、_SeRegisterExceptionHandler - 截取程序异常，并恢复程序运行。
+#include <lsasecur.au3>
+
+ 
+
+Const $INVALID_POINTER = -1     ; 非法指针，
+
+ 
+
+$sOutput = "异常代码：  0x%08X\n异常地址：      0x%08X\n自定义参数：    0x%08X"
+
+ 
+
+; 注册“安全函数”，程序发生异常时，将跳转到这个函数中。
+
+$hSafeAddress = DllCallBackRegister("_ExceptionCallBack", "none", "ptr")
+
+ 
+
+; 获取“安全函数”地址。
+
+$pSafeAddress = DllCallBackGetPtr($hSafeAddress)
+
+ 
+
+; 注册异常处理。
+
+_SeRegisterExceptionHandler( _
+
+        $pSafeAddress, _                ; 安全函数的地址。
+
+        7, _                            ; 安全函数的自定义参数，可以是任意32位值。
+
+        Default, _                      ; 安全函数的返回地址，默认为Kernel32.ExitProcess函数。
+
+        1)                              ; Kernel32.ExitProcess函数的参数。
+
+ 
+
+; 创建非法结构。
+
+$tTest = DllStructCreate("dword Test", $INVALID_POINTER)
+
+ 
+
+; 下面这句将会引发一个“内存不能为‘read’”的异常。
+
+DllStructGetData($tTest, "Test")
+
+ 
+
+Func _ExceptionCallBack($pSafeAddress)
+
+        Local $tSafeAddress = DllStructCreate($tagSE_SAFE_ADDRESS, $pSafeAddress)
+
+        Local $tRecord = DllStructCreate($tagSE_EXCEPTION_RECORD, DllStructGetData($tSafeAddress, "ExceptionRecord"))
+
+ 
+
+        MsgBox(48, "发生异常", StringFormat($sOutput, _
+
+                DllStructGetData($tRecord, "ExceptionCode"), _          ; 异常代码
+
+                DllStructGetData($tRecord, "ExceptionAddress"), _       ; 发生异常的地址
+
+                DllStructGetData($tSafeAddress, "Parameter")))          ; 用户自定义参数
+
+ 
+
+        ; 本函数执行完成之后，程序流程将会跳转到Kernel32.ExitProcess函数中，_
+
+        ; 并非以AutoIt的常规方式退出进程，所以要先清除托盘图标。
+
+        Opt("TrayIconHide", 1)
+
+EndFunc ;==>_ExceptionCallBack
+
+复制代码 高亮切换
+
+
+8、_SeSingletonEx - 允许同时运行自定义次数的进程实例。
+#include <lsasecur.au3>
+
+ 
+
+Const $iMaxInstances = 2
+
+ 
+
+$sOutput = "本程序已有%u个实例同时运行，请先退出其中1个或多个再运行此程序。"
+
+ 
+
+If _SeSingletonEx($iMaxInstances) Then
+
+        MsgBox(48, "", StringFormat($sOutput, $iMaxInstances))
+
+        Exit
+
+EndIf
+
+ 
+
+MsgBox(0, "", "Bingo~")
+
+复制代码 高亮切换
+
+
+9、_SeGetFileSecurity - 获取NTFS文件的安全信息。
+#include <lsasecur.au3>
+
+ 
+
+$sFilePath = @SystemDir & "\cmd.exe"
+
+ 
+
+$iSecur = BitOR($SE_INFO_OWNER, $SE_INFO_DACL)
+
+$pSecur = _SeGetFileSecurity($sFilePath, $iSecur)
+
+ 
+
+If ($pSecur = 0) Then
+
+        MsgBox(48, "Error", _SeFormatMsg("_SeGetFileSecurity"))
+
+        Exit
+
+EndIf
+
+ 
+
+$pOwner = _SeGetSecurityDescriptorOwner($pSecur)
+
+$pDacl = _SeGetSecurityDescriptorDacl($pSecur)
+
+ 
+
+$sOwner = _SeLookupAccountSid($pOwner)
+
+$aList = _SeEnumEntriesFromAcl($pDacl)
+
+ 
+
+_ArrayDisplay($aList, $sOwner)
+
+复制代码 高亮切换
+
+
+10、本地用户、用户组相关的函数。
+#include <lsasecur.au3>
+
+ 
+
+; 枚举本地用户。
+
+$aLocalUser = _SeEnumLocalUsers()
+
+_ArrayDisplay($aLocalUser, _SeFormatMsg("_SeEnumLocalUsers"))
+
+ 
+
+; 枚举本地用户组。
+
+$aLocalGroup = _SeEnumLocalGroups()
+
+_ArrayDisplay($aLocalGroup, _SeFormatMsg("_SeEnumLocalGroups"))
+
+ 
+
+; 枚举内置账户。
+
+$aWellKnown = _SeEnumWellKnownSids()
+
+_ArrayDisplay($aWellKnown, _SeFormatMsg("_SeEnumWellKnownSids"))
+
+ 
+
+; 枚举当前用户所属的用户组。
+
+$aUserGroup = _SeEnumUserLocalGroups(@UserName)
+
+_ArrayDisplay($aUserGroup, _SeFormatMsg("_SeEnumUserLocalGroups"))
+
+ 
+
+; 枚举管理员组的成员。
+
+$aMembers = _SeEnumLocalGroupMembers("Administrators")
+
+_ArrayDisplay($aMembers, _SeFormatMsg("_SeEnumLocalGroupMembers"))
+
+复制代码 高亮切换
+
+
+12/29/2010更新：
+新添加函数：
+_SeAccessCheck ; 访问检查
+
+_SeCreateRestrictedToken ; 创建受限令牌
+
+_SeCreateToken ; 创建访问令牌（Powerful）
+
+_SeCreateTrustedToken ; 创建受信任令牌
+
+_SeCreateUntrustedToken ; 创建不受信任的访问令牌
+
+_SeEnumTokenRestrictedSids ; 枚举令牌中的受限SID
+
+_SeGetUserObjectSecurity ; 获取用户对象（桌面、工作站）的安全信息
+
+_SeRestoreExceptionHandler ; 使用默认的异常函数处理程序异常
+
+_SeSetThreadToken ; 设置线程令牌
+
+_SeImpersonateNamedPipeClient ; 模拟命名管道客户端场景
+
+_SeImpersonateSelf ; 模拟自身场景
+
+_SeImpersonateThread ; 模拟线程场景
+
+_SeIsTokenUntrusted ; 判断令牌是否为非信任令牌
+
+_SeSetUserObjectSecurity ; 设置用户对象的安全信息
+
+_SeCreateSecurProcess ; 创建拥有高安全级别的进程
+
+复制代码 高亮切换
+
+
+04/24/2011更新：
+新添加函数：
+_SeVerifySystemCall ; 验证系统函数的调用
+
+_SeCompleteVerifySystemCall ; 完成验证系统函数的调用
+
+_SeCreateAdminToken ; 创建管理员权限令牌（可以指定任意用户名）
+
+_SeCreateUserProcessEx ; 创建用户进程（可以指定父进程）
+
+_SeImpersonateContext ; 模拟进程场景
+
+复制代码 高亮切换
