@@ -1,25 +1,11 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#AutoIt3Wrapper_icon=J:\android-sdk-windows\AVD Manager.exe|-1
-#AutoIt3Wrapper_Outfile=C:\Users\chtyfox\Desktop\Android模拟器辅助工具.exe
-#AutoIt3Wrapper_Compression=4
-#AutoIt3Wrapper_Res_Comment=xz00311制作
-#AutoIt3Wrapper_Res_Description=xz00311制作
-#AutoIt3Wrapper_Res_Fileversion=2.3.0.1
-#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
-#AutoIt3Wrapper_Res_LegalCopyright=xz00311
+#PRE_Outfile=C:\Users\chtyfox\Desktop\11.exe
+#PRE_Compression=4
+#PRE_Res_Fileversion=0.0.0.0
+#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=							;文件版本
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
 ;#PRE_Run_Tidy=                   				;脚本整理
 ;#PRE_Run_Obfuscator=      						;代码迷惑
