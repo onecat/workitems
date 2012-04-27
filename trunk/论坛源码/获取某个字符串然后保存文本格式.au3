@@ -1,4 +1,4 @@
-#Region ACN预处理程序参数(常用参数)
+#region ACN预处理程序参数(常用参数)
 #PRE_Icon= 										;图标,支持EXE,DLL,ICO
 #PRE_OutFile=									;输出文件名
 #PRE_OutFile_Type=exe							;文件类型
@@ -18,29 +18,50 @@
 ;#PRE_Run_After=								;运行后
 ;#PRE_UseX64=n									;使用64位解释器
 ;#PRE_Compile_Both								;进行双平台编译
-#EndRegion ACN预处理程序参数设置完成
+#endregion ACN预处理程序参数(常用参数)
 #cs ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-
- Au3 版本: 
- 脚本作者: 
- 电子邮件: 
-	QQ/TM: 
- 脚本版本: 
- 脚本功能: 
-
+	
+	Au3 版本:
+	脚本作者:
+	电子邮件:
+	QQ/TM:
+	脚本版本:
+	脚本功能:
+	
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-;~ $TxtFile="归类.txt"
-;~ $path = FileOpen( @ScriptDir & "\1.txt", 0)
-;~ StringTrimLeft  ($path, '|')
-
 #include <array.au3>
 #include <file.au3>
 Local $aA, $aB
-_filereadtoarray('2.txt', $aA)
-$aB = _arrayfindall($aA, 'TM', 0,0,0,1)
+_FileReadToArray('2.txt', $aA)
+$aB = _ArrayFindAll($aA, 'Mobile', 0, 0, 0, 1)
 
 $file = FileOpen('3.txt', 2)
-For $i =0 To UBound($aB)-1
-   Filewrite('3.txt', $aA[$aB[$i]] & @crlf)
-next
+For $i = 0 To UBound($aB) - 1
+	FileWrite('3.txt', $aA[$aB[$i]] & @CRLF)
+Next
+_ReplaceStringInFile('3.txt','"','')
+
 FileClose($file)
+
+
+
+;删除搜索出来的字符串
+;~ Local $aA, $aB
+;~ _FileReadToArray('2.txt', $aA)
+;~ $aB = _ArrayFindAll($aA, 'Linux', 0, 0, 0, 1)
+
+;~  $file = FileOpen('1.txt', 2)
+;~ For $i = 0 To UBound($aA) - 1
+;~ 	If _ArraySearch($aB, $i) = -1 Then 
+;~ 	FileWrite('1.txt', $aA[$i] & @CRLF)
+;~  EndIf
+;~ Next
+
+;~ _ReplaceStringInFile('1.txt','"','')
+
+
+
+;~ FileClose($file)
+;~ FileDelete(@ScriptDir & "\2.txt")
+;~ FileMove(@ScriptDir & "\1.txt",@ScriptDir & "\2.txt")
+
