@@ -34,6 +34,8 @@ While $i >= 0
     If FileExists ( "C:\Program Files\DVR Soft\DvrClient\RsDvrClient.dmp" ) Then
 		FileMove("C:\Program Files\DVR Soft\DvrClient\RsDvrClient.dmp","C:\Users\chty\Desktop\BUG文件\RsDvrClient" & $i & ".dmp")
 		FileCopy("C:\Program Files\DVR Soft\DvrClient\DvrClient.exe","C:\Users\chty\Desktop\BUG文件\DvrClient" & $i & ".exe")
+		IniWrite(@ScriptDir & "\CMS.ini", "次数", "运行次数", $i)
+		IniWrite(@ScriptDir & "\CMS.ini", "保存时间", "时间",  @year & "/" & @MON & "/"   & @mday & " " & @HOUR & ":" & @MIN & ":" & @SEC & @CRLF)
 			$i= $i+1
 			DvrClient()
 	EndIf
