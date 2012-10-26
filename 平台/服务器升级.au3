@@ -67,7 +67,7 @@ EndIf
 EndFunc
 
 Func _upgrade();服务器升级
-ShellExecute("putty.exe","","J:\")
+ShellExecute("putty.exe","","J:\putty")
 WinWait("PuTTY 配置")
 ControlClick("PuTTY 配置","","Edit1")
 ControlSetText("PuTTY 配置","","Edit1",$IP)
@@ -104,10 +104,10 @@ Dim $i=MsgBox(1,"注意","请在“root@localhost:/home”这个窗口上面等待文件解压完后
 EndIf
 
 WinActivate("root@localhost:/home")
-Send("cd ./RS_upgrade_pack")
+Send("cd ./RVMS_PC64_UPGRADE")
 Send("{enter}")
 Sleep(2000)
-Send("./RS_upgrade.sh /home/RS_upgrade_pack /home/RS_CMS_PC64")
+Send("./upgrade.sh /home/RVMS_PC64_UPGRADE /home/RS_CMS_PC64")
 Send("{enter}")
 MsgBox(0,"注意","请等待服务器升级完成后在点击确定")
 ProcessClose("putty.exe")
