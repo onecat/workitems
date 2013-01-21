@@ -53,7 +53,7 @@ ShellExecute("QQ.exe","",$QQPath)
 					
 					;ControlSetText($title, $text, "[CLASS:" & $aa & "; INSTANCE:1]", $mima, 1) ;ControlSend不支持中文 密码
 					Send("{TAB}")
-					Send("QQ密码");123456789
+					Send("QQ密码");xz0031140
 					Send("{enter}")
 				Next
 	EndIf	
