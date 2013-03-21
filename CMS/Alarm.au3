@@ -32,7 +32,7 @@
 
 #include<MsgBoxDJS.au3>
 #Include <GuiComboBox.au3>
-WinActivate("Remote Setup(14)")
+WinActivate("Remote Setting(9704)")
 $A = ControlGetHandle ("Remote Setup(14)","","ComboBox6")
 _GUICtrlComboBox_SetCurSel($A,2)
 sl()
