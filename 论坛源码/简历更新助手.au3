@@ -1,15 +1,12 @@
+#Region ;**** 参数创建于 ACNWrapper_GUI ****
+#PRE_Icon=L:\测试脚本\更新助手.exe
+#PRE_Outfile=C:\Users\chtyfox\Desktop\简历更新助手.exe
+#PRE_Compression=4
+#PRE_Res_Fileversion=1.0.0.3
+#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_Res_requestedExecutionLevel=None
+#EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=							;文件版本
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
 ;#PRE_Run_Tidy=                   				;脚本整理
 ;#PRE_Run_Obfuscator=      						;代码迷惑
@@ -61,23 +58,24 @@ GUISetState(@SW_HIDE,$gx)
 
 _IENavigate($oIE, "http://zh-hr.com")
 
-$username = '用户名'
-$password = '密码'
+$username = 'zhqf2001'
+$password = 'zhqf19831022'
 $Ele = _IEGetObjById($oIE,"loginname")
 _IEFormElementSetValue($Ele,$username)
 $Ele = _IEGetObjById($oIE,"loginpwd")
 _IEFormElementSetValue($Ele,$password)
-$Ele = _IETagNameGetCollection($oIE,"INPUT",7)
+$Ele = _IETagNameGetCollection($oIE,"SPAN",18)
 _IEAction($Ele,"click") ;点击
 _IELoadWait($oIE,1000)
-
+Send("{enter}")
 ;更新
+$Ele = _IETagNameGetCollection($oIE,"SPAN",19)
+_IEAction($Ele, "click")
 
-$Font = _IETagNameGetCollection($oIE, "font",1)
-_IEAction($Font, "click")
 
 
 _IELoadWait ($oIE)
+
 
 
 
