@@ -58,8 +58,8 @@ GUISetState(@SW_HIDE,$gx)
 
 _IENavigate($oIE, "http://zh-hr.com")
 
-$username = 'zhqf2001'
-$password = 'zhqf19831022'
+$username = '”√ªß√˚'
+$password = '√‹¬Î'
 $Ele = _IEGetObjById($oIE,"loginname")
 _IEFormElementSetValue($Ele,$username)
 $Ele = _IEGetObjById($oIE,"loginpwd")
