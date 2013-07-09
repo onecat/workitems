@@ -29,12 +29,42 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+#include <ButtonConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <GuiIPAddress.au3>
+#include <Process.au3>
+#include <WindowsConstants.au3>
+#include <WindowsConstants.au3>
 
 Dim $OffSet,$FirstStartIP,$file,$EndIPOff,$OffSet,$LastStartIP ,$RecordCount,$ContryFlag,$my_ip_contry,$my_ip_LocalStr
 
 
-$myipadress=QQWry("125.89.62.181")
-MsgBox(0,"",$myipadress)
+
+$GUI_1 = GUICreate("IP地址归属地", 270, 159, 192, 125)
+$IPAddress1 = _GUICtrlIpAddress_Create($GUI_1, 32, 16, 185, 25)
+_GUICtrlIpAddress_Set($IPAddress1, "125.89.62.181")
+$Label1 = GUICtrlCreateLabel("", 16, 64, 236, 17)
+$Button1 = GUICtrlCreateButton("确定", 26, 106, 94, 35,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
+$Button2 = GUICtrlCreateButton("退出", 146, 106, 94, 35)
+GUISetState(@SW_SHOW)
+
+While 1
+	$nMsg = GUIGetMsg()
+	Select
+		Case $nMsg = $GUI_EVENT_CLOSE
+			Exit
+		Case $nMsg = $Button1
+			$T = _GUICtrlIpAddress_Get($IPAddress1)
+			$myipadress=QQWry($T)
+			GUICtrlSetData ($Label1,$myipadress)
+		Case $nMsg = $Button2
+			Exit 
+	EndSelect
+WEnd
+
+;~ $myipadress=QQWry("125.89.62.181")
+;~ MsgBox(0,"",$myipadress)
 
 
 
