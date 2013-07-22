@@ -1,0 +1,80 @@
+@AppDataCommonDir 应用程序的目录 
+@AppDataDir 当前用户的程序目录 
+@AutoItExe 当前运行程序的全路径和文件名。 对于编译的脚本来说就是它的路径。 
+@AutoItVersion AutoIt的版本号，就像是 3.0.81.0 
+@CommonFilesDir 公共文件夹的路径 
+@Compiled 如果脚本是可编译执行的返回1。否则返回0。 
+@Computer>@ComSpec value of %comspec%, the SPECified secondary COMmand interpreter;
+primarily for command line uses, e.g. Run(@ComSpec & " /k help | more") 
+@CR 回车, Chr(13); 有时用于一行的中断。 
+@CRLF = @CR & @LF ;有时用于一行的中断。 
+@DesktopCommonDir 桌面的路径 
+@DesktopDir 当前用户的桌面的路径 
+@DesktopHeight 桌面屏幕的象素高度 。(平行分辨率) 
+@DesktopWidth 桌面屏幕的象素宽度 。(垂直分辨率) 
+@DesktopDepth 桌面屏幕的深度。 
+@DesktopRefresh 桌面的刷新频率（Hz） 
+@DocumentsCommonDir 文档的路径 
+@error 错误标记的状况。 查看 SetError 函数。 
+@extended 扩展函数返回 - 用在特定的函数中比如说 StringReplace. 
+@FavoritesCommonDir 收藏夹的路径 
+@FavoritesDir 当前用户收藏夹的路径 
+@GUI_CtrlId L最后点击的控件标识符。 查看 GUICtrlSetOnEvent 函数。 
+@GUI_CtrlHandle L最后点击的控件句柄。 查看 GUICtrlSetOnEvent 函数。 
+@GUI_WinHandle L最后点击的 GUI 窗体句柄。 查看 GUICtrlSetOnEvent 函数。 
+@HomeDrive 包含当前用户主目录的驱动器的符号。 
+@HomePath 当前用户主目录的部分目录。要得到全程路径，需要跟 @HomeDrive 一起使用。 
+@HomeShare @HomeShare - 包含当前用户主目录的服务器和共享名。 
+@HOUR 24小时制的时钟数值，范围是从 00 到 23 
+@InetGetActive 如果 InetGet 的下载正在运行时为1，否则为0。 
+@InetGetBytesRead 在 InetGet 下载期间是当前读取的字节数。如果为－1则表明在下载过程中出现了错误。 
+@IPAddress1 第一个网络适配器的IP地址。 在一些电脑上会返回 127.0.0.1 。 
+@IPAddress2 第二个网络适配器的IP地址。如果不可用则返回 0.0.0.0 。 
+@IPAddress3 第三个网络适配器的IP地址。如果不可用则返回 0.0.0.0 。 
+@IPAddress4 第四个网络适配器的IP地址。如果不可用则返回 0.0.0.0 。 
+@LF 换行, Chr(10); 典型的用于一行中止。 
+@LogonDNSDomain 登录 DNS 域。 
+@LogonDomain 登录域。 
+@LogonServer 登录服务器。 
+@MDAY 今天是这个月的第几天。范围从 01 到 31 
+@MIN 时钟的分钟数值. 范围从 00 到 59 
+@MON 当前的月份. 范围从 01 到 12 
+@MyDocumentsDir 我的文档的路径。 
+@NumParams 调用的用户函数中参数的数量。 
+@OSBuild 返回操作系统的建筑号。（build number）. 举例来说，Windows 2003 Server会返回3790 
+@OSLang 返回操作系统语言的标志。看附录。 
+@OSServicePack 服务包以 "Service Pack 3"形式或在 Windows 95，会返回 "B" 
+@OSTYPE NT/2000/XP/2003操作系统会返回 "WIN32_NT"，95/98/Me返回 "WIN32_WINDOWS"   
+@OSVersion 返回以下种类中的一个： "WIN_2003", "WIN_XP", "WIN_2000", "WIN_NT4", "WIN_ME", "WIN_98", "WIN_95" 
+@ProgramFilesDir 程序文件所在的文件夹 
+@ProgramsCommonDir 开始菜单程序的文件夹 
+@ProgramsDir 当前用户的程序 (开始菜单上的文件夹) 
+@ScriptDir 包含当前运行脚本的目录。 (结果不包含末尾的反斜线符号) 
+@ScriptFullPath 相当于 @ScriptDir & "\" & @Script>@Script>@SEC 时间的秒值。范围是00到59。 
+@StartMenuCommonDir 开始菜单的文件夹。 
+@StartMenuDir 当前用户的开始菜单的文件夹。 
+@StartupCommonDir 启动文件夹 
+@StartupDir 当前用户的启动文件夹 
+@SW_DISABLE 禁止窗体。 
+@SW_ENABLE 启用窗体。 
+@SW_HIDE 隐藏窗体并且激活其他窗体。 
+@SW_MAXIMIZE 最大化指定窗体。 
+@SW_MINIMIZE 最小化指定窗体并且激活下一个最靠前的窗体。 
+@SW_RESTORE 激活并显示窗体。如果这个窗体是最小化或者最大化，那么系统将恢复它到它的原始大小和位置。当一个程序恢复到最小化窗口时可以指定这个标志。 
+@SW_SHOW 激活并显示窗体的当前大小和位置。 
+@SW_SHOWDEFAULT Sets the show state based on the SW_ value specified by the program that started the application. 
+@SW_SHOWMAXIMIZED 激活窗体并显示最小化状态。 
+@SW_SHOWMINIMIZED 激活窗体并显示最大化状态。 
+@SW_SHOWMINNOACTIVE 显示窗体的最小化状态，这个值和@SW_SHOWMINIMIZED相似，只是窗体并未激活。 
+@SW_SHOWNA 以窗体的现有大小和位置显示，和@SW_SHOW相似，只是窗体并未激活。 
+@SW_SHOWNOACTIVATE 以窗体的最近的大小和位置显示，和@SW_SHOWNORMAL相似，只是窗体并未激活。 
+@SW_SHOWNORMAL 激活并显示窗体。如果这个窗体是最小化或者最大化，那么系统将恢复它到它的原始大小和位置。当一个程序是第一次显示可以指定这个标志。 
+@SystemDir Windows的 System (or System32) 文件夹，也就是系统文件夹。 
+@TAB 制表符， Chr(9) 
+@TempDir 临时文件夹。 
+@UserProfileDir 当前用户的 Profile 文件夹。 
+@User>@WDAY 一星期中的第几天。 范围从1到7对应这从星期日到星期六。 
+@WindowsDir Windows的文件夹 
+@WorkingDir 当前/激活的工作目录(结果不包含末尾的反斜线) 
+@YDAY 今天是今年的第几天。范围从1到366或者在非闰年时为365。 
+@YEAR 当前的年份，用四位数字表示的。
