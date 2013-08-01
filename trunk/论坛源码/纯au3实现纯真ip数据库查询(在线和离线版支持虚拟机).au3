@@ -257,24 +257,6 @@ Func AscB($str)
 Return Dec(StringReplace($str,"0x",""))        
 EndFunc
 
-Func _qq()
-        Local $source = _INetGetSource("http://ip.qq.com")
-        Local $sIP,$sLocation,$aIP,$aLocation
-        $aIP = StringRegExp($source,'您当前的IP为.*?(\d[\d.]+)',3)
-        If Not @error Then 
-                $sIP = $aIP[0]
-        Else
-                $sIP = "未获取IP"
-        EndIf
-        $aLocation = StringRegExp($source,'该IP所在地为.*?([^<>]+)</span>',3)
-        If Not @error Then 
-                $sLocation = $aLocation[0]
-                $sLocation = StringRegExpReplace($sLocation,'&nbsp;','')
-        Else
-                $sLocation = "未获取物理位置"
-        EndIf
-        Return $sIP & @CRLF & $sLocation
-EndFunc
 
 Func _qq_query($sHostName = "")
         Local $source = _INetGetSource('http://ip.qq.com/cgi-bin/searchip?searchip1=' & $sHostName)
