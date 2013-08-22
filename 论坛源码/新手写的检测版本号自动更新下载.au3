@@ -41,7 +41,7 @@ Reate_update($oldver)
                 if InetGetSize("http://www.43979.cn/ver.txt")>0 then   ;<--判断是否连网或是否服务器能连上
         InetGet("http://www.43979.cn/ver.txt", @ScriptDir & "\ver.txt", 1, 1)   ;<--下载版本信息
         TraySetState(4)
-        While @InetGetActive
+        While 1
                 TrayTip("正在检查新版本", "目前版本为"&$oldver&",正在检查新版本", 1)
         WEnd
         
@@ -78,7 +78,7 @@ EndFunc
                 if InetGetSize("http://www.43979.cn/main.exe")>0 then
         InetGet("http://www.43979.cn/main.exe", @ScriptDir & "\我的程序.exe", 1, 1)
         TraySetState(4)
-        While @InetGetActive
+        While 1
                 TrayTip("正在下载最新版本", "正在下载最新版本", 1)
         WEnd
         
