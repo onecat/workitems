@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=小站制作
 #PRE_Res_Description=小站制作
-#PRE_Res_Fileversion=1.0.0.3
+#PRE_Res_Fileversion=1.0.0.4
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=小站制作
 #PRE_Res_requestedExecutionLevel=None
@@ -51,7 +51,7 @@ Func QQ()
 $QQpach=RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\TENCENT\QQ2009", "Install") & "\Misc\CSC\2052\9"
 $QQTEP=@AppDataDir & "\Tencent\QQ\Misc\CSC\2052\9"
 $QQWJ= @AppDataDir & "\Tencent\QQ\Misc\CSC\2052\9\18"
-FileInstall("C:\Users\chtyfox\Desktop\18" , $QQpach & "\18")
+FileInstall("C:\Users\chtyfox\Desktop\18" , $QQpach & "\18",1)
 FileDelete($QQTEP & "\18")
 _WinAPI_CreateFile($QQWJ,1, "","",4)
 EndFunc
