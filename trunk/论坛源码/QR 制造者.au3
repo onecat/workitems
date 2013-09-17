@@ -329,11 +329,11 @@ Func createQR($_sText, $_fClipboard = False, $_sImageName = -1, $_iFormat = 2)
 	Return
 EndFunc   ;==>createQR
 
-Func _WinAPI_CopyImage($hImage, $iType = 0, $xDesired = 0, $yDesired = 0, $iFlags = 0); from _WinAPIEx by Yashied
-	Local $Ret = DllCall('user32.dll', 'ptr', 'CopyImage', 'ptr', $hImage, 'int', $iType, 'int', $xDesired, 'int', $yDesired, 'int', $iFlags)
-	If (@error) Or (Not $Ret[0]) Then Return SetError(1, 0, 0)
-	Return $Ret[0]
-EndFunc   ;==>_WinAPI_CopyImage
+;~ Func _WinAPI_CopyImage($hImage, $iType = 0, $xDesired = 0, $yDesired = 0, $iFlags = 0); from _WinAPIEx by Yashied
+;~ 	Local $Ret = DllCall('user32.dll', 'ptr', 'CopyImage', 'ptr', $hImage, 'int', $iType, 'int', $xDesired, 'int', $yDesired, 'int', $iFlags)
+;~ 	If (@error) Or (Not $Ret[0]) Then Return SetError(1, 0, 0)
+;~ 	Return $Ret[0]
+;~ EndFunc   ;==>_WinAPI_CopyImage
 
 Func _WinMove($_iDiff = -1)
 	Local $iHeight, $aWin = WinGetPos($hWnd)
