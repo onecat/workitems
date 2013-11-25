@@ -2,7 +2,7 @@
 #PRE_Outfile=C:\Users\chtyfox\Desktop\au3如何判断系统是WIN8.1.exe
 #PRE_Compression=4
 #PRE_UseX64=y
-#PRE_Res_Fileversion=1.0.0.2
+#PRE_Res_Fileversion=1.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
