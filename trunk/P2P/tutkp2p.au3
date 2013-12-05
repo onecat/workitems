@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=1.0.0.3
+#PRE_Res_Fileversion=1.0.0.5
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -49,7 +49,7 @@ $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 172)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
-Local $HQ
+Local $HQ ,$BQ = "请等待结果，如果时间超过2分钟，请重新点击显示UID状态"
 While 1
 
   $msg = GUIGetMsg()
@@ -64,7 +64,8 @@ While 1
 ;~ 			tc()
 ;~ 			Exit
 		Case $msg = $Button3
-			Sleep(10000)
+			GUICtrlSetData ($Label1, $BQ)
+			Sleep(5000)
 			tc()
 			line()
 			tutkp2p()
