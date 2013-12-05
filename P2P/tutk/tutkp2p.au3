@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=1.0.0.5
+#PRE_Res_Fileversion=1.0.0.6
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -94,7 +94,6 @@ Func line()
 Local $file = FileOpen(@ScriptDir &"\tutkp2p.txt", 0)
 Local $j = 1
 Local $i = 1
-Local $line = 0
 Do
 if $j<=10 Then
     Local $line = FileReadLine($file,$j)
