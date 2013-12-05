@@ -1,11 +1,11 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
 #PRE_Icon=N:\工具\QQ\3D风格ICO图标\photoshopB.ico
-#PRE_Outfile=C:\Users\chtyfox\Desktop\tutk\tutkp2p检测工具.exe
+#PRE_Outfile=C:\Users\chtyfox\Desktop\tutkp2p检测工具.exe
 #PRE_Compression=4
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=1.0.0.2
+#PRE_Res_Fileversion=1.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -42,7 +42,7 @@ $Form1_1 = GUICreate("TUTK UID检测状态", 466, 363, 192, 145)
 $Input1 = GUICtrlCreateInput("", 8, 40, 449, 21)
 $UID = GUICtrlCreateLabel("请输入UID", 8, 8, 60, 17)
 $Button1 = GUICtrlCreateButton("获取UID状态", 8, 296, 129, 41)
-$Button2 = GUICtrlCreateButton("退出", 168, 296, 129, 41)
+;$Button2 = GUICtrlCreateButton("退出", 168, 296, 129, 41)
 $Button3 = GUICtrlCreateButton("显示UID状态", 328, 296, 129, 41)
 $Group1 = GUICtrlCreateGroup("显示", 8, 80, 449, 193)
 $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 172)
@@ -55,16 +55,17 @@ While 1
   $msg = GUIGetMsg()
   Select 
 	Case $msg =  $GUI_EVENT_CLOSE
+			tc()
 			Exit	
 		Case $msg = $Button1
 			GUICtrlSetData ($Label1,"")
 			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\tutkp2p.exe ' & GUICtrlRead($Input1) & ">" & @ScriptDir & '"\tutkp2p.txt"', '', @SW_HIDE)
-		Case $msg = $Button2
-			Exit
+;~ 		Case $msg = $Button2
+;~ 			tc()
+;~ 			Exit
 		Case $msg = $Button3
 			Sleep(10000)
-			ProcessClose ("cmd.exe")
-			ProcessClose ("tutkp2p.exe")
+			tc()
 			line()
 			tutkp2p()
 			GUICtrlSetData ($Label1, $HQ)
@@ -104,3 +105,8 @@ Until $i = 10
 FileClose($file)
 FileDelete(@ScriptDir & "\tutkp2p.txt")
 EndFunc
+
+Func tc()
+	ProcessClose ("cmd.exe")
+	ProcessClose ("tutkp2p.exe")
+EndFunc	
