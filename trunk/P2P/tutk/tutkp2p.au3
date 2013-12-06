@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=1.0.0.6
+#PRE_Res_Fileversion=2.0.0.2
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -38,39 +38,28 @@
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
 #Region ### START Koda GUI section ### Form=
-$Form1_1 = GUICreate("TUTK UID检测状态", 466, 363, 192, 145)
+$Form1_1 = GUICreate("TUTK UID检测状态", 467, 318, 192, 145)
 $Input1 = GUICtrlCreateInput("", 8, 40, 449, 21)
 $UID = GUICtrlCreateLabel("请输入UID", 8, 8, 60, 17)
-$Button1 = GUICtrlCreateButton("获取UID状态", 8, 296, 129, 41)
-;$Button2 = GUICtrlCreateButton("退出", 168, 296, 129, 41)
-$Button3 = GUICtrlCreateButton("显示UID状态", 328, 296, 129, 41)
+$Button1 = GUICtrlCreateButton("显示UID状态", 328, 280, 129, 30)
 $Group1 = GUICtrlCreateGroup("显示", 8, 80, 449, 193)
 $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 172)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
-Local $HQ ,$BQ = "请等待结果，如果时间超过2分钟，请重新点击显示UID状态"
-While 1
+Local $HQ ,$BQ = "请等待，获取TUTK UID状态中..........." 
 
-  $msg = GUIGetMsg()
+While 1
+	$msg = GUIGetMsg()
   Select 
 	Case $msg =  $GUI_EVENT_CLOSE
 			tc()
 			Exit	
 		Case $msg = $Button1
-			GUICtrlSetData ($Label1,"")
-			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\tutkp2p.exe ' & GUICtrlRead($Input1) & ">" & @ScriptDir & '"\tutkp2p.txt"', '', @SW_HIDE)
-;~ 		Case $msg = $Button2
-;~ 			tc()
-;~ 			Exit
-		Case $msg = $Button3
 			GUICtrlSetData ($Label1, $BQ)
-			Sleep(5000)
-			tc()
+			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\tutkp2p.exe ' & GUICtrlRead($Input1) & ">" & @ScriptDir & '"\tutkp2p.txt"', '', @SW_HIDE)
 			line()
-			tutkp2p()
-			GUICtrlSetData ($Label1, $HQ)
-			FileDelete(@ScriptDir & "\tutkp2p.ini")
+			wj()
 	EndSelect
 WEnd
 
@@ -110,3 +99,14 @@ Func tc()
 	ProcessClose ("cmd.exe")
 	ProcessClose ("tutkp2p.exe")
 EndFunc	
+
+Func wj()
+	If FileExists("tutkp2p.ini") Then
+		tc()
+		tutkp2p()
+		GUICtrlSetData ($Label1, $HQ)
+		FileDelete(@ScriptDir & "\tutkp2p.ini")
+	Else
+		MsgBox(1,"TUTK UID检测状态","获取TUTK UID检测状态不成功" & @CRLF & "请重新点击获取TUTK UID状态按钮")
+EndIf
+EndFunc
