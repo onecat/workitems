@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=lorexp2p
 #PRE_Res_Description=lorexp2p
-#PRE_Res_Fileversion=1.0.0.8
+#PRE_Res_Fileversion=1.0.0.9
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=lorexp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -37,39 +37,37 @@
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
 #Region ### START Koda GUI section ### Form=
-$Form1_1 = GUICreate("TUTK UID检测状态", 467, 438, 192, 145)
+$Form1_1 = GUICreate("Lorex ID检测状态", 467, 438, 192, 145)
 $Input1 = GUICtrlCreateInput("", 8, 40, 209, 21)
 $Input2 = GUICtrlCreateInput("", 240, 40, 209, 21)
 $Label2 = GUICtrlCreateLabel("请输入端口", 240, 8, 64, 17)
 $UID = GUICtrlCreateLabel("请输入lorex ID", 8, 8, 108, 17)
-$Button1 = GUICtrlCreateButton("获取UID状态", 8, 384, 129, 41)
+;$Button1 = GUICtrlCreateButton("获取UID状态", 8, 384, 129, 41)
 ;$Button2 = GUICtrlCreateButton("退出", 168, 384, 129, 41)
-$Button3 = GUICtrlCreateButton("显示UID状态", 328, 384, 129, 41)
+$Button3 = GUICtrlCreateButton("显示lorex ID状态", 328, 384, 129, 41)
 $Group1 = GUICtrlCreateGroup("显示", 8, 80, 449, 289)
 $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 268)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
-Local $HQ ,$BQ = "请等待结果，如果时间超过2分钟，请重新点击显示UID状态"
+Local $HQ ,$BQ = "获取lorex ID状态中请等待..........."
 While 1
 
   $msg = GUIGetMsg()
   Select 
 	Case $msg =  $GUI_EVENT_CLOSE
 			Exit	
-		Case $msg = $Button1
-			GUICtrlSetData ($Label1,"")
-			ShellExecute("p2p.exe","",@ScriptDir)
-			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\OsnClientApp.exe ' & GUICtrlRead($Input1) & " " & GUICtrlRead($Input2) & " " & "0" & " " & ">" & " " & @ScriptDir & '"\lorexp2p.txt"', '', @SW_HIDE)
+;~ 		Case $msg = $Button1
+;~ 			
 ;~ 		Case $msg = $Button2
 ;~ 			tc()
 ;~ 			Exit
 		Case $msg = $Button3
-
+			GUICtrlSetData ($Label1,$BQ)
+			ShellExecute("p2p.exe","",@ScriptDir)
+			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\OsnClientApp.exe ' & GUICtrlRead($Input1) & " " & GUICtrlRead($Input2) & " " & "0" & " " & ">" & " " & @ScriptDir & '"\lorexp2p.txt"', '', @SW_HIDE)
 			line()
-			tutkp2p()
-			GUICtrlSetData ($Label1, $HQ)
-			FileDelete(@ScriptDir & "\lorexp2p.ini")
+			wj()
 	EndSelect
 WEnd
 
@@ -116,6 +114,16 @@ $HQ16 = IniRead(@ScriptDir & "\lorexp2p.ini", "字符", "获取17", "")
 ;~ $HQ20 = IniRead(@ScriptDir & "\lorexp2p.ini", "字符", "获取21", "")
 
 $HQ = $HQ0 & @CR & $HQ1 & @CR & $HQ2 & @CR & $HQ3 & @CR & $HQ4 & @CR & $HQ5 & @CR & $HQ6 & @CR & $HQ7 & @CR & $HQ8 & @CR & $HQ9 & @CR & $HQ10 & @CR & $HQ11 & @CR & $HQ12 & @CR & $HQ13 & @CR & $HQ14 & @CR & $HQ15 & @CR & $HQ16; & @CR & $HQ17 & @CR & $HQ18 & @CR & $HQ19 & @CR & $HQ20
+EndFunc
+
+Func wj()
+	If FileExists("lorexp2p.ini") Then
+		tutkp2p()
+		GUICtrlSetData ($Label1, $HQ)
+		FileDelete(@ScriptDir & "\lorexp2p.ini")
+	Else
+		MsgBox(1,"Lorex ID检测状态","获取Lorex ID检测状态不成功" & @CRLF & "请重新点击获取Lorex ID状态按钮")
+EndIf
 EndFunc
 
 
