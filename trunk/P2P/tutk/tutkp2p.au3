@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=2.0.0.2
+#PRE_Res_Fileversion=2.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -31,7 +31,6 @@
 
 #ce £ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß½Å±¾¿ªÊ¼£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß£ß
 
-;
 #include <ButtonConstants.au3>
 #include <EditConstants.au3>
 #include <GUIConstantsEx.au3>
@@ -41,13 +40,31 @@
 $Form1_1 = GUICreate("TUTK UID¼ì²â×´Ì¬", 467, 318, 192, 145)
 $Input1 = GUICtrlCreateInput("", 8, 40, 449, 21)
 $UID = GUICtrlCreateLabel("ÇëÊäÈëUID", 8, 8, 60, 17)
-$Button1 = GUICtrlCreateButton("ÏÔÊ¾UID×´Ì¬", 328, 280, 129, 30)
+$Button1 = GUICtrlCreateButton("ÏÔÊ¾UID×´Ì¬", 328, 280, 129, 30,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
 $Group1 = GUICtrlCreateGroup("ÏÔÊ¾", 8, 80, 449, 193)
 $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 172)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 Local $HQ ,$BQ = "ÇëµÈ´ý£¬»ñÈ¡TUTK UID×´Ì¬ÖÐ..........." 
+
+Opt("TrayMenuMode", 1)
+
+Example()
+
+Func Example()
+	Local $iExit = TrayCreateItem("ÍË³ö")
+	TraySetState(1) ; Show the tray menu.
+
+	While 1
+		Switch TrayGetMsg()
+			Case $iExit ; Exit the loop.
+				tc()
+				Exit
+		EndSwitch
+	WEnd
+EndFunc   ;==>Example
 
 While 1
 	$msg = GUIGetMsg()

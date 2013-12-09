@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=lorexp2p
 #PRE_Res_Description=lorexp2p
-#PRE_Res_Fileversion=1.0.0.9
+#PRE_Res_Fileversion=2.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=lorexp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -44,15 +44,32 @@ $Label2 = GUICtrlCreateLabel("请输入端口", 240, 8, 64, 17)
 $UID = GUICtrlCreateLabel("请输入lorex ID", 8, 8, 108, 17)
 ;$Button1 = GUICtrlCreateButton("获取UID状态", 8, 384, 129, 41)
 ;$Button2 = GUICtrlCreateButton("退出", 168, 384, 129, 41)
-$Button3 = GUICtrlCreateButton("显示lorex ID状态", 328, 384, 129, 41)
+$Button3 = GUICtrlCreateButton("显示lorex ID状态", 328, 384, 129, 41,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
 $Group1 = GUICtrlCreateGroup("显示", 8, 80, 449, 289)
 $Label1 = GUICtrlCreateLabel("", 16, 96, 436, 268)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 Local $HQ ,$BQ = "获取lorex ID状态中请等待..........."
-While 1
 
+Opt("TrayMenuMode", 1)
+
+Example()
+
+Func Example()
+	Local $iExit = TrayCreateItem("退出")
+	TraySetState(1) ; Show the tray menu.
+
+	While 1
+		Switch TrayGetMsg()
+			Case $iExit ; Exit the loop.
+				Exit
+		EndSwitch
+	WEnd
+EndFunc   ;==>Example
+
+While 1
   $msg = GUIGetMsg()
   Select 
 	Case $msg =  $GUI_EVENT_CLOSE
