@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=tutkp2p
 #PRE_Res_Description=tutkp2p
-#PRE_Res_Fileversion=2.0.0.3
+#PRE_Res_Fileversion=2.0.0.4
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=tutkp2p
 #PRE_Res_requestedExecutionLevel=None
@@ -36,6 +36,8 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
+Opt("TrayMenuMode", 1)
+Opt("TrayOnEventMode", 1)
 #Region ### START Koda GUI section ### Form=
 $Form1_1 = GUICreate("TUTK UID检测状态", 467, 318, 192, 145)
 $Input1 = GUICtrlCreateInput("", 8, 40, 449, 21)
@@ -49,29 +51,17 @@ GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 Local $HQ ,$BQ = "请等待，获取TUTK UID状态中..........." 
 
-Opt("TrayMenuMode", 1)
-
-Example()
-
-Func Example()
-	Local $iExit = TrayCreateItem("退出")
-	TraySetState(1) ; Show the tray menu.
-
-	While 1
-		Switch TrayGetMsg()
-			Case $iExit ; Exit the loop.
-				tc()
-				Exit
-		EndSwitch
-	WEnd
-EndFunc   ;==>Example
+$Quit = TrayCreateItem("退出") ;创建第三个菜单项
+TrayItemSetOnEvent(-1,"_Exit")
+TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
+TraySetState()
 
 While 1
 	$msg = GUIGetMsg()
   Select 
 	Case $msg =  $GUI_EVENT_CLOSE
 			tc()
-			Exit	
+			_Exit()
 		Case $msg = $Button1
 			GUICtrlSetData ($Label1, $BQ)
 			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\tutkp2p.exe ' & GUICtrlRead($Input1) & ">" & @ScriptDir & '"\tutkp2p.txt"', '', @SW_HIDE)
@@ -79,7 +69,6 @@ While 1
 			wj()
 	EndSelect
 WEnd
-
 
 
 Func tutkp2p()
@@ -127,3 +116,9 @@ Func wj()
 		MsgBox(1,"TUTK UID检测状态","获取TUTK UID检测状态不成功" & @CRLF & "请重新点击获取TUTK UID状态按钮")
 EndIf
 EndFunc
+
+
+Func _Exit()
+        Exit
+EndFunc
+
