@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=lorexp2p
 #PRE_Res_Description=lorexp2p
-#PRE_Res_Fileversion=2.0.0.7
+#PRE_Res_Fileversion=2.0.0.8
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=lorexp2p SDK 1.01.08
 #PRE_Res_SaveSource=y
@@ -74,7 +74,7 @@ While 1
 		Case $msg = $Button3
 			GUICtrlSetData ($Label1,$BQ)
 			ShellExecute("p2p.exe","",@ScriptDir)
-			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\OsnClientApp.exe ' & GUICtrlRead($Input1) & " " & GUICtrlRead($Input2) & " " & "0" & " " & ">" & " " & @ScriptDir & '"\lorexp2p.txt"', '', @SW_SHOW)
+			RunWait(@ComSpec & ' /c ' & @ScriptDir & '\OsnClientApp.exe ' & GUICtrlRead($Input1) & " " & GUICtrlRead($Input2) & " " & "0" & " " & ">" & " " & @ScriptDir & '"\lorexp2p.txt"', '', @SW_HIDE)
 			line()
 			wj()
 	EndSelect
@@ -130,6 +130,8 @@ Func wj()
 		tutkp2p()
 		GUICtrlSetData ($Label1, $HQ)
 		FileDelete(@ScriptDir & "\lorexp2p.ini")
+		FileDelete(@ScriptDir & "\lorexp2p.txt")
+		FileDelete(@ScriptDir & "\version.txt")
 	Else
 		MsgBox(1,"Lorex ID检测状态","获取Lorex ID检测状态不成功" & @CRLF & "请重新点击获取Lorex ID状态按钮")
 EndIf
