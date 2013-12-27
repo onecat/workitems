@@ -30,9 +30,9 @@
 
 #ce �ߣߣߣߣߣߣߣߣߣߣߣߣߣߣ߽ű���ʼ�ߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣ�
 
-MsgBox(0, 0, __GetIP())
+MsgBox(0, 0, _GetIP())
 
-Func __GetIP()
+Func _GetIP()
     $oHTTP = ObjCreate("microsoft.xmlhttp")
     $oHTTP.Open("get", "http://ip.qq.com", False)
     $oHTTP.Send("")
