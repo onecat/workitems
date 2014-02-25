@@ -1,15 +1,11 @@
+#Region ;**** 参数创建于 ACNWrapper_GUI ****
+#PRE_Outfile=J:\ADMuncher最终汉化版\CJX规则更新小助手(未完成).exe
+#PRE_Compression=4
+#PRE_Res_Fileversion=0.0.0.1
+#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_Res_requestedExecutionLevel=None
+#EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=							;文件版本
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
 ;#PRE_Run_Tidy=                   				;脚本整理
 ;#PRE_Run_Obfuscator=      						;代码迷惑
@@ -32,12 +28,12 @@
 
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
-;Opt("GUIOnEventMode", 1)
+#include <Constants.au3>
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 #Region ### START Koda GUI section ### Form=
-$Form1 = GUICreate("CJX规则更新小助手", 347, 188, 197, 124)
+$Form1 = GUICreate("CJX规则更新小助手", 347, 215, 197, 124,$WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
@@ -64,6 +60,7 @@ TrayCreateItem("关于") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"guanyu") ;注册第二个菜单项的（被点下）事件
 TrayCreateItem("退出") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"ExitScript") ;注册第二个菜单项的（被点下）事件
+TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE,"xianshi")
 TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
 TraySetState()
 
@@ -79,7 +76,9 @@ While 1
 ;~ 			$file = FileOpenDialog("Choose file...", @TempDir, "All (*.*)")
 ;~ 			If @error <> 1 Then GUICtrlCreateMenuItem($file, $recentfilesmenu)
 ;~ 		EndIf
-	Case $GUI_EVENT_CLOSE,$tc 
+	Case $GUI_EVENT_CLOSE
+			suoxiao()
+	Case $tc 
 				Exit		
 	Case $gy 
 			guanyu()
@@ -93,19 +92,22 @@ While 1
 			ljgx()
 	Case $Button1
 			ljgx()
-	Case $Button2
+		Case $Button2
 			
 	EndSwitch	
 WEnd
 
 Func kjqd()
+		$bt = WinGetTitle ($Form1)
 	If BitAND(GUICtrlRead($kjqd), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
-		MsgBox(0,"","选中")
+		RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
+		MsgBox(0,"设置开机启动","设置开机启动成功")
 ;~      IniWrite(@ScriptDir & "\myfile.ini", "设置", "坏人人数", "12345")
 	Else
 		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
-		MsgBox(0,"","没选中")
+		RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
+		MsgBox(0,"取消开机启动","取消开机启动成功")
 ;~      IniWrite(@ScriptDir & "\myfile.ini", "设置", "坏人人数", "54321")
 	EndIf
 EndFunc
@@ -137,6 +139,17 @@ EndFunc
 Func guanyu()
 	MsgBox(0, '关于', StringFormat($str))
 EndFunc	
+
+Func suoxiao()
+ GUISetState(@SW_HIDE,$Form1)
+EndFunc
+
+Func xianshi()
+   GUISetState(@SW_SHOW, $Form1)   ;调整窗口的状态
+   GUISetState(@SW_RESTORE, $Form1)
+ 
+EndFunc   ;==>启用(双击鼠标)
+
 
 Func ExitScript()
    Exit  ; $Quit
