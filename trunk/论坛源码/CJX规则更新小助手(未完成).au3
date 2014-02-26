@@ -1,7 +1,7 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Outfile=J:\ADMuncher最终汉化版\CJX规则更新小助手(未完成).exe
+#PRE_Outfile=11.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=0.0.0.2
+#PRE_Res_Fileversion=0.0.0.5
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -34,6 +34,7 @@ Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 #Region ### START Koda GUI section ### Form=
+
 $Form1 = GUICreate("CJX规则更新小助手", 347, 215, 197, 124,$WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
@@ -57,32 +58,42 @@ TrayCreateItem("立即更新") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"ljgx") ;注册第二个菜单项的（被点下）事件
 $tyctptb = TrayCreateItem("隐藏托盘图标") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"yctptb") ;注册第二个菜单项的（被点下）事件
-TrayCreateItem("关于") ;创建第三个菜单项
+$tgy = TrayCreateItem("关于") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"guanyu") ;注册第二个菜单项的（被点下）事件
 TrayCreateItem("退出") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"ExitScript") ;注册第二个菜单项的（被点下）事件
 TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE,"xianshi")
 TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
 TraySetState()
-
-
 GUISetState(@SW_SHOW)
+
 #EndRegion ### END Koda GUI section ###
 
-;ini()
+If Not FileExists("CJX规则更新小助手.ini") Then
+    Local $file = FileOpen("CJX规则更新小助手.ini", 1)
+	FileWrite($file, ";此文件为CJX规则更新小助手的配置文件 请不要删除" & @CRLF)
+	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
+	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
+	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
+	FileClose($file)
+	ini1()
+Else
+	ini()
+EndIf;判断结束
+
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！'
 
 While 1
 	 	Switch GUIGetMsg()
-
-;~ 		If $msg = $fileitem Then
-;~ 			$file = FileOpenDialog("Choose file...", @TempDir, "All (*.*)")
-;~ 			If @error <> 1 Then GUICtrlCreateMenuItem($file, $recentfilesmenu)
-;~ 		EndIf
 	Case $GUI_EVENT_CLOSE
 			suoxiao()
 	Case $tc 
-				Exit		
+			Exit		
 	Case $gy 
 			guanyu()
 	Case $kjqd
@@ -101,14 +112,36 @@ While 1
 WEnd
 
 
-;~ Func ini()
-;~ 	$kj = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "")
-;~ 	If $kj = "真" Then
-;~ 		GUICtrlSetState($kjqd, $GUI_CHECKED)
-;~ 	EndIf	
-;~ 	
-;~ EndFunc	
-
+Func ini()
+	$kj = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "")
+	$zd = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "")
+	$yt = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "")
+	If $kj = "真" Then
+		GUICtrlSetState($kjqd, $GUI_CHECKED)
+		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
+		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $zd = "真" Then
+		GUICtrlSetState($zdgx, $GUI_CHECKED)
+		TrayItemSetState ($tzdgx, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
+		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
+	EndIf
+	
+	If $yt = "真" Then
+		GUICtrlSetState($yctptb, $GUI_CHECKED)
+		TrayItemSetState ($tyctptb, $GUI_CHECKED)
+		Opt("TrayIconHide", 1) 
+	Else
+		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
+		TrayItemSetState ($tyctptb, $GUI_UNCHECKED)
+		Opt("TrayIconHide", 0) 
+	EndIf
+EndFunc	
 
 Func kjqd()
 		$bt = _WinAPI_GetProcessName ()
@@ -146,11 +179,13 @@ Func yctptb()
 	If BitAND(GUICtrlRead($yctptb), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($yctptb, $GUI_CHECKED)
 		TrayItemSetState($tyctptb, $GUI_CHECKED)
+		Opt("TrayIconHide", 1) 
 		MsgBox(0,"","选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "真")
 	Else
 		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
 		TrayItemSetState($tyctptb, $GUI_UNCHECKED)
+		Opt("TrayIconHide", 0) 
 		MsgBox(0,"","没选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
 	EndIf		
@@ -162,6 +197,7 @@ Func ljgx()
 EndFunc
 
 Func guanyu()
+	TrayItemSetState($tgy, $GUI_UNCHECKED)
 	MsgBox(0, '关于', StringFormat($str))
 EndFunc	
 
@@ -181,6 +217,38 @@ Func ExitScript()
 EndFunc ;==>退出
 
 
+Func ini1()
+	$kj = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "")
+	$zd = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "")
+	$yt = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "")
+	If $kj = "真" Then
+		GUICtrlSetState($kjqd, $GUI_CHECKED)
+		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+		;RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
+		;MsgBox(0,"设置开机启动","设置开机启动成功")
+	Else
+		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
+		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $zd = "真" Then
+		GUICtrlSetState($zdgx, $GUI_CHECKED)
+		TrayItemSetState ($tzdgx, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
+		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
+	EndIf
+	
+	If $yt = "真" Then
+		GUICtrlSetState($yctptb, $GUI_CHECKED)
+		TrayItemSetState ($tyctptb, $GUI_CHECKED)
+		Opt("TrayIconHide", 1) 
+	Else
+		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
+		TrayItemSetState ($tyctptb, $GUI_UNCHECKED)
+		Opt("TrayIconHide", 0) 
+	EndIf
+EndFunc	
 
 
 ;此文件为CJX规则更新小助手的配置文件 请不要删除 
