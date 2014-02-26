@@ -49,13 +49,13 @@ $Label4 = GUICtrlCreateLabel("Label1", 120, 56, 36, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
 $Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
 
-TrayCreateItem("开机启动") ;创建第一个菜单项
+$tkjqd = TrayCreateItem("开机启动") ;创建第一个菜单项
 TrayItemSetOnEvent(-1,"kjqd") ;注册第一个菜单项的（被点下）事件  
-TrayCreateItem("自动更新") ;创建第三个菜单项
+$tzdgx = TrayCreateItem("自动更新") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"zdgx") ;注册第二个菜单项的（被点下）事件
 TrayCreateItem("立即更新") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"ljgx") ;注册第二个菜单项的（被点下）事件
-TrayCreateItem("隐藏托盘图标") ;创建第三个菜单项
+$tyctptb = TrayCreateItem("隐藏托盘图标") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"yctptb") ;注册第二个菜单项的（被点下）事件
 TrayCreateItem("关于") ;创建第三个菜单项
 TrayItemSetOnEvent(-1,"guanyu") ;注册第二个菜单项的（被点下）事件
@@ -65,9 +65,11 @@ TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE,"xianshi")
 TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
 TraySetState()
 
+
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
+;ini()
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！'
 
 While 1
@@ -84,7 +86,7 @@ While 1
 	Case $gy 
 			guanyu()
 	Case $kjqd
-            kjqd()
+            kjqd()	
 	Case $zdgx
 			zdgx()
 	Case $yctptb
@@ -93,46 +95,67 @@ While 1
 			ljgx()
 	Case $Button1
 			ljgx()
-		Case $Button2
-			$25 = _WinAPI_GetProcessName ()
-			MsgBox(0,"",$25)
+	Case $Button2
+			
 	EndSwitch	
 WEnd
 
+
+;~ Func ini()
+;~ 	$kj = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "")
+;~ 	If $kj = "真" Then
+;~ 		GUICtrlSetState($kjqd, $GUI_CHECKED)
+;~ 	EndIf	
+;~ 	
+;~ EndFunc	
+
+
 Func kjqd()
 		$bt = _WinAPI_GetProcessName ()
-	If BitAND(GUICtrlRead($kjqd), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
+	If BitAND(GUICtrlRead($kjqd) , $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
-		RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
+		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+		;RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
 		MsgBox(0,"设置开机启动","设置开机启动成功")
-;~      IniWrite(@ScriptDir & "\myfile.ini", "设置", "坏人人数", "12345")
+       IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "真")
 	Else
 		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
-		RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
+		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
+		;RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
 		MsgBox(0,"取消开机启动","取消开机启动成功")
-;~      IniWrite(@ScriptDir & "\myfile.ini", "设置", "坏人人数", "54321")
+		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
 	EndIf
 EndFunc
+
 
 Func zdgx()
 	If BitAND(GUICtrlRead($zdgx), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($zdgx, $GUI_CHECKED)
+		TrayItemSetState ($tzdgx, $GUI_CHECKED)
 		MsgBox(0,"","选中")
+		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "真")
 	Else
 		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
+		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
 		MsgBox(0,"","没选中")
+		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
 	EndIf	
 EndFunc	
 
 Func yctptb()
 	If BitAND(GUICtrlRead($yctptb), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($yctptb, $GUI_CHECKED)
+		TrayItemSetState($tyctptb, $GUI_CHECKED)
 		MsgBox(0,"","选中")
+		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "真")
 	Else
 		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
+		TrayItemSetState($tyctptb, $GUI_UNCHECKED)
 		MsgBox(0,"","没选中")
+		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
 	EndIf		
 EndFunc	
+
 
 Func ljgx()
 	MsgBox(0,"未完成的功能","功能未完成")
@@ -156,3 +179,17 @@ EndFunc   ;==>启用(双击鼠标)
 Func ExitScript()
    Exit  ; $Quit
 EndFunc ;==>退出
+
+
+
+
+;此文件为CJX规则更新小助手的配置文件 请不要删除 
+;若被删除 将启用默认设置
+;间隔时间 为检查规则更新的间隔时间 单位为秒
+;隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U
+;~ [配置]
+;~ 开机启动=假
+;~ 自动更新=假
+;~ 首次运行=假 ;第一次运行就加入开机启动
+;~ 间隔时间=1000 
+;~ 隐藏托盘=假
