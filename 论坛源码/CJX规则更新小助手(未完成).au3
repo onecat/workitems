@@ -1,7 +1,7 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
 #PRE_Outfile=J:\ADMuncher最终汉化版\CJX规则更新小助手(未完成).exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=0.0.0.1
+#PRE_Res_Fileversion=0.0.0.2
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -29,6 +29,7 @@
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
 #include <Constants.au3>
+#Include <WinAPIEx.au3>
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
@@ -93,12 +94,13 @@ While 1
 	Case $Button1
 			ljgx()
 		Case $Button2
-			
+			$25 = _WinAPI_GetProcessName ()
+			MsgBox(0,"",$25)
 	EndSwitch	
 WEnd
 
 Func kjqd()
-		$bt = WinGetTitle ($Form1)
+		$bt = _WinAPI_GetProcessName ()
 	If BitAND(GUICtrlRead($kjqd), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
 		RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
