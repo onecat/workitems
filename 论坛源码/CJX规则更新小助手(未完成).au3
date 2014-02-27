@@ -85,7 +85,7 @@ While 1
 	Case $yctptb
 			yctptb()
 	Case $ljgx
-			ljgx()
+			;ljgx()
 	Case $Button1
 			ljgx()
 		Case $Button2
@@ -196,7 +196,13 @@ EndFunc
 
 
 Func ljgx()
-	MsgBox(0,"未完成的功能","功能未完成")
+	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @ScriptDir & "\update.dat", 1, 1)
+Do
+    Sleep(250)
+Until InetGetInfo($hDownload, 2)    ; 检查下载是否完成.
+	Local $nBytes = InetGetInfo($hDownload, 0)
+	InetClose($hDownload)   ; 关闭句柄,释放资源.
+	MsgBox(4096, "", "字节读取: " & $nBytes)
 EndFunc
 
 Func guanyu()
