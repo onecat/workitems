@@ -30,11 +30,11 @@
 #include <WindowsConstants.au3>
 #include <Constants.au3>
 #Include <WinAPIEx.au3>
+#Include <File.au3>
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 #Region ### START Koda GUI section ### Form=
-
 $Form1 = GUICreate("CJX规则更新小助手", 347, 215, 197, 124,$WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
@@ -46,9 +46,11 @@ $tc = GUICtrlCreateMenuItem("退出", $MenuItem)
 $Label1 = GUICtrlCreateLabel("规则更新状态：", 8, 24, 88, 17)
 $Label2 = GUICtrlCreateLabel("Label1", 120, 24, 36, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
-$Label4 = GUICtrlCreateLabel("Label1", 120, 56, 36, 17)
+$Label4 = GUICtrlCreateLabel("", 120, 56, 36, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
 $Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
+GUISetState(@SW_SHOW)
+#EndRegion ### END Koda GUI section ###
 
 $tkjqd = TrayCreateItem("开机启动") ;创建第一个菜单项
 TrayItemSetOnEvent(-1,"kjqd") ;注册第一个菜单项的（被点下）事件  
@@ -65,29 +67,9 @@ TrayItemSetOnEvent(-1,"ExitScript") ;注册第二个菜单项的（被点下）事件
 TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE,"xianshi")
 TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
 TraySetState()
-GUISetState(@SW_SHOW)
-
-#EndRegion ### END Koda GUI section ###
-
-If Not FileExists("CJX规则更新小助手.ini") Then
-    Local $file = FileOpen("CJX规则更新小助手.ini", 1)
-	FileWrite($file, ";此文件为CJX规则更新小助手的配置文件 请不要删除" & @CRLF)
-	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
-	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
-	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
-	FileClose($file)
-	ini1()
-Else
-	ini()
-EndIf;判断结束
 
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！'
-
+CJXBDGZ();获取本地版本号
 While 1
 	 	Switch GUIGetMsg()
 	Case $GUI_EVENT_CLOSE
@@ -106,10 +88,31 @@ While 1
 			ljgx()
 	Case $Button1
 			ljgx()
-	Case $Button2
-			
+		Case $Button2
+			 CJXBDGZ()
+			;GUICtrlSetData($Label4, $CJXBDGZ)
 	EndSwitch	
 WEnd
+
+
+
+If Not FileExists("CJX规则更新小助手.ini") Then
+    Local $file = FileOpen("CJX规则更新小助手.ini", 1)
+	FileWrite($file, ";此文件为CJX规则更新小助手的配置文件 请不要删除" & @CRLF)
+	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
+	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
+	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
+	FileClose($file)
+	ini1()
+Else
+	ini()
+EndIf;判断结束
+
 
 
 Func ini()
@@ -216,6 +219,22 @@ Func ExitScript()
    Exit  ; $Quit
 EndFunc ;==>退出
 
+Func CJXBDGZ();获取本地CJX规则
+	$IniFile = @ScriptDir & "\CustomStrings.dat"                                 ;文本路径
+	$Lines = _FileCountLines($IniFile)                       ;读取文本行数
+For $i=1 To $Lines-1                                           ;循环
+        $ReadFile=FileReadLine($IniFile,$i)                       ;第1行开始读取
+        If $ReadFile='' Then ExitLoop                                  ;文本空退出
+        If stringinstr($ReadFile,"Xlist version") Then   			;返回带‘：’号的字符串
+		Local $CJXBDGZ = StringRight($ReadFile, 6)
+		GUICtrlSetData($Label4, $CJXBDGZ)
+		ExitLoop
+		;MsgBox(4096, "最右边三个字符为:", $GZ) 
+		;MsgBox(4096, "最右边三个字符为:", $CJXBDGZ)   
+	EndIf    
+
+NEXT
+EndFunc;获取本地CJX规则
 
 Func ini1()
 	$kj = IniRead(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "")
