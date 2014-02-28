@@ -227,7 +227,7 @@ EndFunc
 
 Func ljgx();立即更新
 	CJXBAK()
-	CJZGX()
+	CJZGX();这里在加个判断
 	THJGZ();这里面第2次会有问题
 	FileDelete(@ScriptDir & "\update.dat")
 	BDCJXGZ()
