@@ -44,9 +44,9 @@ $yctptb = GUICtrlCreateMenuItem("隐藏托盘图标", $MenuItem)
 $gy = GUICtrlCreateMenuItem("关于", $MenuItem)
 $tc = GUICtrlCreateMenuItem("退出", $MenuItem)
 $Label1 = GUICtrlCreateLabel("规则更新状态：", 8, 24, 88, 17)
-$Label2 = GUICtrlCreateLabel("Label1", 120, 24, 36, 17)
+$Label2 = GUICtrlCreateLabel("", 120, 24, 112, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
-$Label4 = GUICtrlCreateLabel("", 120, 56, 36, 17)
+$Label4 = GUICtrlCreateLabel("", 120, 56, 108, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
 $Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
 GUISetState(@SW_SHOW)
@@ -67,6 +67,24 @@ TrayItemSetOnEvent(-1,"ExitScript") ;注册第二个菜单项的（被点下）事件
 TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE,"xianshi")
 TraySetClick(8)  ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键) 
 TraySetState()
+
+If Not FileExists("CJX规则更新小助手.ini") Then
+    Local $file = FileOpen("CJX规则更新小助手.ini", 1)
+	FileWrite($file, ";此文件为CJX规则更新小助手的配置文件 请不要删除" & @CRLF)
+	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
+	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
+	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "真")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "真")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
+	FileClose($file)
+	ini1()
+Else
+	ini()
+EndIf;判断结束
+
 
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！'
 BDCJXGZ();获取本地版本号
@@ -92,24 +110,6 @@ While 1
 	EndSwitch	
 WEnd
 
-
-
-If Not FileExists("CJX规则更新小助手.ini") Then
-    Local $file = FileOpen("CJX规则更新小助手.ini", 1)
-	FileWrite($file, ";此文件为CJX规则更新小助手的配置文件 请不要删除" & @CRLF)
-	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
-	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
-	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
-	FileClose($file)
-	ini1()
-Else
-	ini()
-EndIf;判断结束
 
 
 Func ini1();配置文件不存在就运行就显示状态
@@ -228,9 +228,6 @@ EndFunc
 Func ljgx();立即更新
 	CJXBAK()
 	CJZGX();这里在加个判断
-	THJGZ();这里面第2次会有问题
-	FileDelete(@ScriptDir & "\update.dat")
-	BDCJXGZ()
 EndFunc	
 
 Func guanyu();关于
@@ -262,10 +259,7 @@ Func CJXBAK();检测CJX备份文件是否存在
 	EndIf
 EndFunc	
 
-Func THJGZ();更新奶牛CJX规则
-		FileDelete(@ScriptDir & "\CustomStrings.dat")
-		FileCopy (@ScriptDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
-EndFunc
+
 	
 Func CJZGX();CJX规则更新
 	gzxz()
@@ -274,14 +268,25 @@ EndFunc
 
 Func bbhdb();判断网络CJX规则和本地CJX规则
 		If WLCJXGZ() <= BDCJXGZ() Then
-			;BDCJXGZ()
+			BDCJXGZ()
+			GUICtrlSetData($Label2, "已是最新")
 		Else
-			;THKS()
+			THKS()
+			THJGZ();这里面第2次会有问题
+			BDCJXGZ()
+			FileDelete(@TempDir & "\update.dat")
+			GUICtrlSetData($Label2, "更新完成")
 		EndIf	
 EndFunc
+	
+Func THJGZ();更新奶牛CJX规则
+		FileDelete(@ScriptDir & "\CustomStrings.dat")
+		FileCopy (@TempDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
+EndFunc	
 
 Func gzxz();现在CJX规则文件
-	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @ScriptDir & "\update.dat", 1, 1)
+	GUICtrlSetData($Label2, "正在更新中")
+	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @TempDir & "\update.dat", 1, 1)
 Do
     Sleep(250)
 Until InetGetInfo($hDownload, 2)    ; 检查下载是否完成.
@@ -293,7 +298,7 @@ EndFunc
 
 
 Func WLCJXGZ();网络CJX规则
-	$IniFile = @ScriptDir & "\update.dat"                                 ;文本路径
+	$IniFile = @TempDir & "\update.dat"                                 ;文本路径
 	$Lines = _FileCountLines($IniFile)                       ;读取文本行数
 For $i=1 To $Lines-1                                           ;循环
         $ReadFile=FileReadLine($IniFile,$i)                       ;第1行开始读取
@@ -335,7 +340,7 @@ Func THKS();替换开始
 For $i=1 To $Lines-1                                           ;循环
 
         $ReadFile=FileReadLine($IniFile,$i)                       ;第1行开始读取
-		FileWriteLine(@ScriptDir & "\规则更新临时文件.txt", $ReadFile)
+		FileWriteLine(@TempDir & "\规则更新临时文件.txt", $ReadFile)
         If stringinstr($ReadFile,"Xlist version") Then                            ;返回带‘：’号的字符串
 			 QCBBH()
 			 WLTH()
@@ -345,7 +350,7 @@ NEXT
 EndFunc
 
 Func QCBBH();去除版本号
-	Local Const $aFile = "规则更新临时文件.txt"
+	Local Const $aFile = @TempDir & "\规则更新临时文件.txt"
 	Local $hFile = FileOpen($aFile, 1)
 	FileFlush($hFile)
 	FileSetPos($hFile, 0, $file_begin)
@@ -358,7 +363,7 @@ Func QCBBH();去除版本号
 EndFunc
 
 Func WLTH();把自定义规则写到CJX规则
-Local Const $aFile3 = "update.dat"
+Local Const $aFile3 = @TempDir & "\update.dat"
 Local $hFile = FileOpen($aFile3, 1)
 FileFlush($hFile)
 FileSetPos($hFile, StringInStr(stringstripws(FileRead($aFile3), 2), Chr(13), 0, -1), $file_current)
@@ -366,11 +371,11 @@ $last = FileRead($aFile3,Filegetpos($hFile))
 	FileOpen($aFile3, 2)
 	FileWrite($aFile3,QCBBHGZ() & $last)
 	FileClose($aFile3)
-	FileDelete(@ScriptDir & "\规则更新临时文件.txt")
+	FileDelete(@TempDir & "\规则更新临时文件.txt")
 EndFunc
 
 Func QCBBHGZ();读取没版本号的自定义规则
-	Local Const $aFile = "规则更新临时文件.txt"
+	Local Const $aFile = @TempDir & "\规则更新临时文件.txt"
 	Local $hFile = FileOpen($aFile, 1)
 	FileFlush($hFile)
 	FileSetPos($hFile, StringInStr(stringstripws(FileRead($aFile), 2), Chr(13), 0, -1), $file_current)
