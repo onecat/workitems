@@ -69,7 +69,7 @@ TraySetClick(8)  ;ÉèÖÃÊó±êÔÚÏµÍ³ÍĞÅÌÍ¼±êÀïÃæµÄµã»÷Ä£Ê½ - ÔõÑùµÄÊó±êµã»÷²Å»áÏÔÊ¾Ï
 TraySetState()
 
 Local $str = 'CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ ³ÌĞòÖÆ×÷ by xiaozhan\n\nÖÂĞ»£ºÄÌÅ£¿ª·¢Õß ¹æÔòÎ¬»¤Õß\nÒÔ¼°×ö³öÏà¹Ø¹±Ï×µÄÅó£¡'
-CJXBDGZ();»ñÈ¡±¾µØ°æ±¾ºÅ
+BDCJXGZ();»ñÈ¡±¾µØ°æ±¾ºÅ
 While 1
 	 	Switch GUIGetMsg()
 	Case $GUI_EVENT_CLOSE
@@ -84,12 +84,10 @@ While 1
 			zdgx()
 	Case $yctptb
 			yctptb()
-	Case $ljgx
-			;ljgx()
 	Case $Button1
 			ljgx()
-		Case $Button2
-			 CJXBDGZ()
+	Case $Button2
+			;BDCJXGZ()
 			;GUICtrlSetData($Label4, $CJXBDGZ)
 	EndSwitch	
 WEnd
@@ -114,135 +112,7 @@ Else
 EndIf;ÅĞ¶Ï½áÊø
 
 
-
-Func ini()
-	$kj = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "")
-	$zd = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "")
-	$yt = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "")
-	If $kj = "Õæ" Then
-		GUICtrlSetState($kjqd, $GUI_CHECKED)
-		TrayItemSetState ($tkjqd, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
-		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
-	EndIf	
-	
-	If $zd = "Õæ" Then
-		GUICtrlSetState($zdgx, $GUI_CHECKED)
-		TrayItemSetState ($tzdgx, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
-		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
-	EndIf
-	
-	If $yt = "Õæ" Then
-		GUICtrlSetState($yctptb, $GUI_CHECKED)
-		TrayItemSetState ($tyctptb, $GUI_CHECKED)
-		Opt("TrayIconHide", 1) 
-	Else
-		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
-		TrayItemSetState ($tyctptb, $GUI_UNCHECKED)
-		Opt("TrayIconHide", 0) 
-	EndIf
-EndFunc	
-
-Func kjqd()
-		$bt = _WinAPI_GetProcessName ()
-	If BitAND(GUICtrlRead($kjqd) , $GUI_UNCHECKED) = $GUI_UNCHECKED Then
-		GUICtrlSetState($kjqd, $GUI_CHECKED)
-		TrayItemSetState ($tkjqd, $GUI_CHECKED)
-		;RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
-		MsgBox(0,"ÉèÖÃ¿ª»úÆô¶¯","ÉèÖÃ¿ª»úÆô¶¯³É¹¦")
-       IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "Õæ")
-	Else
-		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
-		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
-		;RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
-		MsgBox(0,"È¡Ïû¿ª»úÆô¶¯","È¡Ïû¿ª»úÆô¶¯³É¹¦")
-		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "¼Ù")
-	EndIf
-EndFunc
-
-
-Func zdgx()
-	If BitAND(GUICtrlRead($zdgx), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
-		GUICtrlSetState($zdgx, $GUI_CHECKED)
-		TrayItemSetState ($tzdgx, $GUI_CHECKED)
-		MsgBox(0,"","Ñ¡ÖĞ")
-		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "Õæ")
-	Else
-		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
-		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
-		MsgBox(0,"","Ã»Ñ¡ÖĞ")
-		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "¼Ù")
-	EndIf	
-EndFunc	
-
-Func yctptb()
-	If BitAND(GUICtrlRead($yctptb), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
-		GUICtrlSetState($yctptb, $GUI_CHECKED)
-		TrayItemSetState($tyctptb, $GUI_CHECKED)
-		Opt("TrayIconHide", 1) 
-		MsgBox(0,"","Ñ¡ÖĞ")
-		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "Õæ")
-	Else
-		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
-		TrayItemSetState($tyctptb, $GUI_UNCHECKED)
-		Opt("TrayIconHide", 0) 
-		MsgBox(0,"","Ã»Ñ¡ÖĞ")
-		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "¼Ù")
-	EndIf		
-EndFunc	
-
-
-Func ljgx()
-	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @ScriptDir & "\update.dat", 1, 1)
-Do
-    Sleep(250)
-Until InetGetInfo($hDownload, 2)    ; ¼ì²éÏÂÔØÊÇ·ñÍê³É.
-	Local $nBytes = InetGetInfo($hDownload, 0)
-	InetClose($hDownload)   ; ¹Ø±Õ¾ä±ú,ÊÍ·Å×ÊÔ´.
-	MsgBox(4096, "", "×Ö½Ú¶ÁÈ¡: " & $nBytes)
-EndFunc
-
-Func guanyu()
-	TrayItemSetState($tgy, $GUI_UNCHECKED)
-	MsgBox(0, '¹ØÓÚ', StringFormat($str))
-EndFunc	
-
-Func suoxiao()
- GUISetState(@SW_HIDE,$Form1)
-EndFunc
-
-Func xianshi()
-   GUISetState(@SW_SHOW, $Form1)   ;µ÷Õû´°¿ÚµÄ×´Ì¬
-   GUISetState(@SW_RESTORE, $Form1)
- 
-EndFunc   ;==>ÆôÓÃ(Ë«»÷Êó±ê)
-
-
-Func ExitScript()
-   Exit  ; $Quit
-EndFunc ;==>ÍË³ö
-
-Func CJXBDGZ();»ñÈ¡±¾µØCJX¹æÔò
-	$IniFile = @ScriptDir & "\CustomStrings.dat"                                 ;ÎÄ±¾Â·¾¶
-	$Lines = _FileCountLines($IniFile)                       ;¶ÁÈ¡ÎÄ±¾ĞĞÊı
-For $i=1 To $Lines-1                                           ;Ñ­»·
-        $ReadFile=FileReadLine($IniFile,$i)                       ;µÚ1ĞĞ¿ªÊ¼¶ÁÈ¡
-        If $ReadFile='' Then ExitLoop                                  ;ÎÄ±¾¿ÕÍË³ö
-        If stringinstr($ReadFile,"Xlist version") Then   			;·µ»Ø´ø¡®£º¡¯ºÅµÄ×Ö·û´®
-		Local $CJXBDGZ = StringRight($ReadFile, 6)
-		GUICtrlSetData($Label4, $CJXBDGZ)
-		ExitLoop
-		;MsgBox(4096, "×îÓÒ±ßÈı¸ö×Ö·ûÎª:", $GZ) 
-		;MsgBox(4096, "×îÓÒ±ßÈı¸ö×Ö·ûÎª:", $CJXBDGZ)   
-	EndIf    
-
-NEXT
-EndFunc;»ñÈ¡±¾µØCJX¹æÔò
-
-Func ini1()
+Func ini1();ÅäÖÃÎÄ¼ş²»´æÔÚ¾ÍÔËĞĞ¾ÍÏÔÊ¾×´Ì¬
 	$kj = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "")
 	$zd = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "")
 	$yt = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "")
@@ -275,6 +145,238 @@ Func ini1()
 	EndIf
 EndFunc	
 
+
+Func ini();ÅäÖÃÎÄ¼ş´æÔÚ¾ÍÏÔÊ¾×´Ì¬
+	$kj = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "")
+	$zd = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "")
+	$yt = IniRead(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "")
+	If $kj = "Õæ" Then
+		GUICtrlSetState($kjqd, $GUI_CHECKED)
+		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
+		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $zd = "Õæ" Then
+		GUICtrlSetState($zdgx, $GUI_CHECKED)
+		TrayItemSetState ($tzdgx, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
+		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
+	EndIf
+	
+	If $yt = "Õæ" Then
+		GUICtrlSetState($yctptb, $GUI_CHECKED)
+		TrayItemSetState ($tyctptb, $GUI_CHECKED)
+		Opt("TrayIconHide", 1) 
+	Else
+		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
+		TrayItemSetState ($tyctptb, $GUI_UNCHECKED)
+		Opt("TrayIconHide", 0) 
+	EndIf
+EndFunc	
+
+Func kjqd();¿ª»úÆô¶¯
+		$bt = _WinAPI_GetProcessName ()
+	If BitAND(GUICtrlRead($kjqd) , $GUI_UNCHECKED) = $GUI_UNCHECKED Then
+		GUICtrlSetState($kjqd, $GUI_CHECKED)
+		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+		;RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
+		MsgBox(0,"ÉèÖÃ¿ª»úÆô¶¯","ÉèÖÃ¿ª»úÆô¶¯³É¹¦")
+       IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "Õæ")
+	Else
+		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
+		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
+		;RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
+		MsgBox(0,"È¡Ïû¿ª»úÆô¶¯","È¡Ïû¿ª»úÆô¶¯³É¹¦")
+		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "¿ª»úÆô¶¯", "¼Ù")
+	EndIf
+EndFunc
+
+
+Func zdgx();×Ô¶¯¸üĞÂ
+	If BitAND(GUICtrlRead($zdgx), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
+		GUICtrlSetState($zdgx, $GUI_CHECKED)
+		TrayItemSetState ($tzdgx, $GUI_CHECKED)
+		MsgBox(0,"","Ñ¡ÖĞ")
+		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "Õæ")
+	Else
+		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
+		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
+		MsgBox(0,"","Ã»Ñ¡ÖĞ")
+		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "×Ô¶¯¸üĞÂ", "¼Ù")
+	EndIf	
+EndFunc	
+
+Func yctptb();Òş²ØÍĞÅÌ
+	If BitAND(GUICtrlRead($yctptb), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
+		GUICtrlSetState($yctptb, $GUI_CHECKED)
+		TrayItemSetState($tyctptb, $GUI_CHECKED)
+		Opt("TrayIconHide", 1) 
+		MsgBox(0,"","Ñ¡ÖĞ")
+		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "Õæ")
+	Else
+		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
+		TrayItemSetState($tyctptb, $GUI_UNCHECKED)
+		Opt("TrayIconHide", 0) 
+		MsgBox(0,"","Ã»Ñ¡ÖĞ")
+		IniWrite(@ScriptDir & "\CJX¹æÔò¸üĞÂĞ¡ÖúÊÖ.ini", "ÅäÖÃ", "Òş²ØÍĞÅÌ", "¼Ù")
+	EndIf		
+EndFunc	
+
+Func ljgx();Á¢¼´¸üĞÂ
+	CJXBAK()
+	CJZGX()
+	THJGZ();ÕâÀïÃæµÚ2´Î»áÓĞÎÊÌâ
+	FileDelete(@ScriptDir & "\update.dat")
+	BDCJXGZ()
+EndFunc	
+
+Func guanyu();¹ØÓÚ
+	TrayItemSetState($tgy, $GUI_UNCHECKED)
+	MsgBox(0, '¹ØÓÚ', StringFormat($str))
+EndFunc	
+
+Func suoxiao();ËõĞ¡µ½ÍĞÅÌ
+ GUISetState(@SW_HIDE,$Form1)
+EndFunc
+
+Func xianshi();ÏÔÊ¾GUI½çÃæ
+   GUISetState(@SW_SHOW, $Form1)   ;µ÷Õû´°¿ÚµÄ×´Ì¬
+   GUISetState(@SW_RESTORE, $Form1)
+ 
+EndFunc   ;==>ÆôÓÃ(Ë«»÷Êó±ê)
+
+
+Func ExitScript()
+   Exit  ; $Quit
+EndFunc ;==>ÍË³ö
+
+Func CJXBAK();¼ì²âCJX±¸·İÎÄ¼şÊÇ·ñ´æÔÚ
+	If FileExists("CustomStrings.dat.BAK") Then
+		FileDelete(@ScriptDir & "\CustomStrings.dat.BAK")
+		FileCopy (@ScriptDir & "\CustomStrings.dat",@ScriptDir & "\CustomStrings.dat.BAK",1)
+	Else
+		FileCopy (@ScriptDir & "\CustomStrings.dat",@ScriptDir & "\CustomStrings.dat.BAK",1)
+	EndIf
+EndFunc	
+
+Func THJGZ();¸üĞÂÄÌÅ£CJX¹æÔò
+		FileDelete(@ScriptDir & "\CustomStrings.dat")
+		FileCopy (@ScriptDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
+EndFunc
+	
+Func CJZGX();CJX¹æÔò¸üĞÂ
+	gzxz()
+	bbhdb()
+EndFunc
+
+Func bbhdb();ÅĞ¶ÏÍøÂçCJX¹æÔòºÍ±¾µØCJX¹æÔò
+		If WLCJXGZ() <= BDCJXGZ() Then
+			;BDCJXGZ()
+		Else
+			;THKS()
+		EndIf	
+EndFunc
+
+Func gzxz();ÏÖÔÚCJX¹æÔòÎÄ¼ş
+	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @ScriptDir & "\update.dat", 1, 1)
+Do
+    Sleep(250)
+Until InetGetInfo($hDownload, 2)    ; ¼ì²éÏÂÔØÊÇ·ñÍê³É.
+	Local $nBytes = InetGetInfo($hDownload, 0)
+	InetClose($hDownload)   ; ¹Ø±Õ¾ä±ú,ÊÍ·Å×ÊÔ´.
+	;MsgBox(4096, "", "×Ö½Ú¶ÁÈ¡: " & $nBytes)
+EndFunc
+
+
+
+Func WLCJXGZ();ÍøÂçCJX¹æÔò
+	$IniFile = @ScriptDir & "\update.dat"                                 ;ÎÄ±¾Â·¾¶
+	$Lines = _FileCountLines($IniFile)                       ;¶ÁÈ¡ÎÄ±¾ĞĞÊı
+For $i=1 To $Lines-1                                           ;Ñ­»·
+        $ReadFile=FileReadLine($IniFile,$i)                       ;µÚ1ĞĞ¿ªÊ¼¶ÁÈ¡
+        If $ReadFile='' Then ExitLoop                                  ;ÎÄ±¾¿ÕÍË³ö
+        If stringinstr($ReadFile,"Xlist version") Then   			;·µ»Ø´ø¡®£º¡¯ºÅµÄ×Ö·û´®
+		Local $WLCJXGZ = StringRight($ReadFile, 6)
+		Return($WLCJXGZ)
+		ExitLoop
+		;MsgBox(4096, "×îÓÒ±ßÈı¸ö×Ö·ûÎª:", $GZ) 
+		;MsgBox(4096, "×îÓÒ±ßÈı¸ö×Ö·ûÎª:", $CJXBDGZ)   
+	EndIf    
+
+NEXT
+EndFunc;»ñÈ¡±¾µØCJX¹æÔò
+
+Func BDCJXGZ();»ñÈ¡±¾µØCJX¹æÔò
+	$IniFile = @ScriptDir & "\CustomStrings.dat"                                 ;ÎÄ±¾Â·¾¶
+	$Lines = _FileCountLines($IniFile)                       ;¶ÁÈ¡ÎÄ±¾ĞĞÊı
+For $i=1 To $Lines-1                                           ;Ñ­»·
+        $ReadFile=FileReadLine($IniFile,$i)                       ;µÚ1ĞĞ¿ªÊ¼¶ÁÈ¡
+        If $ReadFile='' Then ExitLoop                                  ;ÎÄ±¾¿ÕÍË³ö
+        If stringinstr($ReadFile,"Xlist version") Then   			;·µ»Ø´ø¡®£º¡¯ºÅµÄ×Ö·û´®
+		Local $BDCJXGZ = StringRight($ReadFile, 6)
+		GUICtrlSetData($Label4, $BDCJXGZ)
+		Return($BDCJXGZ)
+		ExitLoop
+		;MsgBox(4096, "×îÓÒ±ßÈı¸ö×Ö·ûÎª:", $GZ) 
+
+	EndIf    
+ 
+NEXT
+EndFunc;»ñÈ¡±¾µØCJX¹æÔò
+
+
+	
+Func THKS();Ìæ»»¿ªÊ¼
+	$IniFile = "CustomStrings.dat"                                 ;ÎÄ±¾Â·¾¶
+	$Lines = _FileCountLines($IniFile)                       ;¶ÁÈ¡ÎÄ±¾ĞĞÊı
+For $i=1 To $Lines-1                                           ;Ñ­»·
+
+        $ReadFile=FileReadLine($IniFile,$i)                       ;µÚ1ĞĞ¿ªÊ¼¶ÁÈ¡
+		FileWriteLine(@ScriptDir & "\¹æÔò¸üĞÂÁÙÊ±ÎÄ¼ş.txt", $ReadFile)
+        If stringinstr($ReadFile,"Xlist version") Then                            ;·µ»Ø´ø¡®£º¡¯ºÅµÄ×Ö·û´®
+			 QCBBH()
+			 WLTH()
+			ExitLoop 
+	EndIf     
+NEXT
+EndFunc
+
+Func QCBBH();È¥³ı°æ±¾ºÅ
+	Local Const $aFile = "¹æÔò¸üĞÂÁÙÊ±ÎÄ¼ş.txt"
+	Local $hFile = FileOpen($aFile, 1)
+	FileFlush($hFile)
+	FileSetPos($hFile, 0, $file_begin)
+	FileSetPos($hFile, StringInStr(stringstripws(FileRead($aFile), 2), Chr(13), 0, -1), $file_current)
+	$last = FileRead($aFile,Filegetpos($hFile))
+	FileOpen($aFile, 2)
+	FileWrite($aFile,$last)
+	FileClose($aFile)
+	Return($last)
+EndFunc
+
+Func WLTH();°Ñ×Ô¶¨Òå¹æÔòĞ´µ½CJX¹æÔò
+Local Const $aFile3 = "update.dat"
+Local $hFile = FileOpen($aFile3, 1)
+FileFlush($hFile)
+FileSetPos($hFile, StringInStr(stringstripws(FileRead($aFile3), 2), Chr(13), 0, -1), $file_current)
+$last = FileRead($aFile3,Filegetpos($hFile))
+	FileOpen($aFile3, 2)
+	FileWrite($aFile3,QCBBHGZ() & $last)
+	FileClose($aFile3)
+	FileDelete(@ScriptDir & "\¹æÔò¸üĞÂÁÙÊ±ÎÄ¼ş.txt")
+EndFunc
+
+Func QCBBHGZ();¶ÁÈ¡Ã»°æ±¾ºÅµÄ×Ô¶¨Òå¹æÔò
+	Local Const $aFile = "¹æÔò¸üĞÂÁÙÊ±ÎÄ¼ş.txt"
+	Local $hFile = FileOpen($aFile, 1)
+	FileFlush($hFile)
+	FileSetPos($hFile, StringInStr(stringstripws(FileRead($aFile), 2), Chr(13), 0, -1), $file_current)
+	$QCBBHGZ = FileRead($aFile,Filegetpos($hFile))
+	Return($QCBBHGZ)
+EndFunc
 
 ;´ËÎÄ¼şÎªCJX¹æÔò¸üĞÂĞ¡ÖúÊÖµÄÅäÖÃÎÄ¼ş Çë²»ÒªÉ¾³ı 
 ;Èô±»É¾³ı ½«ÆôÓÃÄ¬ÈÏÉèÖÃ
