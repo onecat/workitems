@@ -25,7 +25,7 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-
+#RequireAdmin;管理员方式运行
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
 #include <Constants.au3>
@@ -104,6 +104,10 @@ While 1
 			yctptb()
 	Case $Button1
 			ljgx()
+			MsgBox(0,"","1")
+			ForceDel1()
+			MsgBox(0,"","2")
+			ForceDel2()
 	Case $Button2
 			;BDCJXGZ()
 			;GUICtrlSetData($Label4, $CJXBDGZ)
@@ -263,7 +267,18 @@ EndFunc
 	
 Func CJZGX();CJX规则更新
 	gzxz()
-	bbhdb()
+	WLSB()
+	ForceDel1()
+	ForceDel2()
+	FileDelete(@TempDir & "\update.dat")
+EndFunc
+
+Func WLSB();判断update.dat文件存在性
+	If FileExists (@TempDir & "\update.dat") Then
+		bbhdb()
+	Else
+		GUICtrlSetData($Label2, "更新失败")	
+	EndIf	
 EndFunc
 
 Func bbhdb();判断网络CJX规则和本地CJX规则
@@ -274,14 +289,17 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 			THKS()
 			THJGZ();这里面第2次会有问题
 			BDCJXGZ()
-			FileDelete(@TempDir & "\update.dat")
 			GUICtrlSetData($Label2, "更新完成")
+			ForceDel2()
+			FileDelete(@TempDir & "\update.dat")
 		EndIf	
 EndFunc
 	
 Func THJGZ();更新奶牛CJX规则
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy (@TempDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
+		ForceDel2()
+		FileDelete(@TempDir & "\update.dat")
 EndFunc	
 
 Func gzxz();现在CJX规则文件
@@ -371,7 +389,7 @@ $last = FileRead($aFile3,Filegetpos($hFile))
 	FileOpen($aFile3, 2)
 	FileWrite($aFile3,QCBBHGZ() & $last)
 	FileClose($aFile3)
-	FileDelete(@TempDir & "\规则更新临时文件.txt")
+	;FileDelete(@TempDir & "\规则更新临时文件.txt")
 EndFunc
 
 Func QCBBHGZ();读取没版本号的自定义规则
@@ -382,6 +400,31 @@ Func QCBBHGZ();读取没版本号的自定义规则
 	$QCBBHGZ = FileRead($aFile,Filegetpos($hFile))
 	Return($QCBBHGZ)
 EndFunc
+
+
+Func ForceDel1();删除规则更新临时文件.tx
+        Local $file = @TempDir & "\规则更新临时文件.txt"
+        ;If FileExists($file) = 0 Then Exit(MsgBox(0,'','文件不存在'))
+        ;If @OSArch = 'X64' Then Exit(MsgBox(0,'','不支持此平台系统'))
+        If FileDelete($file) = 0 Then
+                Local $tempdata = RegRead('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager','PendingFileRenameOperations')
+                RegWrite('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager','PendingFileRenameOperations','REG_MULTI_SZ',$tempdata&@LF&'\??\'&@LF&$file&'!\??\')
+        EndIf
+EndFunc
+
+Func ForceDel2();删除update.dat
+        Local $file =  @TempDir & "\update.dat"
+       ; If FileExists($file) = 0 Then Exit(MsgBox(0,'','文件不存在'))
+        ;If @OSArch = 'X64' Then Exit(MsgBox(0,'','不支持此平台系统'))
+        If FileDelete($file) = 0 Then
+                Local $tempdata = RegRead('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager','PendingFileRenameOperations')
+                RegWrite('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager','PendingFileRenameOperations','REG_MULTI_SZ',$tempdata&@LF&'\??\'&@LF&$file&'!\??\')
+        EndIf
+EndFunc
+
+
+
+
 
 ;此文件为CJX规则更新小助手的配置文件 请不要删除 
 ;若被删除 将启用默认设置
