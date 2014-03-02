@@ -1,0 +1,13 @@
+[plugin]
+language=English
+version=1.0
+author=ISI360
+
+
+str1=Icon(s) found
+str2=Icons are loaded
+str3=Extract icon
+str4=Info
+str5=was successfully extracted!
+str6=could not be extracted!
+str7=Error

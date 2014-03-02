@@ -1,0 +1,13 @@
+[plugin]
+language=Deutsch
+version=1.0
+author=ISI360
+
+
+str1=Icon(s) gefunden
+str2=Icons werden geladen
+str3=Icon extrahieren
+str4=Info
+str5=wurde erfolgreich extrahiert!
+str6=konnte nicht extrahiert werden!
+str7=Fehler

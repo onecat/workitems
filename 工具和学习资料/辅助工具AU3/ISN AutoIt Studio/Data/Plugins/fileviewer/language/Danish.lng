@@ -1,0 +1,11 @@
+[plugin]
+language=Dansk
+version=1.0
+author=Johnny Rex
+str1=Ikon(er) fundet
+str2=Ikoner er placeret
+str3=Udtræk ikon
+str4=Info
+str5=blev udtrukket med success!
+str6=kunne ikke udtrækkes!
+str7=Fejl
