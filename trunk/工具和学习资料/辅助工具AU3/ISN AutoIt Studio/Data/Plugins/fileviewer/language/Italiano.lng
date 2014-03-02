@@ -1,0 +1,13 @@
+[plugin]
+language=Italian
+version=1.0
+author=Stefano Cerbioni www.e-Officecom.com
+
+
+str1 = icona trovata
+str2 = icone  caricate
+str3 = icona Estratta
+STR4 = Info
+STR5 = è stata estratta con successo!
+Str6 = non può essere estratta!
+STR7 = errore

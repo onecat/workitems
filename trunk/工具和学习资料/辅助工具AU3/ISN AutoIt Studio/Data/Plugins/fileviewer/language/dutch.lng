@@ -1,0 +1,13 @@
+[plugin]
+language=Nederlands
+version=1.0
+author=Elwin Wildschut
+
+
+str1=Icon(en) gevonden
+str2=Iconen geladen
+str3=Ophalen icoon
+str4=Info
+str5=is succesvol opgehaald!
+str6=kan niet worden opgehaald!
+str7=Error

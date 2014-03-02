@@ -1,0 +1,13 @@
+[plugin]
+language=Chinesisch
+version=1.0
+author=GordonCHN
+
+
+str1=个图标被发现
+str2=个图标已加载
+str3=扩展图标
+str4=信息
+str5=提取成功！
+str6=不能提取！
+str7=错误
