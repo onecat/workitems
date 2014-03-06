@@ -31,6 +31,11 @@
 #include <Constants.au3>
 #Include <WinAPIEx.au3>
 #Include <File.au3>
+#include <String.au3>
+If Not FileExists("AdMunch.exe") Then
+    MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
+    Exit
+EndIf
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
@@ -74,8 +79,8 @@ If Not FileExists("CJX规则更新小助手.ini") Then
 	FileWrite($file, ";若被删除 将启用默认设置" & @CRLF)
 	FileWrite($file, ";间隔时间 为检查规则更新的间隔时间 单位为秒" & @CRLF)
 	FileWrite($file, ";隐藏托盘图标热键为：Ctrl+Q 立即更新热键为：Ctrl+U" & @CRLF)
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "真")
-	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "真")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
+	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
 	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
 	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "首次运行", "假")
 	IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "间隔时间", "1000")
@@ -282,24 +287,31 @@ Func WLSB();判断update.dat文件存在性
 EndFunc
 
 Func bbhdb();判断网络CJX规则和本地CJX规则
-		If WLCJXGZ() <= BDCJXGZ() Then
+			$HWL = _StringToHex(WLCJXGZ())
+			$HBD = _StringToHex(BDCJXGZ())
+	If $HWL <= $HBD Then
 			BDCJXGZ()
 			GUICtrlSetData($Label2, "已是最新")
-		Else
+	Else
 			THKS()
 			THJGZ();这里面第2次会有问题
 			BDCJXGZ()
 			GUICtrlSetData($Label2, "更新完成")
 			ForceDel2()
 			FileDelete(@TempDir & "\update.dat")
-		EndIf	
+	EndIf	
 EndFunc
 	
 Func THJGZ();更新奶牛CJX规则
+	If ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
+		ProcessClose ("AdMunch.exe") 
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy (@TempDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
 		ForceDel2()
 		FileDelete(@TempDir & "\update.dat")
+		ShellExecute("AdMunch.exe","",@ScriptDir)
+EndIf
+		
 EndFunc	
 
 Func gzxz();现在CJX规则文件
@@ -322,7 +334,7 @@ For $i=1 To $Lines-1                                           ;循环
         $ReadFile=FileReadLine($IniFile,$i)                       ;第1行开始读取
         If $ReadFile='' Then ExitLoop                                  ;文本空退出
         If stringinstr($ReadFile,"Xlist version") Then   			;返回带‘：’号的字符串
-		Local $WLCJXGZ = StringRight($ReadFile, 6)
+		Local $WLCJXGZ = StringTrimLeft($ReadFile, 14)
 		Return($WLCJXGZ)
 		ExitLoop
 		;MsgBox(4096, "最右边三个字符为:", $GZ) 
@@ -339,7 +351,7 @@ For $i=1 To $Lines-1                                           ;循环
         $ReadFile=FileReadLine($IniFile,$i)                       ;第1行开始读取
         If $ReadFile='' Then ExitLoop                                  ;文本空退出
         If stringinstr($ReadFile,"Xlist version") Then   			;返回带‘：’号的字符串
-		Local $BDCJXGZ = StringRight($ReadFile, 6)
+		Local $BDCJXGZ = StringTrimLeft($ReadFile, 14)
 		GUICtrlSetData($Label4, $BDCJXGZ)
 		Return($BDCJXGZ)
 		ExitLoop
