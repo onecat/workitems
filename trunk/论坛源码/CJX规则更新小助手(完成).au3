@@ -109,7 +109,9 @@ While 1
 			yctptb()
 	Case $Button1
 			ljgx()
+			MsgBox(0,"","1")
 			ForceDel1()
+			MsgBox(0,"","2")
 			ForceDel2()
 	Case $Button2
 			;BDCJXGZ()
