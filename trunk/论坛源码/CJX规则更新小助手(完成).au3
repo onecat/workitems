@@ -160,7 +160,6 @@ Func ini();配置文件存在就显示状态
 	If $kj = "真" Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
 		TrayItemSetState ($tkjqd, $GUI_CHECKED)
-		ljgx()
 	Else
 		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
 		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
@@ -169,6 +168,7 @@ Func ini();配置文件存在就显示状态
 	If $zd = "真" Then
 		GUICtrlSetState($zdgx, $GUI_CHECKED)
 		TrayItemSetState ($tzdgx, $GUI_CHECKED)
+		ljgx()
 	Else
 		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
 		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
@@ -190,13 +190,13 @@ Func kjqd();开机启动
 	If BitAND(GUICtrlRead($kjqd) , $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
 		TrayItemSetState ($tkjqd, $GUI_CHECKED)
-		;RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
+		RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt, "REG_SZ", @ScriptDir & "\" & $bt & ".exe"  & " /start")
 		MsgBox(0,"设置开机启动","设置开机启动成功")
        IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "真")
 	Else
 		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
 		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
-		;RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
+		RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",$bt)
 		MsgBox(0,"取消开机启动","取消开机启动成功")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "开机启动", "假")
 	EndIf
@@ -220,13 +220,11 @@ Func yctptb();隐藏托盘
 		GUICtrlSetState($yctptb, $GUI_CHECKED)
 		TrayItemSetState($tyctptb, $GUI_CHECKED)
 		Opt("TrayIconHide", 1) 
-		MsgBox(0,"","选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "真")
 	Else
 		GUICtrlSetState($yctptb, $GUI_UNCHECKED)
 		TrayItemSetState($tyctptb, $GUI_UNCHECKED)
 		Opt("TrayIconHide", 0) 
-		MsgBox(0,"","没选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "隐藏托盘", "假")
 	EndIf		
 EndFunc	
@@ -306,6 +304,7 @@ Func THJGZ();更新奶牛CJX规则
 		FileCopy (@TempDir & "\update.dat",@ScriptDir & "\CustomStrings.dat",1)
 		ForceDel2()
 		FileDelete(@TempDir & "\update.dat")
+		_RefreshSystemTray();刷新托盘图标
 		ShellExecute("AdMunch.exe","",@ScriptDir)
 EndIf
 		
@@ -432,7 +431,46 @@ Func ForceDel2();删除update.dat
 EndFunc
 
 
-
+Func _RefreshSystemTray($nDelay = 1000);刷新托盘图标
+    Local $oldMatchMode = Opt("WinTitleMatchMode", 4)
+    Local $oldChildMode = Opt("WinSearchChildren", 1)
+    Local $error = 0
+    Do
+        Local $hWnd = WinGetHandle("classname=TrayNotifyWnd")
+        If @error Then
+            $error = 1
+            ExitLoop
+        EndIf
+        Local $hControl = ControlGetHandle($hWnd, "", "Button1")
+        
+        If $hControl <> "" And ControlCommand($hWnd, "", $hControl, "IsVisible") Then
+            ControlClick($hWnd, "", $hControl)
+            Sleep($nDelay)
+        EndIf
+        Local $posStart = MouseGetPos()
+        Local $posWin = WinGetPos($hWnd)    
+        Local $y = $posWin[1]
+        While $y < $posWin[3] + $posWin[1]
+            Local $x = $posWin[0]
+            While $x < $posWin[2] + $posWin[0]
+                DllCall("user32.dll", "int", "SetCursorPos", "int", $x, "int", $y)
+                If @error Then
+                    $error = 2
+                    ExitLoop 3;
+                EndIf
+                $x += 8
+            WEnd
+            $y += 8
+        WEnd
+        DllCall("user32.dll", "int", "SetCursorPos", "int", $posStart[0], "int", $posStart[1])
+        If $hControl <> "" And ControlCommand($hWnd, "", $hControl, "IsVisible") Then
+            ControlClick($hWnd, "", $hControl)
+        EndIf
+    Until 1
+    Opt("WinTitleMatchMode", $oldMatchMode)
+    Opt("WinSearchChildren", $oldChildMode)
+    SetError($error)
+EndFunc
 
 
 ;此文件为CJX规则更新小助手的配置文件 请不要删除 
