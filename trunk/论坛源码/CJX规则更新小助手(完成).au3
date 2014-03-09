@@ -1,9 +1,15 @@
+#RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Outfile=11.exe
+#PRE_Icon=123.ico
+#PRE_Outfile=C:\Users\xiaozhan\Desktop\CJX规则更新小助手.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=0.0.0.5
-#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_UseUpx=n
+#PRE_Res_Comment=小站制作 by xiaozhan
+#PRE_Res_Description=小站制作 by xiaozhan
+#PRE_Res_Fileversion=1.0.0.6
+#PRE_Res_LegalCopyright=小站制作 by xiaozhan
 #PRE_Res_requestedExecutionLevel=None
+;#PRE_Res_File_Add=123.jpg,-10
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
@@ -25,13 +31,15 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-#RequireAdmin;管理员方式运行
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
 #include <Constants.au3>
 #Include <WinAPIEx.au3>
 #Include <File.au3>
 #include <String.au3>
+
+FileInstall("C:\Users\xiaozhan\Desktop\123.jpg", @TempDir & "\123.jpg",1)
+
 If Not FileExists("AdMunch.exe") Then
     MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
     Exit
@@ -56,7 +64,7 @@ $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
 ;$Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
 $Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 144, 130, 17)
 GUICtrlSetColor($Label5,0xFF00FF)
-$Pic1 = GUICtrlCreatePic("C:\Users\xiaozhan\Desktop\123.jpg",  200, 8, 121, 113)
+$Pic1 = GUICtrlCreatePic(@TempDir & "\123.jpg",  200, 8, 121, 113)
 Dim $Form1_1_AccelTable[1][2] = [["6", $gy]]
 GUISetAccelerators($Form1_1_AccelTable)
 GUISetState(@SW_SHOW)
@@ -103,7 +111,7 @@ While 1
 	Case $GUI_EVENT_CLOSE
 			suoxiao()
 	Case $tc 
-			Exit		
+			ExitScript()		
 	Case $gy 
 			guanyu()
 	Case $kjqd
@@ -256,6 +264,7 @@ EndFunc   ;==>启用(双击鼠标)
 
 
 Func ExitScript()
+   FileDelete(@TempDir & "\123.jpg")
    Exit  ; $Quit
 EndFunc ;==>退出
 
