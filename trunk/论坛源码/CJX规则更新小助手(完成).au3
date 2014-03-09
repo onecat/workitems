@@ -40,7 +40,7 @@ Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 #Region ### START Koda GUI section ### Form=
-$Form1 = GUICreate("CJX规则更新小助手", 347, 215, 197, 124,$WS_SYSMENU)
+$Form1 = GUICreate("CJX规则更新小助手", 335, 217, 197, 124,$WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
@@ -49,11 +49,16 @@ $yctptb = GUICtrlCreateMenuItem("隐藏托盘图标", $MenuItem)
 $gy = GUICtrlCreateMenuItem("关于", $MenuItem)
 $tc = GUICtrlCreateMenuItem("退出", $MenuItem)
 $Label1 = GUICtrlCreateLabel("规则更新状态：", 8, 24, 88, 17)
-$Label2 = GUICtrlCreateLabel("", 120, 24, 112, 17)
+$Label2 = GUICtrlCreateLabel("", 120, 24, 88, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
-$Label4 = GUICtrlCreateLabel("", 120, 56, 108, 17)
+$Label4 = GUICtrlCreateLabel("", 120, 56, 84, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
-$Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
+;$Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
+$Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 144, 130, 17)
+GUICtrlSetColor($Label5,0xFF00FF)
+$Pic1 = GUICtrlCreatePic("C:\Users\xiaozhan\Desktop\123.jpg",  200, 8, 121, 113)
+Dim $Form1_1_AccelTable[1][2] = [["6", $gy]]
+GUISetAccelerators($Form1_1_AccelTable)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
@@ -91,7 +96,7 @@ Else
 EndIf;判断结束
 
 
-Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！'
+Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！\n感谢ilv的大力支持'
 BDCJXGZ();获取本地版本号
 While 1
 	 	Switch GUIGetMsg()
@@ -111,7 +116,7 @@ While 1
 			ljgx()
 			ForceDel1()
 			ForceDel2()
-	Case $Button2
+	;Case $Button2
 			;BDCJXGZ()
 			;GUICtrlSetData($Label4, $CJXBDGZ)
 	EndSwitch	
