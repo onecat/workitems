@@ -160,6 +160,7 @@ Func ini();配置文件存在就显示状态
 	If $kj = "真" Then
 		GUICtrlSetState($kjqd, $GUI_CHECKED)
 		TrayItemSetState ($tkjqd, $GUI_CHECKED)
+		ljgx()
 	Else
 		GUICtrlSetState($kjqd, $GUI_UNCHECKED)
 		TrayItemSetState ($tkjqd, $GUI_UNCHECKED)
@@ -206,12 +207,10 @@ Func zdgx();自动更新
 	If BitAND(GUICtrlRead($zdgx), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
 		GUICtrlSetState($zdgx, $GUI_CHECKED)
 		TrayItemSetState ($tzdgx, $GUI_CHECKED)
-		MsgBox(0,"","选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "真")
 	Else
 		GUICtrlSetState($zdgx, $GUI_UNCHECKED)
 		TrayItemSetState ($tzdgx, $GUI_UNCHECKED)
-		MsgBox(0,"","没选中")
 		IniWrite(@ScriptDir & "\CJX规则更新小助手.ini", "配置", "自动更新", "假")
 	EndIf	
 EndFunc	
