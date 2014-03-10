@@ -302,6 +302,7 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 			BDCJXGZ()
 			GUICtrlSetData($Label2, "已是最新")
 	Else
+			GUICtrlSetData($Label2, "正在更新中")
 			THKS()
 			THJGZ();这里面第2次会有问题
 			BDCJXGZ()
@@ -325,7 +326,7 @@ EndIf
 EndFunc	
 
 Func gzxz();现在CJX规则文件
-	GUICtrlSetData($Label2, "正在更新中")
+	GUICtrlSetData($Label2, "读取更新")
 	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @TempDir & "\update.dat", 1, 1)
 Do
     Sleep(250)
