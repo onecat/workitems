@@ -331,6 +331,12 @@ Func THJGZ();更新奶牛CJX规则
 		FileDelete(@TempDir & "\update.dat")
 		_RefreshSystemTray();刷新托盘图标
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
+	Else
+		FileDelete(@ScriptDir & "\CustomStrings.dat")
+		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
+		FileDelete(@TempDir & "\update.dat")
+		_RefreshSystemTray();刷新托盘图标
+		ShellExecute("AdMunch.exe", "", @ScriptDir)
 	EndIf
 	
 EndFunc   ;==>THJGZ
