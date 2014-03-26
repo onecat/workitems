@@ -123,7 +123,7 @@ Else
 EndIf;判断结束
 
 
-Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋！\n感谢ilv的大力支持'
+Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋友！\n感谢ilv的大力支持'
 BDCJXGZ();获取本地版本号
 While 1
 	Switch GUIGetMsg()
