@@ -63,8 +63,10 @@ $yctptb = GUICtrlCreateMenuItem("隐藏托盘图标", $MenuItem)
 $gy = GUICtrlCreateMenuItem("关于", $MenuItem)
 $tc = GUICtrlCreateMenuItem("退出", $MenuItem)
 $Label1 = GUICtrlCreateLabel("规则更新状态：", 8, 24, 88, 17)
+GUICtrlSetColor($Label1, 0x0000FF)
 $Label2 = GUICtrlCreateLabel("", 120, 24, 88, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
+GUICtrlSetColor($Label3, 0x6633CC)
 $Label4 = GUICtrlCreateLabel("", 120, 56, 84, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
 ;$Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
@@ -305,6 +307,7 @@ Func WLSB();判断update.dat文件存在性
 		bbhdb()
 	Else
 		GUICtrlSetData($Label2, "更新失败")
+		GUICtrlSetColor($Label2, 0x3399FF)
 	EndIf
 EndFunc   ;==>WLSB
 
@@ -314,12 +317,15 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 	If $HWL <= $HBD Then
 		BDCJXGZ()
 		GUICtrlSetData($Label2, "已是最新")
+		GUICtrlSetColor($Label2, 0x3399FF)
 	Else
 		GUICtrlSetData($Label2, "正在更新中")
+		GUICtrlSetColor($Label2, 0x3399FF)
 		CJXGZGX()
 		THJGZ();这里面第2次会有问题
 		BDCJXGZ()
 		GUICtrlSetData($Label2, "更新完成")
+		GUICtrlSetColor($Label2, 0x3399FF)
 	EndIf
 EndFunc   ;==>bbhdb
 
@@ -343,6 +349,7 @@ EndFunc   ;==>THJGZ
 
 Func gzxz();现在CJX规则文件
 	GUICtrlSetData($Label2, "读取更新")
+	GUICtrlSetColor($Label2, 0x3399FF)
 	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @TempDir & "\update.dat", 1, 1)
 	Do
 		Sleep(250)
@@ -380,6 +387,7 @@ Func BDCJXGZ();获取本地CJX规则
 		If StringInStr($ReadFile, "Xlist version") Then ;返回带‘：’号的字符串
 			Local $BDCJXGZ = StringTrimLeft($ReadFile, 14)
 			GUICtrlSetData($Label4, $BDCJXGZ)
+			GUICtrlSetColor($Label4, 0x9932CC)
 			Return ($BDCJXGZ)
 			ExitLoop
 			;MsgBox(4096, "最右边三个字符为:", $GZ)
