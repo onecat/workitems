@@ -41,6 +41,11 @@
 #include <APIConstants.au3>
 #include <GDIPlus.au3>
 #include <Memory.au3>
+HotKeySet("^u", "ljgx")
+HotKeySet("^q", "yctptb")
+Opt("TrayIconHide", 0)
+Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
+Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 Global Const $STM_SETIMAGE = 0x0172
 Global Const $STM_GETIMAGE = 0x0173
 Global $hForm, $Pic, $hPic, $hBitmap, $hObj, $hImage, $pStream, $bData, $hData, $pData, $tData, $Width, $Height, $Lenght
@@ -49,17 +54,15 @@ If Not FileExists("AdMunch.exe") Then
     MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
     Exit
 EndIf
-Opt("TrayIconHide", 0)
-Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
-Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
+
 
 #Region ### START Koda GUI section ### Form=
 $Form1 = GUICreate("CJX规则更新小助手", 335, 217, 197, 124, $WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
-$ljgx = GUICtrlCreateMenuItem("立即更新", $MenuItem)
-$yctptb = GUICtrlCreateMenuItem("隐藏托盘图标", $MenuItem)
+$ljgx = GUICtrlCreateMenuItem("立即更新"   &  "           Ctrl+U", $MenuItem)
+$yctptb = GUICtrlCreateMenuItem("隐藏托盘图标"  &  "     Ctrl+Q", $MenuItem)
 $gy = GUICtrlCreateMenuItem("关于", $MenuItem)
 $tc = GUICtrlCreateMenuItem("退出", $MenuItem)
 $Label1 = GUICtrlCreateLabel("规则更新状态：", 8, 24, 88, 17)
@@ -95,9 +98,9 @@ $tkjqd = TrayCreateItem("开机启动") ;创建第一个菜单项
 TrayItemSetOnEvent(-1, "kjqd") ;注册第一个菜单项的（被点下）事件
 $tzdgx = TrayCreateItem("自动更新") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "zdgx") ;注册第二个菜单项的（被点下）事件
-TrayCreateItem("立即更新") ;创建第三个菜单项
+TrayCreateItem("立即更新"  &  "           Ctrl+U") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "ljgx") ;注册第二个菜单项的（被点下）事件
-$tyctptb = TrayCreateItem("隐藏托盘图标") ;创建第三个菜单项
+$tyctptb = TrayCreateItem("隐藏托盘图标"  &  "     Ctrl+Q") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "yctptb") ;注册第二个菜单项的（被点下）事件
 $tgy = TrayCreateItem("关于") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "guanyu") ;注册第二个菜单项的（被点下）事件
@@ -105,7 +108,7 @@ TrayCreateItem("退出") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "ExitScript") ;注册第二个菜单项的（被点下）事件
 TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE, "xianshi")
 TraySetClick(8) ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键)
-TraySetState()
+;TraySetState(2)
 
 If Not FileExists("CJX规则更新小助手.ini") Then
 	Local $file = FileOpen("CJX规则更新小助手.ini", 1)
@@ -124,6 +127,7 @@ Else
 	ini()
 EndIf;判断结束
 
+TraySetState(2)
 
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋友！\n感谢ilv的大力支持'
 BDCJXGZ();获取本地版本号
@@ -272,12 +276,13 @@ EndFunc   ;==>guanyu
 
 Func suoxiao();缩小到托盘
 	GUISetState(@SW_HIDE, $Form1)
+	Opt("TrayIconHide", 0) 
 EndFunc   ;==>suoxiao
 
 Func xianshi();显示GUI界面
 	GUISetState(@SW_SHOW, $Form1) ;调整窗口的状态
 	GUISetState(@SW_RESTORE, $Form1)
-
+	Opt("TrayIconHide", 1) 
 EndFunc   ;==>xianshi
 
 
