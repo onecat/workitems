@@ -382,7 +382,7 @@ Func Down()
 		$newsize = InetGetInfo($get)
         $pro = Int($newsize[0] / 1024) / $size
         GUICtrlSetData($Progress1, $pro * 100)
-        GUICtrlSetData($Label6, "已下载 " &  Int($pro * 100) & "%")
+        GUICtrlSetData($Label6, "已读取 " &  Int($pro * 100) & "%")
 EndFunc   ;==>Down
 	
 ;~ Func gzxz();现在CJX规则文件
