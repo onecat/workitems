@@ -336,6 +336,7 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 		BDCJXGZ()
 		GUICtrlSetData($Label2, "已是最新")
 		GUICtrlSetColor($Label2, 0x3399FF)
+		FileDelete(@TempDir & "\update.dat")
 	Else
 		GUICtrlSetData($Label2, "正在更新中")
 		GUICtrlSetColor($Label2, 0x3399FF)
