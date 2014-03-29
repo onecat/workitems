@@ -1,9 +1,8 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Icon=123.ico
+#PRE_icon=CJX规则更新小助手.exe|-1
 #PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手.exe
 #PRE_Compression=4
-#PRE_UseUpx=n
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
 #PRE_Res_Fileversion=2.0.0.0
@@ -49,6 +48,7 @@ Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 Global Const $STM_SETIMAGE = 0x0172
 Global Const $STM_GETIMAGE = 0x0173
 Global $hForm, $Pic, $hPic, $hBitmap, $hObj, $hImage, $pStream, $bData, $hData, $pData, $tData, $Width, $Height, $Lenght
+Local $size , $get
 
 If Not FileExists("AdMunch.exe") Then
     MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
@@ -57,7 +57,7 @@ EndIf
 
 
 #Region ### START Koda GUI section ### Form=
-$Form1 = GUICreate("CJX规则更新小助手", 335, 217, 197, 124, $WS_SYSMENU)
+$Form1 = GUICreate("CJX规则更新小助手", 336, 255, 197, 124, $WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
@@ -71,13 +71,18 @@ $Label2 = GUICtrlCreateLabel("", 120, 24, 88, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
 GUICtrlSetColor($Label3, 0x6633CC)
 $Label4 = GUICtrlCreateLabel("", 120, 56, 84, 17)
-$Button1 = GUICtrlCreateButton("立即更新", 8, 120, 73, 33)
-;$Button2 = GUICtrlCreateButton("代理更新", 104, 120, 73, 33)
-$Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 144, 130, 17)
+$Progress1 = GUICtrlCreateProgress(8, 112, 177, 17)
+$Button1 = GUICtrlCreateButton("立即更新", 8, 160, 73, 33)
+;$Button2 = GUICtrlCreateButton("代理更新", 104, 160, 73, 33)
+$Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 168, 130, 17)
 GUICtrlSetColor($Label5, 0xFF00FF)
+$Label6 = GUICtrlCreateLabel("",  110, 136, 100, 17)
+GUICtrlSetColor($Label6, 0x0000FF)
+$Label7 = GUICtrlCreateLabel("", 8, 88, 180, 17)
+GUICtrlSetColor($Label7, 0x0000FF)
 ;-----------------------------------------------------------------------------
 PN()
-$Pic = GUICtrlCreatePic("", 200, 8, 121, 113, $WS_EX_TRANSPARENT)
+$Pic = GUICtrlCreatePic("", 200, 24, 121, 113, $WS_EX_TRANSPARENT)
 $hPic = GUICtrlGetHandle($Pic)
 ; 设置位图到控件
 _SendMessage($hPic, $STM_SETIMAGE, 0, $hBitmap)
@@ -305,7 +310,15 @@ Func CJZGX();CJX规则更新
 	BDCJXGZ()
 	gzxz()
 	WLSB()
+	ZXJDT()
 EndFunc   ;==>CJZGX
+
+Func ZXJDT()
+	AdlibUnRegister( "Down" )
+	GUICtrlSetData($Progress1,"")
+	GUICtrlSetData($Label6,"")
+	GUICtrlSetData($Label7,"")
+EndFunc		
 
 Func WLSB();判断update.dat文件存在性
 	If FileExists(@TempDir & "\update.dat") Then
@@ -349,22 +362,45 @@ Func THJGZ();更新奶牛CJX规则
 		_RefreshSystemTray();刷新托盘图标
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
 	EndIf
-	
 EndFunc   ;==>THJGZ
 
 Func gzxz();现在CJX规则文件
 	GUICtrlSetData($Label2, "读取更新")
 	GUICtrlSetColor($Label2, 0x3399FF)
-	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @TempDir & "\update.dat", 1, 1)
+	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$get = InetGet($url, @TempDir & "\update.dat", 1, 1)
+	GUICtrlSetData($Label7, "正在读取最新CJX规则,请稍后....")
+	$size = Int(InetGetSize($url) / 1024)
+	AdlibRegister("Down")
 	Do
 		Sleep(250)
-	Until InetGetInfo($hDownload, 2) ; 检查下载是否完成.
-	Local $nBytes = InetGetInfo($hDownload, 0)
-	InetClose($hDownload) ; 关闭句柄,释放资源.
-	;MsgBox(4096, "", "字节读取: " & $nBytes)
+	Until InetGetInfo($get, 2)
 EndFunc   ;==>gzxz
 
+Func Down()
+		$newsize = InetGetInfo($get)
+        $pro = Int($newsize[0] / 1024) / $size
+        GUICtrlSetData($Progress1, $pro * 100)
+        GUICtrlSetData($Label6, "已下载 " &  Int($pro * 100) & "%")
+EndFunc   ;==>Down
+	
+;~ Func gzxz();现在CJX规则文件
+;~ 	GUICtrlSetData($Label2, "读取更新")
+;~ 	GUICtrlSetColor($Label2, 0x3399FF)
+;~ 	Local $hDownload = InetGet("http://cjxlist.googlecode.com/svn/CustomStrings.dat", @TempDir & "\update.dat", 1, 1)
+;~ 	Do
+;~ 		Sleep(250)
+;~ 	Until InetGetInfo($hDownload, 2) ; 检查下载是否完成.
+;~ 	Local $nBytes = InetGetInfo($hDownload, 0)
+;~ 	InetClose($hDownload) ; 关闭句柄,释放资源.
+;~ 	;MsgBox(4096, "", "字节读取: " & $nBytes)
+;~ EndFunc   ;==>gzxz
 
+;~ Func WLCJXGZ();网络CJX规则
+;~ 		$a=InetRead ( "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat" , 1)
+;~ 		$array = StringRegExp(BinaryToString($a), '><td class="source">Xlist version (.*?)<br></td></tr', 2)
+;~ 		Return($array[1])
+;~ EndFunc   ;==>WLCJXGZ
 
 Func WLCJXGZ();网络CJX规则
 	$IniFile = @TempDir & "\update.dat" ;文本路径
@@ -381,7 +417,7 @@ Func WLCJXGZ();网络CJX规则
 		EndIf
 
 	Next
-EndFunc   ;==>WLCJXGZ
+EndFunc   ;==>WLCJXG
 
 Func BDCJXGZ();获取本地CJX规则
 	$IniFile = @ScriptDir & "\CustomStrings.dat" ;文本路径
