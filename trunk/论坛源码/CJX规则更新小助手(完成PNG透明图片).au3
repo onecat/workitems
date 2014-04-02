@@ -1,6 +1,6 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=CJX规则更新小助手.exe|-1
+#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手.exe|-1
 #PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
@@ -270,6 +270,7 @@ Func yctptb();隐藏托盘
 EndFunc   ;==>yctptb
 
 Func ljgx();立即更新
+	GBNNJC()
 	CJXBAK()
 	CJZGX();这里在加个判断
 EndFunc   ;==>ljgx
@@ -294,6 +295,13 @@ EndFunc   ;==>xianshi
 Func ExitScript()
 	Exit ; $Quit
 EndFunc   ;==>ExitScript
+
+Func GBNNJC()
+	If ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
+		ProcessClose("AdMunch.exe")
+		_RefreshSystemTray()
+	EndIf
+EndFunc	
 
 Func CJXBAK();检测CJX备份文件是否存在
 	If FileExists("CustomStrings.dat.BAK") Then
@@ -349,20 +357,11 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 EndFunc   ;==>bbhdb
 
 Func THJGZ();更新奶牛CJX规则
-	If ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
-		ProcessClose("AdMunch.exe")
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
 		FileDelete(@TempDir & "\update.dat")
 		_RefreshSystemTray();刷新托盘图标
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
-	Else
-		FileDelete(@ScriptDir & "\CustomStrings.dat")
-		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
-		FileDelete(@TempDir & "\update.dat")
-		_RefreshSystemTray();刷新托盘图标
-		ShellExecute("AdMunch.exe", "", @ScriptDir)
-	EndIf
 EndFunc   ;==>THJGZ
 
 Func gzxz();现在CJX规则文件
