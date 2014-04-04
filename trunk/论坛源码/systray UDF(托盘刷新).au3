@@ -36,16 +36,25 @@ Func _SysTrayIcon_Clean($processes = '', $iWin = 1)
 			$ret = _SysTrayIconRemove($i - $x)
 			If $ret = -1 Then Return -1
 			$x += 1
+			TraySetState (1)
 		EndIf
 	Next
 	If $x = 0 Then Return SetError(1, 0, 0)
 	If $x > 0 Then Return SetExtended($x)
 EndFunc   ;==>_SysTrayIcon_Clean
 
+;====================================================================================
+;调用过程：
+;......
+; _SysTrayIcon_Clean(“”)
+; ......
+;TraySetState(2) 
+; ......
+;====================================================================================
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconCount($iWin = 1)
-; Description:      Returns number of icons on systray 
+; Description:      Returns number of icons on systray 返回系统托盘上的图标数量
 ;                   Note: Hidden icons are also reported
 ; Parameter(s):     $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -70,7 +79,7 @@ EndFunc   ;==>_SysTrayIconCount
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconTitles($iWin = 1)
-; Description:      Get list of all window titles that have systray icon
+; Description:      Get list of all window titles that have systray icon 获取的所有窗口标题有托盘图标列表
 ; Parameter(s):     $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
 ;                   | 1         - NotifyIconOverflowWindow, Win7+
@@ -95,7 +104,7 @@ EndFunc   ;==>_SysTrayIconTitles
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconPids($iWin = 1)
-; Description:      Get list of all processes id's that have systray icon
+; Description:      Get list of all processes id's that have systray icon 得到有系统托盘图标的所有进程的ID列表
 ; Parameter(s):     $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
 ;                   | 1         - NotifyIconOverflowWindow, Win7+
@@ -120,7 +129,7 @@ EndFunc   ;==>_SysTrayIconPids
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconProcesses($iWin = 1)
-; Description:      Get list of all processes that have systray icon
+; Description:      Get list of all processes that have systray icon 得到有系统托盘图标的所有进程列表
 ; Parameter(s):     $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+           
 ;                   | 1         - NotifyIconOverflowWindow, Win7+     
@@ -151,7 +160,7 @@ EndFunc   ;==>_SysTrayIconProcesses
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconIndex($test, $mode = 0, $iWin = 1)
-; Description:      Get list of all processes id"s that have systray icon
+; Description:      Get list of all processes id"s that have systray icon 得到所有进程id为“ s表示有托盘图标列表
 ; Parameter(s):     $test       - process name / window title text / process PID
 ;                   $mode
 ;                   | 0         - get index by process name (default)
@@ -191,7 +200,7 @@ EndFunc   ;==>_SysTrayIconIndex
 ; INTERNAL =====================================================================
 ;
 ; Function Name:    _SysTrayGetButtonInfo($iIndex = 0, $iWin = 1, $iInfo = 0)
-; Description:      Gets Tray Button Info 
+; Description:      Gets Tray Button Info  获取托盘按钮信息
 ; Parameter(s):     $iIndex     - icon index (Note: starting from 0)
 ;                   $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -319,7 +328,7 @@ EndFunc   ;==>_SysTrayGetButtonInfo
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconHandle($iIndex, $iWin = 1)
-; Description:      Gets hwnd of window associated with systray icon of given index 
+; Description:      Gets hwnd of window associated with systray icon of given index 获取HWND与给定索引的系统托盘图标关联的窗口
 ; Parameter(s):     $iIndex     - icon index (Note: starting from 0)
 ;                   $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -339,7 +348,7 @@ EndFunc   ;==>_SysTrayIconHandle
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconTooltip($iIndex, $iWin = 1)
-; Description:      Gets the tooltip text of systray icon of given index
+; Description:      Gets the tooltip text of systray icon of given index 获取系统托盘图标的工具提示文本定索引
 ; Parameter(s):     $iIndex     - icon index (Note: starting from 0)
 ;                   $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -359,7 +368,7 @@ EndFunc   ;==>_SysTrayIconTooltip
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconPos($iIndex, $iWin = 1)
-; Description:      Gets x & y position of systray icon
+; Description:      Gets x & y position of systray icon 获取系统托盘图标的x和y位置
 ; Parameter(s):     $iIndex     - icon index (Note: starting from 0)
 ;                   $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -379,7 +388,7 @@ EndFunc   ;==>_SysTrayIconPos
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconVisible($iIndex, $iWin = 1)
-; Description:      Gets the visibility of a systray icon
+; Description:      Gets the visibility of a systray icon 获取一个系统托盘图标的可见性
 ; Parameter(s):     $iIndex     - icon index (Note: starting from 0)
 ;                   $iWin
 ;                   | 0         - ToolbarWindow32, Win2000+
@@ -422,7 +431,7 @@ EndFunc   ;==>_SysTrayIconHide
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconMove($curPos, $newPos)
-; Description:      Moves systray icon
+; Description:      Moves systray icon  移动托盘图标
 ;
 ; Parameter(s):     $curPos = icon"s current index (0 based)
 ;                   $newPos = icon"s new position
@@ -450,7 +459,7 @@ EndFunc   ;==>_SysTrayIconMove
 ;===============================================================================
 ;
 ; Function Name:    _SysTrayIconRemove($index=0)
-; Description:      Removes systray icon completely.
+; Description:      Removes systray icon completely. 完全删除系统托盘图标。
 ;
 ; Parameter(s):     index = icon index. Can be queried with _SysTrayIconIndex()
 ;                   Default = 0
@@ -475,7 +484,7 @@ EndFunc   ;==>_SysTrayIconRemove
 ;===============================================================================
 ;
 ; Function Name:    _FindTrayToolbarWindow
-; Description:      Utility function for finding Toolbar window hwnd 
+; Description:      Utility function for finding Toolbar window hwnd  效用函数查找工具栏的窗口HWND
 ; Parameter(s):     None
 ;
 ; Requirement(s):   AutoIt3 Beta

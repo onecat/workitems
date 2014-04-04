@@ -300,6 +300,7 @@ Func GBNNJC()
 	If ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
 		ProcessClose("AdMunch.exe")
 		_RefreshSystemTray()
+		;_SysTrayIcon_Clean("AdMunch.exe")
 	EndIf
 EndFunc	
 
@@ -361,7 +362,8 @@ Func THJGZ();更新奶牛CJX规则
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
 		FileDelete(@TempDir & "\update.dat")
-		_RefreshSystemTray();刷新托盘图标
+		;_SysTrayIcon_Clean("AdMunch.exe");刷新托盘图标
+		_RefreshSystemTray()
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
 EndFunc   ;==>THJGZ
 
@@ -459,46 +461,54 @@ Func CJXGZGX()
 	FileClose($bFile2)
 EndFunc   ;==>CJXGZGX
 
-Func _RefreshSystemTray($nDelay = 1000);刷新托盘图标
-	Local $oldMatchMode = Opt("WinTitleMatchMode", 4)
-	Local $oldChildMode = Opt("WinSearchChildren", 1)
-	Local $error = 0
-	Do
-		Local $hWnd = WinGetHandle("classname=TrayNotifyWnd")
-		If @error Then
-			$error = 1
-			ExitLoop
-		EndIf
-		Local $hControl = ControlGetHandle($hWnd, "", "Button1")
 
-		If $hControl <> "" And ControlCommand($hWnd, "", $hControl, "IsVisible") Then
-			ControlClick($hWnd, "", $hControl)
-			Sleep($nDelay)
-		EndIf
-		Local $posStart = MouseGetPos()
-		Local $posWin = WinGetPos($hWnd)
-		Local $y = $posWin[1]
-		While $y < $posWin[3] + $posWin[1]
-			Local $x = $posWin[0]
-			While $x < $posWin[2] + $posWin[0]
-				DllCall("user32.dll", "int", "SetCursorPos", "int", $x, "int", $y)
-				If @error Then
-					$error = 2
-					ExitLoop 3;
-				EndIf
-				$x += 8
-			WEnd
-			$y += 8
-		WEnd
-		DllCall("user32.dll", "int", "SetCursorPos", "int", $posStart[0], "int", $posStart[1])
-		If $hControl <> "" And ControlCommand($hWnd, "", $hControl, "IsVisible") Then
-			ControlClick($hWnd, "", $hControl)
-		EndIf
-	Until 1
-	Opt("WinTitleMatchMode", $oldMatchMode)
-	Opt("WinSearchChildren", $oldChildMode)
-	SetError($error)
-EndFunc   ;==>_RefreshSystemTray
+Func _RefreshSystemTray($nDelay = 1000);刷新托盘图标
+        Local $hWnd, $hControl, $posStart, $posWin, $posX, $posY, $error = 0
+        ; Save Opt settings
+        Local $oldChildMode = Opt("WinSearchChildren", 1)
+        Local $oldMatchMode = Opt("WinTitleMatchMode", 4)
+        Do   ; Pseudo loop
+                $hWnd = WinGetHandle("[CLASS:Shell_TrayWnd]")
+                If @error Then
+                        $error = 1
+                        ExitLoop
+                EndIf
+                $hControl = ControlGetHandle($hWnd, "", "Button2")
+                ; We're on XP and the Hide Inactive Icons button is there, so expand it
+                If $hControl <> "" AND ControlCommand($hWnd, "", $hControl, "IsVisible") Then
+                        ControlClick($hWnd, "", $hControl)
+                        Sleep($nDelay)
+                EndIf
+                $posStart = MouseGetPos()
+                $posWin = WinGetPos($hWnd)
+                $posY = $posWin[1]
+                While $posY < $posWin[1] + $posWin[3]
+                        $posX = $posWin[0]
+                        While $posX < $posWin[0] + $posWin[2]
+                                DllCall("user32.dll", "int", "SetCursorPos", "int", $posX, "int", $posY)
+                                If @error Then
+                                        $error = 2
+                                        ExitLoop 3   ; Jump out of While/While/Do
+                                EndIf
+                                $posX += 8
+                        WEnd
+                        $posY += 8
+                WEnd
+                DllCall("user32.dll", "int", "SetCursorPos", "int", $posStart[0], "int", $posStart[1])
+                ; We're on XP so we need to hide the inactive icons again.
+                If $hControl <> "" AND ControlCommand($hWnd, "", $hControl, "IsVisible") Then
+                        ControlClick($hWnd, "", $hControl)
+                EndIf
+        Until 1
+        ; Restore Opt settings
+        Opt("WinSearchChildren", $oldChildMode)
+        Opt("WinTitleMatchMode", $oldMatchMode)
+        If $error Then
+                Return SetError($error, 0, 0)
+        Else
+                Return 1
+        EndIf
+EndFunc   ;==>_RefreshSystemT
 
 ;此文件为CJX规则更新小助手的配置文件 请不要删除
 ;若被删除 将启用默认设置
