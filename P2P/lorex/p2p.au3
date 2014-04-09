@@ -1,15 +1,11 @@
+#Region ;**** 参数创建于 ACNWrapper_GUI ****
+#PRE_Outfile=N:\脚源包\workitems\P2P\lorex\p2p.exe
+#PRE_Compression=4
+#PRE_Res_Fileversion=1.0.0.10
+#PRE_Res_Fileversion_AutoIncrement=p
+#PRE_Res_requestedExecutionLevel=None
+#EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=1.0.0.8
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
 ;#PRE_Run_Tidy=                   				;脚本整理
 ;#PRE_Run_Obfuscator=      						;代码迷惑
@@ -30,7 +26,7 @@
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 #include 'msgboxDJS_UDF.au3'
-$msg = MsgBoxDJS(0 + 48 + 4, '等待读取lorex ID状态', '等待读取lorex ID状态，' & @CRLF & '请不要做其他操作' & @CRLF & '如果不能自动关闭请手动点“是”', 5, 2)
+$msg = MsgBoxDJS(0 + 48 + 4, '等待读取lorex ID状态', '等待读取lorex ID状态，' & @CRLF & '请不要做其他操作' & @CRLF & '如果不能自动关闭请手动点“是”', 9, 2)
 If $msg = 6 Then 
 	ProcessClose ("cmd.exe")
 	ProcessClose ("OsnClientApp.exe")
