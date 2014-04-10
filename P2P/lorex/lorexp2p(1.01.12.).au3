@@ -5,7 +5,7 @@
 #PRE_UseUpx=n
 #PRE_Res_Comment=lorexp2p
 #PRE_Res_Description=lorexp2p
-#PRE_Res_Fileversion=2.0.0.8
+#PRE_Res_Fileversion=2.0.0.10
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=lorexp2p SDK 1.01.08
 #PRE_Res_SaveSource=y
