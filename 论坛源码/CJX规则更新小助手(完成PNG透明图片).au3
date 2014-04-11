@@ -354,7 +354,6 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 		GUICtrlSetData($Label2, "更新完成")
 		GUICtrlSetColor($Label2, 0x3399FF)
 		GBNNJC()
-		SXNN()
 	EndIf
 EndFunc   ;==>bbhdb
 
@@ -364,15 +363,15 @@ Func THJGZ();更新奶牛CJX规则
 		FileDelete(@TempDir & "\update.dat")	
 EndFunc   ;==>THJGZ
 
-Func SXNN()
-	Run(@ScriptDir & "\AdMunch.exe")
-	WinWaitActive ("Ad Muncher 4.93 参数配置","")
-	WinClose("Ad Muncher 4.93 参数配置")
-EndFunc
+	
 
 Func GBNNJC()
 	If Not ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
+	Else
+		Run(@ScriptDir & "\AdMunch.exe")
+		WinWaitActive ("Ad Muncher 4.93 参数配置","")
+		WinClose("Ad Muncher 4.93 参数配置")
 	EndIf
 EndFunc	
 
