@@ -270,7 +270,6 @@ Func yctptb();隐藏托盘
 EndFunc   ;==>yctptb
 
 Func ljgx();立即更新
-	GBNNJC()
 	CJXBAK()
 	CJZGX();这里在加个判断
 EndFunc   ;==>ljgx
@@ -296,13 +295,7 @@ Func ExitScript()
 	Exit ; $Quit
 EndFunc   ;==>ExitScript
 
-Func GBNNJC()
-	If ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
-		ProcessClose("AdMunch.exe")
-		_RefreshSystemTray()
-		;_SysTrayIcon_Clean("AdMunch.exe")
-	EndIf
-EndFunc	
+
 
 Func CJXBAK();检测CJX备份文件是否存在
 	If FileExists("CustomStrings.dat.BAK") Then
@@ -346,7 +339,7 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 		GUICtrlSetData($Label2, "已是最新")
 		GUICtrlSetColor($Label2, 0x3399FF)
 		FileDelete(@TempDir & "\update.dat")
-		ShellExecute("AdMunch.exe", "", @ScriptDir)
+		GBNNJC()
 	Else
 		GUICtrlSetData($Label2, "正在更新中")
 		GUICtrlSetColor($Label2, 0x3399FF)
@@ -355,17 +348,28 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 		BDCJXGZ()
 		GUICtrlSetData($Label2, "更新完成")
 		GUICtrlSetColor($Label2, 0x3399FF)
+		GBNNJC()
+		SXNN()
 	EndIf
 EndFunc   ;==>bbhdb
 
 Func THJGZ();更新奶牛CJX规则
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
-		FileDelete(@TempDir & "\update.dat")
-		;_SysTrayIcon_Clean("AdMunch.exe");刷新托盘图标
-		_RefreshSystemTray()
-		ShellExecute("AdMunch.exe", "", @ScriptDir)
+		FileDelete(@TempDir & "\update.dat")	
 EndFunc   ;==>THJGZ
+
+Func SXNN()
+	Run(@ScriptDir & "\AdMunch.exe")
+	WinWaitActive ("Ad Muncher 4.93 参数配置","")
+	WinClose("Ad Muncher 4.93 参数配置")
+EndFunc
+
+Func GBNNJC()
+	If Not ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
+		ShellExecute("AdMunch.exe", "", @ScriptDir)
+	EndIf
+EndFunc	
 
 Func gzxz();现在CJX规则文件
 	GUICtrlSetData($Label2, "读取更新")
