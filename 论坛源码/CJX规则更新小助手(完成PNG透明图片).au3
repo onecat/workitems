@@ -40,6 +40,7 @@
 #include <APIConstants.au3>
 #include <GDIPlus.au3>
 #include <Memory.au3>
+#Include <Misc.au3>
 HotKeySet("^u", "ljgx")
 HotKeySet("^q", "yctptb")
 Opt("TrayIconHide", 0)
@@ -53,6 +54,10 @@ Local $size , $get
 If Not FileExists("AdMunch.exe") Then
     MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
     Exit
+EndIf
+
+If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开
+	Exit
 EndIf
 
 
