@@ -373,8 +373,12 @@ Func GBNNJC();更新规则判断奶牛进程
 	If Not ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
 	Else
-		Run(@ScriptDir & "\AdMunch.exe")
-		WinWaitActive ("Ad Muncher 4.93 参数配置","")
+		Run(@ScriptDir & "\AdMunch.exe");暂时就这样
+		WinWait("Ad Muncher 4.93 参数配置", "",2)
+		Local $aPos = WinGetPos("Ad Muncher 4.93 参数配置")
+		WinSetState("Ad Muncher 4.93 参数配置", "", @SW_HIDE)
+		WinMove("Ad Muncher 4.93 参数配置", "", -100, -100, -100, -100)
+		WinMove("Ad Muncher 4.93 参数配置", "", $aPos[0], $aPos[1], $aPos[2], $aPos[3])
 		WinClose("Ad Muncher 4.93 参数配置")
 	EndIf
 EndFunc	
