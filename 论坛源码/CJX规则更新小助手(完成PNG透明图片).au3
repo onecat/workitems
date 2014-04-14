@@ -1,7 +1,7 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手.exe|-1
-#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手.exe
+#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V2.0 by xiaozhan.exe|-1
+#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V2.0 by xiaozhan.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
@@ -51,7 +51,7 @@ Global Const $STM_GETIMAGE = 0x0173
 Global $hForm, $Pic, $hPic, $hBitmap, $hObj, $hImage, $pStream, $bData, $hData, $pData, $tData, $Width, $Height, $Lenght
 Local $size , $get
 
-If Not FileExists("AdMunch.exe") Then
+If Not FileExists("AdMunch.exe") Then;检测文件是否存在
     MsgBox(64,"友情提示","请将本程序置于奶牛(AdMunch)安装目录下运行！")
     Exit
 EndIf
@@ -62,7 +62,7 @@ EndIf
 
 
 #Region ### START Koda GUI section ### Form=
-$Form1 = GUICreate("CJX规则更新小助手", 336, 255, 197, 124, $WS_SYSMENU)
+$Form1 = GUICreate("CJX规则更新小助手", 336, 255, -1, -1, $WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
