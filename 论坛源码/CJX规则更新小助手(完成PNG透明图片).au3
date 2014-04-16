@@ -1,6 +1,6 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V2.0 by xiaozhan.exe|-1
+#PRE_icon=CJX规则更新小助手.exe|-1
 #PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V2.0 by xiaozhan.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
@@ -56,7 +56,7 @@ If Not FileExists("AdMunch.exe") Then;检测文件是否存在
     Exit
 EndIf
 
-If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开 
+If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开  
 	Exit
 EndIf
 
@@ -330,15 +330,27 @@ EndFunc
 
 Func WLSB();判断update.dat文件存在性
 	If FileExists(@TempDir & "\update.dat") Then
-		BDX()
+		BDX();判断CJX规则的大小是否一致
 	Else
 		GUICtrlSetData($Label2, "更新失败")
 		GUICtrlSetColor($Label2, 0x3399FF)
 	EndIf
 EndFunc   ;==>WLSB
 
-Func BDX()
-	$url = "https://cjxlist.googlecode.com/svn/CustomStrings.dat"
+Func BDX();判断CJX规则的大小是否一致
+	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$size = Int(InetGetSize($url) / 1024)
+	$data = Int(FileGetSize(@TempDir & "\update.dat") / 1024)
+	If $size = $data Then
+		bbhdb()
+	Else
+		gzxz1()
+		BDX1();判断CJX规则的大小是否一致
+	EndIf
+EndFunc 
+
+Func BDX1();判断CJX规则的大小是否一致
+	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
 	$size = Int(InetGetSize($url) / 1024)
 	$data = Int(FileGetSize(@TempDir & "\update.dat") / 1024)
 	If $size = $data Then
@@ -348,7 +360,6 @@ Func BDX()
 		GUICtrlSetColor($Label2, 0x3399FF)
 	EndIf
 EndFunc 
-
 
 Func bbhdb();判断网络CJX规则和本地CJX规则 
 	$HWL = _StringToHex(WLCJXGZ())
@@ -398,6 +409,19 @@ Func GBNNJC();更新规则判断奶牛进程和刷新规则版本号
 EndFunc	
 
 Func gzxz();现在CJX规则文件
+	GUICtrlSetData($Label2, "读取更新")
+	GUICtrlSetColor($Label2, 0x3399FF)
+	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$get = InetGet($url, @TempDir & "\update.dat", 1, 1)
+	GUICtrlSetData($Label7, "正在读取最新CJX规则,请稍后....")
+	$size = Int(InetGetSize($url) / 1024)
+	AdlibRegister("Down")
+	Do
+		Sleep(250)
+	Until InetGetInfo($get, 2)
+EndFunc   ;==>gzxz
+
+Func gzxz1();现在CJX规则文件
 	GUICtrlSetData($Label2, "读取更新")
 	GUICtrlSetColor($Label2, 0x3399FF)
 	$url = "https://cjxlist.googlecode.com/svn/CustomStrings.dat"
