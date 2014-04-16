@@ -338,7 +338,7 @@ Func WLSB();判断update.dat文件存在性
 EndFunc   ;==>WLSB
 
 Func BDX()
-	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$url = "https://cjxlist.googlecode.com/svn/CustomStrings.dat"
 	$size = Int(InetGetSize($url) / 1024)
 	$data = Int(FileGetSize(@TempDir & "\update.dat") / 1024)
 	If $size = $data Then
@@ -350,7 +350,7 @@ Func BDX()
 EndFunc 
 
 
-Func bbhdb();判断网络CJX规则和本地CJX规则
+Func bbhdb();判断网络CJX规则和本地CJX规则 
 	$HWL = _StringToHex(WLCJXGZ())
 	$HBD = _StringToHex(BDCJXGZ())
 	If $HWL <= $HBD Then
@@ -400,7 +400,7 @@ EndFunc
 Func gzxz();现在CJX规则文件
 	GUICtrlSetData($Label2, "读取更新")
 	GUICtrlSetColor($Label2, 0x3399FF)
-	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$url = "https://cjxlist.googlecode.com/svn/CustomStrings.dat"
 	$get = InetGet($url, @TempDir & "\update.dat", 1, 1)
 	GUICtrlSetData($Label7, "正在读取最新CJX规则,请稍后....")
 	$size = Int(InetGetSize($url) / 1024)
