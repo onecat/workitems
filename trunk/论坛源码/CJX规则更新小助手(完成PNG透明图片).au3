@@ -56,7 +56,7 @@ If Not FileExists("AdMunch.exe") Then;检测文件是否存在
     Exit
 EndIf
 
-If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开
+If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开 
 	Exit
 EndIf
 
@@ -76,18 +76,19 @@ $Label2 = GUICtrlCreateLabel("", 120, 24, 88, 17)
 $Label3 = GUICtrlCreateLabel("本地规则版本号：", 8, 56, 100, 17)
 GUICtrlSetColor($Label3, 0x6633CC)
 $Label4 = GUICtrlCreateLabel("", 120, 56, 84, 17)
-$Progress1 = GUICtrlCreateProgress(8, 112, 177, 17)
-$Button1 = GUICtrlCreateButton("立即更新", 8, 160, 73, 33)
+$Progress1 = GUICtrlCreateProgress(8, 112, 186, 17)
+$Button1 = GUICtrlCreateButton("立即更新", 8, 160, 73, 33,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
 ;$Button2 = GUICtrlCreateButton("代理更新", 104, 160, 73, 33)
 $Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 168, 130, 17)
 GUICtrlSetColor($Label5, 0xFF00FF)
-$Label6 = GUICtrlCreateLabel("",  110, 136, 100, 17)
+$Label6 = GUICtrlCreateLabel("",  126, 136, 68, 17,$SS_CENTER)
 GUICtrlSetColor($Label6, 0x0000FF)
-$Label7 = GUICtrlCreateLabel("", 8, 88, 180, 17)
+$Label7 = GUICtrlCreateLabel("", 8, 88, 180, 17,$SS_CENTER)
 GUICtrlSetColor($Label7, 0x0000FF)
 ;-----------------------------------------------------------------------------
 PN()
-$Pic = GUICtrlCreatePic("", 200, 24, 121, 113, $WS_EX_TRANSPARENT)
+$Pic = GUICtrlCreatePic("", 208, 24, 121, 113, $WS_EX_TRANSPARENT)
 $hPic = GUICtrlGetHandle($Pic)
 ; 设置位图到控件
 _SendMessage($hPic, $STM_SETIMAGE, 0, $hBitmap)
@@ -329,12 +330,25 @@ EndFunc
 
 Func WLSB();判断update.dat文件存在性
 	If FileExists(@TempDir & "\update.dat") Then
-		bbhdb()
+		BDX()
 	Else
 		GUICtrlSetData($Label2, "更新失败")
 		GUICtrlSetColor($Label2, 0x3399FF)
 	EndIf
 EndFunc   ;==>WLSB
+
+Func BDX()
+	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$size = Int(InetGetSize($url) / 1024)
+	$data = Int(FileGetSize(@TempDir & "\update.dat") / 1024)
+	If $size = $data Then
+		bbhdb()
+	Else
+		GUICtrlSetData($Label2, "更新失败")
+		GUICtrlSetColor($Label2, 0x3399FF)
+	EndIf
+EndFunc 
+
 
 Func bbhdb();判断网络CJX规则和本地CJX规则
 	$HWL = _StringToHex(WLCJXGZ())
@@ -348,12 +362,12 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 	Else
 		GUICtrlSetData($Label2, "正在更新中")
 		GUICtrlSetColor($Label2, 0x3399FF)
-		CJXGZGX()
-		THJGZ();这里面第2次会有问题
+		CJXGZGX();更新规则自定义规则合并
+		THJGZ();更新奶牛CJX规则
 		BDCJXGZ()
 		GUICtrlSetData($Label2, "更新完成")
 		GUICtrlSetColor($Label2, 0x3399FF)
-		GBNNJC()
+		GBNNJC();更新规则判断奶牛进程和刷新规则版本号
 	EndIf
 EndFunc   ;==>bbhdb
 
@@ -369,7 +383,7 @@ Func YZXPD();已经最新规则判断奶牛进程
 	EndIf
 EndFunc
 
-Func GBNNJC();更新规则判断奶牛进程
+Func GBNNJC();更新规则判断奶牛进程和刷新规则版本号
 	If Not ProcessExists("AdMunch.exe") Then ; Check if the Notepad process is running.
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
 	Else
@@ -457,7 +471,7 @@ Func BDCJXGZ();获取本地CJX规则
 	Next
 EndFunc   ;==>BDCJXGZ
 
-Func CJXGZGX()
+Func CJXGZGX();更新规则自定义规则合并
 	Local $aFiles = @ScriptDir & "\CustomStrings.dat"
 	Local $bFiles = @TempDir & "\update.dat"
 	$aFile = FileOpen($aFiles)
@@ -478,53 +492,6 @@ Func CJXGZGX()
 EndFunc   ;==>CJXGZGX
 
 
-Func _RefreshSystemTray($nDelay = 1000);刷新托盘图标
-        Local $hWnd, $hControl, $posStart, $posWin, $posX, $posY, $error = 0
-        ; Save Opt settings
-        Local $oldChildMode = Opt("WinSearchChildren", 1)
-        Local $oldMatchMode = Opt("WinTitleMatchMode", 4)
-        Do   ; Pseudo loop
-                $hWnd = WinGetHandle("[CLASS:Shell_TrayWnd]")
-                If @error Then
-                        $error = 1
-                        ExitLoop
-                EndIf
-                $hControl = ControlGetHandle($hWnd, "", "Button2")
-                ; We're on XP and the Hide Inactive Icons button is there, so expand it
-                If $hControl <> "" AND ControlCommand($hWnd, "", $hControl, "IsVisible") Then
-                        ControlClick($hWnd, "", $hControl)
-                        Sleep($nDelay)
-                EndIf
-                $posStart = MouseGetPos()
-                $posWin = WinGetPos($hWnd)
-                $posY = $posWin[1]
-                While $posY < $posWin[1] + $posWin[3]
-                        $posX = $posWin[0]
-                        While $posX < $posWin[0] + $posWin[2]
-                                DllCall("user32.dll", "int", "SetCursorPos", "int", $posX, "int", $posY)
-                                If @error Then
-                                        $error = 2
-                                        ExitLoop 3   ; Jump out of While/While/Do
-                                EndIf
-                                $posX += 8
-                        WEnd
-                        $posY += 8
-                WEnd
-                DllCall("user32.dll", "int", "SetCursorPos", "int", $posStart[0], "int", $posStart[1])
-                ; We're on XP so we need to hide the inactive icons again.
-                If $hControl <> "" AND ControlCommand($hWnd, "", $hControl, "IsVisible") Then
-                        ControlClick($hWnd, "", $hControl)
-                EndIf
-        Until 1
-        ; Restore Opt settings
-        Opt("WinSearchChildren", $oldChildMode)
-        Opt("WinTitleMatchMode", $oldMatchMode)
-        If $error Then
-                Return SetError($error, 0, 0)
-        Else
-                Return 1
-        EndIf
-EndFunc   ;==>_RefreshSystemT
 
 ;此文件为CJX规则更新小助手的配置文件 请不要删除
 ;若被删除 将启用默认设置
