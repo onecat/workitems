@@ -44,7 +44,8 @@
 HotKeySet("^u", "ljgx")
 HotKeySet("^q", "yctptb")
 Opt("TrayIconHide", 0)
-Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
+Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单. 
+Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单. 
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 Global Const $STM_SETIMAGE = 0x0172
 Global Const $STM_GETIMAGE = 0x0173
@@ -154,6 +155,8 @@ While 1
 			kjqd()
 		Case $zdgx
 			zdgx()
+		Case $ljgx
+			ljgx()	
 		Case $yctptb
 			yctptb()
 		Case $Button1
@@ -344,6 +347,12 @@ Func BDX();判断CJX规则的大小是否一致
 	If $size = $data Then
 		bbhdb()
 	Else
+		GUICtrlSetData($Label2, "读取更新失败")
+		GUICtrlSetColor($Label2, 0x3399FF)
+		ZXJDT()
+		GUICtrlSetData($Label2, "6秒后切换线路")
+		GUICtrlSetColor($Label2, 0x3399FF)
+		Sleep(6*1000)
 		gzxz1()
 		BDX1();判断CJX规则的大小是否一致
 	EndIf
