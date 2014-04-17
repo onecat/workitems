@@ -49,6 +49,7 @@ Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
 Global Const $STM_SETIMAGE = 0x0172
 Global Const $STM_GETIMAGE = 0x0173
+Global $time = 6
 Global $hForm, $Pic, $hPic, $hBitmap, $hObj, $hImage, $pStream, $bData, $hData, $pData, $tData, $Width, $Height, $Lenght
 Local $size , $get
 
@@ -350,13 +351,19 @@ Func BDX();判断CJX规则的大小是否一致
 		GUICtrlSetData($Label2, "读取更新失败")
 		GUICtrlSetColor($Label2, 0x3399FF)
 		ZXJDT()
-		GUICtrlSetData($Label2, "6秒后切换线路")
-		GUICtrlSetColor($Label2, 0x3399FF)
+		AdlibRegister("timer",1000);倒计时切换通道
 		Sleep(6*1000)
 		gzxz1()
 		BDX1();判断CJX规则的大小是否一致
 	EndIf
 EndFunc 
+
+Func timer()
+        $time -= 1
+        GUICtrlSetData($Label2, $time & "秒后切换线路")
+		GUICtrlSetColor($Label2, 0x3399FF)
+        If $time <= 1 Then AdlibUnRegister()
+EndFunc   ;==>_timer
 
 Func BDX1();判断CJX规则的大小是否一致
 	$url = "http://cjxlist.googlecode.com/svn/CustomStrings.dat"
