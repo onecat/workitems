@@ -118,7 +118,7 @@ $tyctptb = TrayCreateItem("隐藏托盘图标"  &  "     Ctrl+Q") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "yctptb") ;注册第二个菜单项的（被点下）事件
 $tgy = TrayCreateItem("关于") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "guanyu") ;注册第二个菜单项的（被点下）事件
-TrayCreateItem("退出") ;创建第三个菜单项
+$ttc = TrayCreateItem("退出") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "ExitScript") ;注册第二个菜单项的（被点下）事件
 TraySetOnEvent($TRAY_EVENT_PRIMARYDOUBLE, "xianshi")
 TraySetClick(8) ;设置鼠标在系统托盘图标里面的点击模式 - 怎样的鼠标点击才会显示系统托盘的菜单  8 = 按下鼠标次要按键(通常右键)
@@ -281,17 +281,44 @@ Func yctptb();隐藏托盘
 EndFunc   ;==>yctptb
 
 Func ljgx();立即更新
+	PBNN();屏蔽按钮为灰色状态不可点击
+	CJXBAK()
+	CJZGX();这里在加个判断
+	XXAN();显示之前屏蔽的按钮
+EndFunc   ;==>ljgx
+
+Func PBNN();屏蔽按钮为灰色状态不可点击
 	_GUICtrlButton_Enable($Button1,False)
 	GUICtrlSetState($ljgx, $GUI_DISABLE)
 	TrayItemSetState($tljgx, $GUI_DISABLE)
 	TrayItemSetState($tljgx, $GUI_UNCHECKED)
-	CJXBAK()
-	CJZGX();这里在加个判断
+	GUICtrlSetState($tc, $GUI_DISABLE)
+	TrayItemSetState($ttc, $GUI_DISABLE)
+	GUICtrlSetState($gy, $GUI_DISABLE)
+	TrayItemSetState($tgy, $GUI_DISABLE)
+	GUICtrlSetState($kjqd, $GUI_DISABLE)
+	TrayItemSetState($tkjqd, $GUI_DISABLE)
+	GUICtrlSetState($zdgx, $GUI_DISABLE)
+	TrayItemSetState($tzdgx, $GUI_DISABLE)
+	GUICtrlSetState($yctptb, $GUI_DISABLE)
+	TrayItemSetState($tyctptb, $GUI_DISABLE)
+EndFunc
+
+Func XXAN();显示之前屏蔽的按钮
 	_GUICtrlButton_Enable($Button1,True)
 	GUICtrlSetState($ljgx, $GUI_ENABLE)
 	TrayItemSetState($tljgx, $GUI_ENABLE)
-	TrayItemSetState($tljgx, $GUI_CHECKED)
-EndFunc   ;==>ljgx
+	GUICtrlSetState($tc, $GUI_ENABLE)
+	TrayItemSetState($ttc, $GUI_ENABLE)
+	GUICtrlSetState($gy, $GUI_ENABLE)
+	TrayItemSetState($tgy, $GUI_ENABLE)
+	GUICtrlSetState($kjqd, $GUI_ENABLE)
+	TrayItemSetState($tkjqd, $GUI_ENABLE)
+	GUICtrlSetState($zdgx, $GUI_ENABLE)
+	TrayItemSetState($tzdgx, $GUI_ENABLE)
+	GUICtrlSetState($yctptb, $GUI_ENABLE)
+	TrayItemSetState($tyctptb, $GUI_ENABLE)
+EndFunc	
 
 Func guanyu();关于
 	TrayItemSetState($tgy, $GUI_UNCHECKED)
