@@ -4,7 +4,7 @@
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作
 #PRE_Res_Description=小站制作
-#PRE_Res_Fileversion=1.0.0.2
+#PRE_Res_Fileversion=1.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=小站制作
 #PRE_Res_requestedExecutionLevel=None
@@ -40,10 +40,7 @@ Else
 EndIf
 
 
-Func WLCJXGZ()
-$a=InetRead ( "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat" , 1)
-$array = StringRegExp(BinaryToString($a), '><td class="source">Xlist version (.*?)<br></td></tr', 2)
-EndFunc 
+
 
 Func bbhdb();判断网络CJX规则和本地CJX规则 
 	$HWL = _StringToHex(WLCJXGZ())
@@ -57,6 +54,12 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 	EndIf
 EndFunc   ;==>bbhdb
 
+Func WLCJXGZ()
+$a=InetRead ( "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat" , 1)
+$array = StringRegExp(BinaryToString($a), '><td class="source">Xlist version (.*?)<br></td></tr', 2)
+$GZ = $array[1]
+Return ($GZ)
+EndFunc 
 
 Func BDCJXGZ();获取本地CJX规则
 	$iPid=ProcessExists("AdMunch.exe")
