@@ -41,6 +41,7 @@
 #include <GDIPlus.au3>
 #include <Memory.au3>
 #Include <Misc.au3>
+#include <GuiButton.au3>
 HotKeySet("^u", "ljgx")
 HotKeySet("^q", "yctptb")
 Opt("TrayIconHide", 0)
@@ -111,7 +112,7 @@ $tkjqd = TrayCreateItem("开机启动") ;创建第一个菜单项
 TrayItemSetOnEvent(-1, "kjqd") ;注册第一个菜单项的（被点下）事件
 $tzdgx = TrayCreateItem("自动更新") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "zdgx") ;注册第二个菜单项的（被点下）事件
-TrayCreateItem("立即更新"  &  "           Ctrl+U") ;创建第三个菜单项
+$tljgx = TrayCreateItem("立即更新"  &  "           Ctrl+U") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "ljgx") ;注册第二个菜单项的（被点下）事件
 $tyctptb = TrayCreateItem("隐藏托盘图标"  &  "     Ctrl+Q") ;创建第三个菜单项
 TrayItemSetOnEvent(-1, "yctptb") ;注册第二个菜单项的（被点下）事件
@@ -280,8 +281,16 @@ Func yctptb();隐藏托盘
 EndFunc   ;==>yctptb
 
 Func ljgx();立即更新
+	_GUICtrlButton_Enable($Button1,False)
+	GUICtrlSetState($ljgx, $GUI_DISABLE)
+	TrayItemSetState($tljgx, $GUI_DISABLE)
+	TrayItemSetState($tljgx, $GUI_UNCHECKED)
 	CJXBAK()
 	CJZGX();这里在加个判断
+	_GUICtrlButton_Enable($Button1,True)
+	GUICtrlSetState($ljgx, $GUI_ENABLE)
+	TrayItemSetState($tljgx, $GUI_ENABLE)
+	TrayItemSetState($tljgx, $GUI_CHECKED)
 EndFunc   ;==>ljgx
 
 Func guanyu();关于
