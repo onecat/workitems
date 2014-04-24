@@ -364,6 +364,7 @@ Func _CoProcSend($vProcess, $vParameter, $iTimeout = 500, $fAbortIfHung = True)
 			, "int", 0, "ptr", DllStructGetPtr($COPYDATA), "int", $iFuFlags, "int", $iTimeout, "long_ptr", 0)
 	If @error Then Return SetError(3, 0, False) ; SendMessageTimeout Failed
 	If Not $aTmp[0] Then Return SetError(3, 0, False) ; SendMessageTimeout Failed
+	If $aTmp[7] <> 256 Then Return SetError(3, 0, False)
 	$aTmp = DllCall("user32.dll", "int", "PostMessage", "hwnd", $hWndTarget, "int", 0x400 + 0x64, "int", 0, "int", 0)
 	If @error Then Return SetError(4, 0, False)
 	If Not $aTmp[0] Then Return SetError(4, 0, False)
