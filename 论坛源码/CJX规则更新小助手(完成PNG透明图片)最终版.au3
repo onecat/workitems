@@ -66,7 +66,6 @@ EndIf
 
 #Region ### START Koda GUI section ### Form=
 $Form1 = GUICreate("CJX规则更新小助手", 336, 255, -1, -1, $WS_SYSMENU)
-
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
@@ -85,7 +84,7 @@ $Button1 = GUICtrlCreateButton("立即更新", 8, 160, 73, 33,$WS_GROUP)
 GUICtrlSetState(-1, $GUI_DEFBUTTON)
 ;$Button2 = GUICtrlCreateButton("代理更新", 104, 160, 73, 33)
 $Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 168, 130, 17)
-Global $iClose = GUICtrlCreateButton("N M 都什么破网速", 199, 185, 132, 20)
+;Global $iClose = GUICtrlCreateButton("N M 都什么破网速", 199, 185, 132, 20)
 GUICtrlSetColor($Label5, 0xFF00FF)
 $Label6 = GUICtrlCreateLabel("",  126, 136, 68, 17,$SS_CENTER)
 GUICtrlSetColor($Label6, 0x0000FF)
@@ -110,7 +109,6 @@ GUISetAccelerators($Form1_1_AccelTable)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
-
 $tkjqd = TrayCreateItem("开机启动") ;创建第一个菜单项
 $tzdgx = TrayCreateItem("自动更新") ;创建第三个菜单项
 $tljgx = TrayCreateItem("立即更新"  &  "           Ctrl+U") ;创建第三个菜单项
@@ -118,7 +116,7 @@ TrayItemSetOnEvent($tljgx, "ljgx") ;注册第二个菜单项的（被点下）事件
 $tyctptb = TrayCreateItem("隐藏托盘图标"  &  "     Ctrl+Q") ;创建第三个菜单项
 $tgy = TrayCreateItem("关于") ;创建第三个菜单项
 $ttc = TrayCreateItem("退出") ;创建第三个菜单项
- _tp()
+ _tp();运行过程中可以终止
 
 If Not FileExists("CJX规则更新小助手.ini") Then
 	Local $file = FileOpen("CJX规则更新小助手.ini", 1)
@@ -163,7 +161,7 @@ While 1
 	EndSwitch
 WEnd
 
-Func _xun()
+Func _xun();运行过程中可以终止
 	Switch GUIGetMsg()
 		Case $iClose,$tc,$ttc
 			Exit
@@ -308,14 +306,14 @@ Func yctptb();隐藏托盘
 EndFunc   ;==>yctptb
 
 Func ljgx();立即更新
-	AdlibRegister("_xun",100)
-	AdlibRegister("_tp",100)
+	AdlibRegister("_xun",100);运行过程中可以终止
+	AdlibRegister("_tp",100);运行过程中可以终止
 	PBNN();屏蔽按钮为灰色状态不可点击
 	CJXBAK()
 	CJZGX();这里在加个判断
 	XXAN();显示之前屏蔽的按钮
-	AdlibUnRegister("_xun")
-	AdlibUnRegister("_tp")
+	AdlibUnRegister("_xun");运行过程中可以终止
+	AdlibUnRegister("_tp");运行过程中可以终止
 EndFunc   ;==>ljgx
 
 Func PBNN();屏蔽按钮为灰色状态不可点击
