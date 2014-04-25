@@ -1,11 +1,11 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=CJX规则更新小助手.exe|-1
-#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V2.0 by xiaozhan.exe
+#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V1.0 by ilv.exe|-1
+#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V3.0 by xiaozhan.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
-#PRE_Res_Fileversion=2.0.0.0
+#PRE_Res_Fileversion=3.0.0.0
 #PRE_Res_LegalCopyright=小站制作 by xiaozhan
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -135,7 +135,7 @@ Else
 	ini()
 EndIf;判断结束
 
-TraySetState(2)
+TraySetState(2);
 
 Local $str = 'CJX规则更新小助手 程序制作 by xiaozhan\n\n致谢：奶牛开发者 规则维护者\n以及做出相关贡献的朋友！\n感谢ilv的大力支持'
 BDCJXGZ();获取本地版本号
@@ -163,7 +163,7 @@ WEnd
 
 Func _xun();运行过程中可以终止
 	Switch GUIGetMsg()
-		Case $iClose,$tc,$ttc
+		Case $tc ;$iClose,
 			Exit
 		Case $GUI_EVENT_CLOSE
 			GUISetState(@SW_HIDE, $Form1)
