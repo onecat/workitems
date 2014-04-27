@@ -46,10 +46,10 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 	$HWL = _StringToHex(WLCJXGZ())
 	$HBD = _StringToHex(BDCJXGZ())
 	If $HWL <= $HBD Then
-		 MsgBox(0,"奶牛CJX规则","奶牛CJX规则已经是最新")
+		 MsgBox(0,"奶牛CJX规则","奶牛CJX规则已经是最新" & @CRLF & "新版本   ：" & WLCJXGZ() & @CRLF & "本地版本：" & BDCJXGZ())
 		 Exit
 	Else
-		 MsgBox(0,"奶牛CJX规则","奶牛CJX规则有新版本及时更新")
+		 MsgBox(0,"奶牛CJX规则","奶牛CJX规则有新版本及时更新"& @CRLF & "新版本   ：" & WLCJXGZ() & @CRLF & "本地版本：" & BDCJXGZ())
 		 Exit
 	EndIf
 EndFunc   ;==>bbhdb
