@@ -6,6 +6,7 @@ If WinExists("RegSvr32","确定") Then
 	Send("{enter}")
     MsgBox(1, "文件已删除", "文件已经删除了")
 EndIf
+
 FileDelete(@SystemDir & "\RSVideo.ocx")
 FileDelete(@SystemDir & "\AVI.dll")
 FileDelete(@SystemDir & "\hi_h264dec_w.dll")
