@@ -5,7 +5,7 @@
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
-#PRE_Res_Fileversion=3.0.0.0
+#PRE_Res_Fileversion=3.5.0.0
 #PRE_Res_LegalCopyright=小站制作 by xiaozhan
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -267,45 +267,128 @@ Func ini();配置文件存在就显示状态
 EndFunc   ;==>ini
 
 Func qlhc()
-$Form1_1 = GUICreate("浏览器缓存", 228, 161, 192, 124,$WS_VISIBLE)
-$Radio1 = GUICtrlCreateRadio("IE缓存", 24, 8, 57, 41)
-$Radio2 = GUICtrlCreateRadio("傲游", 24, 48, 41, 33)
-$Button11 = GUICtrlCreateButton("确定", 16, 96, 73, 25)
-$Button12 = GUICtrlCreateButton("退出", 120, 96, 73, 25)
+$Form1_1 = GUICreate("浏览器缓存",  229, 228, -1, -1,$WS_VISIBLE)
+$Radio1 = GUICtrlCreateRadio("IE", 24, 16, 41, 25)
+GUICtrlSetState($Radio1, $GUI_CHECKED)
+$Radio2 = GUICtrlCreateRadio("傲游", 24, 40, 41, 25)
+$Radio3 = GUICtrlCreateRadio("火狐", 24, 64, 57, 25)
+$Radio4 = GUICtrlCreateRadio("谷歌", 24, 92, 57, 17)
+$Button11 = GUICtrlCreateButton("确定", 8, 160, 73, 25,$WS_GROUP)
+GUICtrlSetState(-1, $GUI_DEFBUTTON)
+$Button12 = GUICtrlCreateButton("退出", 112, 160, 73, 25)
+$Label11 = GUICtrlCreateLabel("  暂时不支持绿色版浏览器", 16, 128, 158, 17)
+GUICtrlSetColor($Label11, 0x0000FF)
+$Label12 = GUICtrlCreateLabel("", 96, 22, 116, 17)
+$Label13 = GUICtrlCreateLabel("", 96, 46, 116, 17)
+$Label14 = GUICtrlCreateLabel("", 96, 70, 116, 17)
+$Label15 = GUICtrlCreateLabel("", 96, 94, 116, 17)
+
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
 While 1
 	$nMsg = GUIGetMsg()
 	Switch $nMsg
-		Case $Button12
+	Case $Button12
 			GUIDelete($Form1_1)
 			ExitLoop
-		Case $Button11
-			If  BitAnd(GUICtrlRead($Radio1), $GUI_CHECKED) Then ;BitAnd 比较前后两个值
+	Case $radio1 
+		If	BitAND(GUICtrlRead($radio1), $GUI_CHECKED) = $GUI_CHECKED Then
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label14, "")
+			GUICtrlSetData($Label15, "")
+		EndIf
+	Case $radio2
+		If	BitAND(GUICtrlRead($radio2), $GUI_CHECKED) = $GUI_CHECKED Then
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label14, "")
+			GUICtrlSetData($Label15, "")
+		EndIf	
+	Case $radio3
+		If	BitAND(GUICtrlRead($radio3), $GUI_CHECKED) = $GUI_CHECKED Then
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label15, "")
+		EndIf
+	Case $radio4
+		If	BitAND(GUICtrlRead($radio4), $GUI_CHECKED) = $GUI_CHECKED Then
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label14, "")
+		EndIf	
+	Case $Button11
+		If  BitAnd(GUICtrlRead($Radio1), $GUI_CHECKED) Then ;IE
 			GUISetState($Radio2, $GUI_UNCHECKED)
-			;GUISetState($Radio3, $GUI_UNCHECKED)
-			MsgBox(0,"1","IE")
+			GUISetState($Radio3, $GUI_UNCHECKED)
+			GUISetState($Radio4, $GUI_UNCHECKED)
 			RunWait(@ComSpec & ' /c ' & 'RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 8', '', @SW_HIDE)
+			GUICtrlSetData($Label12, "清理IE缓存成功")
+			GUICtrlSetColor($Label12, 0xFF00FF)
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label14, "")
+			GUICtrlSetData($Label15, "")
 		Else	
 			GUISetState($Radio1, $GUI_UNCHECKED)
 			GUISetState($Radio2, $GUI_CHECKED)
-			;GUISetState($Radio3, $GUI_CHECKED)
+			GUISetState($Radio3, $GUI_CHECKED)
+			GUISetState($Radio4, $GUI_CHECKED)
 		EndIf	
 		
-		If  BitAnd(GUICtrlRead($Radio2), $GUI_CHECKED) Then 
-			;GUISetState($Radio3, $GUI_UNCHECKED)
-			GUISetState($Radio2, $GUI_UNCHECKED)
-			MsgBox(0,"1","傲游")
+		If  BitAnd(GUICtrlRead($Radio2), $GUI_CHECKED) Then ;傲游
+			GUISetState($Radio1, $GUI_UNCHECKED)
+			GUISetState($Radio3, $GUI_UNCHECKED)
+			GUISetState($Radio4, $GUI_UNCHECKED)
+			RunWait(@ComSpec & ' /c ' & 'del /f /s /q '& @TempDir & '"\Maxthon3Cache\Temp\Webkit\Cache\*.*"', '', @SW_HIDE)
+			GUICtrlSetData($Label13, "清理傲游缓存成功")
+			GUICtrlSetColor($Label13, 0xFF00FF)
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label14, "")
+			GUICtrlSetData($Label15, "")
 		Else	
 			GUISetState($Radio2, $GUI_UNCHECKED)
 			GUISetState($Radio1, $GUI_CHECKED)
-			;GUISetState($Radio3, $GUI_CHECKED)
+			GUISetState($Radio3, $GUI_CHECKED)
+			GUISetState($Radio4, $GUI_CHECKED)
 		EndIf
+		
+		If  BitAnd(GUICtrlRead($Radio3), $GUI_CHECKED) Then ;火狐
+			GUISetState($Radio1, $GUI_UNCHECKED)
+			GUISetState($Radio2, $GUI_UNCHECKED)
+			GUISetState($Radio4, $GUI_UNCHECKED)
+			RunWait(@ComSpec & ' /c ' & 'del /f /s /q ' & StringTrimRight(@TempDir,5) & '"\Mozilla\Firefox\Profiles\7wayvzhv.default\Cache\*.*"', '', @SW_HIDE)
+			RunWait(@ComSpec & ' /c ' & 'del /f /s /q ' & StringTrimRight(@TempDir,5) & '"\Mozilla\Firefox\Profiles\7wayvzhv.default\OfflineCache\*.*"', '', @SW_HIDE)
+			GUICtrlSetData($Label14, "清理火狐缓存成功")
+			GUICtrlSetColor($Label14, 0xFF00FF)
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label15, "")
+		Else	
+			GUISetState($Radio3, $GUI_UNCHECKED)
+			GUISetState($Radio1, $GUI_CHECKED)
+			GUISetState($Radio2, $GUI_CHECKED)
+			GUISetState($Radio4, $GUI_CHECKED)
+		EndIf
+		
+		If  BitAnd(GUICtrlRead($Radio4), $GUI_CHECKED) Then ;谷歌
+			GUISetState($Radio1, $GUI_UNCHECKED)
+			GUISetState($Radio2, $GUI_UNCHECKED)
+			GUISetState($Radio3, $GUI_UNCHECKED)
+			RunWait(@ComSpec & ' /c ' & 'del /f /s /q ' & StringTrimRight(@TempDir,5) & '"\Google\Chrome\User Data\Default\Cache\*.*"', '', @SW_HIDE)
+			GUICtrlSetData($Label15, "清理谷歌缓存成功")
+			GUICtrlSetColor($Label15, 0xFF00FF)
+			GUICtrlSetData($Label12, "")
+			GUICtrlSetData($Label13, "")
+			GUICtrlSetData($Label14, "")
+		Else	
+			GUISetState($Radio4, $GUI_UNCHECKED)
+			GUISetState($Radio1, $GUI_CHECKED)
+			GUISetState($Radio2, $GUI_CHECKED)
+			GUISetState($Radio3, $GUI_CHECKED)
+		EndIf
+;~ 		GUIDelete($Form1_1)
+;~ 		ExitLoop
 	EndSwitch
 WEnd
-
-		;
 EndFunc
 Func kjqd();开机启动
 	$bt = _WinAPI_GetProcessName()
