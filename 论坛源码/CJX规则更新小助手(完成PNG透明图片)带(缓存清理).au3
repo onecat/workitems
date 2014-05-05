@@ -1,7 +1,7 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V1.0 by ilv.exe|-1
-#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V3.0 by xiaozhan.exe
+#PRE_Icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V1.0 by ilv.exe
+#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V3.5 by xiaozhan.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
@@ -62,7 +62,7 @@ If Not FileExists("AdMunch.exe") Then;检测文件是否存在
     Exit
 EndIf
 
-If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开  
+If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开   
 	Exit
 EndIf
 
@@ -448,12 +448,14 @@ EndFunc   ;==>ljgx
 Func PBNN();屏蔽按钮为灰色状态不可点击
 	_GUICtrlButton_Enable($Button1,False)
 	GUICtrlSetState($ljgx, $GUI_DISABLE)
+	_GUICtrlButton_Enable($Button2,False)
 	TrayItemSetState($tljgx, $GUI_DISABLE)
 	TrayItemSetState($tljgx, $GUI_UNCHECKED)
 EndFunc
 
 Func XXAN();显示之前屏蔽的按钮
 	_GUICtrlButton_Enable($Button1,True)
+	_GUICtrlButton_Enable($Button2,True)
 	GUICtrlSetState($ljgx, $GUI_ENABLE)
 	TrayItemSetState($tljgx, $GUI_ENABLE)
 EndFunc	
