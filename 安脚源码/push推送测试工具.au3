@@ -2,7 +2,7 @@
 #PRE_Icon=N:\工具\QQ\3D风格ICO图标\mail-outlook.ico
 #PRE_Outfile=C:\Users\chtyfox\Desktop\push推送测试工具.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=1.0.0.5
+#PRE_Res_Fileversion=1.0.0.6
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -42,7 +42,7 @@ $Button2 = GUICtrlCreateButton("刷新", 0, 0, 49, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlCreateLabel("注意事项:测试1次后必须点击刷新在测试", 58, 7, 223, 17)
 GUICtrlCreateLabel("请输入推送ID：", 282, 7, 87, 17)
-$Input1 = GUICtrlCreateInput("CL499HRY1YYFUGPPWZ5J", 376, 2, 177, 21)
+$Input1 = GUICtrlCreateInput("", 376, 2, 177, 21)
 $Button1 = GUICtrlCreateButton("输入", 560, 0, 49, 25)
 GUICtrlCreateObj($oIE, 0, 25, 800, 561)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP+$GUI_DOCKBOTTOM)
