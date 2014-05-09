@@ -1,9 +1,9 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
 #PRE_Icon=N:\工具\QQ\3D风格ICO图标\recycle full.ico
-#PRE_Outfile=C:\Users\chtyfox\Desktop\网页push推送.exe
+#PRE_Outfile=C:\Users\chtyfox\Desktop\浏览器例子.exe
 #PRE_Compression=4
 #PRE_Res_Fileversion=1.0.0.0
-#PRE_Res_requestedExecutionLevel=None
+#PRE_Res_requestedExecutionLevel=requireAdministrator
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
@@ -31,7 +31,7 @@
 #include <StaticConstants.au3>
 #include <IE.au3>
  
-Global $Title = "网页push推送通过服务器", $URLClick = 0
+Global $Title = "启动手机软件就会push注册到服务器", $URLClick = 0
  
 $oIE = _IECreateEmbedded()
  
@@ -40,7 +40,7 @@ GUICtrlCreateLabel("请输入推送ID:", 10, 7, 87, 17)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 $Input1 = GUICtrlCreateInput("", 98, 2, 513, 21)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKTOP+$GUI_DOCKHEIGHT)
-$Button5 = GUICtrlCreateButton("推送 >", 614, 0, 65, 25, 0x01)
+$Button5 = GUICtrlCreateButton("查看 >", 614, 0, 65, 25, 0x01)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlCreateObj($oIE, 0, 25, 800, 244)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP+$GUI_DOCKBOTTOM)
@@ -60,8 +60,8 @@ While 1
         Switch GUIGetMsg()
                 Case $GUI_EVENT_CLOSE
                                 Exit
-                Case $Button5 
-						_IENavigate($oIE, "http://121.199.60.164/tpns/apns.php?cmd=raise_event&uid=" & GUICtrlRead($Input1) & "&event_type=1399&event_time=1387967542")
+				Case $Button5 
+                        _IENavigate($oIE, "http://121.199.60.164/tpns/apns.php?cmd=reg_mapping&token=a3dc0053a361eb8192904d3d407f8a09e169c5978ff1d24d8b021e7157433b29&uid=" & GUICtrlRead($Input1) & "&appid=com.lttkrx.push")
                         $URLClick = 0
         EndSwitch
 WEnd
