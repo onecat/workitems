@@ -2,7 +2,7 @@
 #PRE_Icon=N:\工具\QQ\3D风格ICO图标\mail-outlook.ico
 #PRE_Outfile=C:\Users\chtyfox\Desktop\push推送测试工具.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=1.0.0.3
+#PRE_Res_Fileversion=1.0.0.5
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -32,16 +32,19 @@
 #include <StaticConstants.au3>
 #include <IE.au3>
  
-Global $Title = "push推送测试工具(显示外网IP地址才算可用推送)";, $URLClick = 0
+Global $Title = "push推送测试工具(显示外网IP地址才算可用推送)"
  
 
 $oIE = _IECreateEmbedded()
  
-$Form1 = GUICreate($Title, 535, 560, -1, -1);, BitOR($WS_MAXIMIZEBOX,$WS_MINIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_SYSMENU,$WS_CAPTION,$WS_OVERLAPPEDWINDOW,$WS_TILEDWINDOW,$WS_POPUP,$WS_POPUPWINDOW,$WS_GROUP,$WS_TABSTOP,$WS_BORDER,$WS_CLIPSIBLINGS))
-$Button3 = GUICtrlCreateButton("刷新", 0, 0, 49, 25)
+$Form1 = GUICreate($Title, 613, 561, -1, -1);, BitOR($WS_MAXIMIZEBOX,$WS_MINIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_SYSMENU,$WS_CAPTION,$WS_OVERLAPPEDWINDOW,$WS_TILEDWINDOW,$WS_POPUP,$WS_POPUPWINDOW,$WS_GROUP,$WS_TABSTOP,$WS_BORDER,$WS_CLIPSIBLINGS))
+$Button2 = GUICtrlCreateButton("刷新", 0, 0, 49, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
-GUICtrlCreateLabel("测试注意事项:测试1次后必须点击刷新在测试", 58, 7, 431, 17)
-GUICtrlCreateObj($oIE, 0, 25, 800, 560)
+GUICtrlCreateLabel("注意事项:测试1次后必须点击刷新在测试", 58, 7, 223, 17)
+GUICtrlCreateLabel("请输入推送ID：", 282, 7, 87, 17)
+$Input1 = GUICtrlCreateInput("CL499HRY1YYFUGPPWZ5J", 376, 2, 177, 21)
+$Button1 = GUICtrlCreateButton("输入", 560, 0, 49, 25)
+GUICtrlCreateObj($oIE, 0, 25, 800, 561)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP+$GUI_DOCKBOTTOM)
 GUISetState(@SW_SHOW)
  
@@ -51,11 +54,12 @@ _IENavigate($oIE, "http://50.16.231.7/iotc/pl/uid.html")
 While 1
         Switch GUIGetMsg()
                 Case $GUI_EVENT_CLOSE
-;~                         If MsgBox(1 + 32, $Title, "确定要退出？") = 1 Then
-;~                                 AdlibUnRegister()
-                                Exit
-;~                         EndIf
-                Case $Button3
-                        _IEAction($oIE, "refresh")
+						Exit
+				Case $Button1	
+						$Ele = _IEGetObjByName($oIE,"uid") ;注意相同name情况,需要第三参数
+						_IEFormElementSetValue($Ele,GUICtrlRead($Input1))		
+                Case $Button2
+						RunWait(@ComSpec & ' /c ' & 'RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 8', '', @SW_HIDE)
+						_IENavigate($oIE, "http://50.16.231.7/iotc/pl/uid.html")
         EndSwitch
 WEnd
