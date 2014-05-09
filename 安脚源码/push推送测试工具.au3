@@ -2,7 +2,7 @@
 #PRE_Icon=N:\工具\QQ\3D风格ICO图标\mail-outlook.ico
 #PRE_Outfile=C:\Users\chtyfox\Desktop\push推送测试工具.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=1.0.0.2
+#PRE_Res_Fileversion=1.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -32,7 +32,7 @@
 #include <StaticConstants.au3>
 #include <IE.au3>
  
-Global $Title = "push推送测试工具(显示外网IP地址才算ID成功推送)";, $URLClick = 0
+Global $Title = "push推送测试工具(显示外网IP地址才算可用推送)";, $URLClick = 0
  
 
 $oIE = _IECreateEmbedded()
