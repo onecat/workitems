@@ -1,0 +1,3 @@
+找到Scite下的 Au3.properties 
+将里面的AutoIt3Wrapper(ACNWrapper)全部换成 
+AccAu3Wrapper 即可
