@@ -1,0 +1,3 @@
+要放在这2个目录下才可以使用
+\Autoit3\Include
+\Autoit3\UserInclude
