@@ -60,11 +60,10 @@ EndFunc   ;==>bbhdb
 
 Func WLCJXGZ()
 Local $doc = _MHDocGetObj() ;创建document对象
-_MHNavigate($doc, "http://code.google.com/p/cjxlist/source/browse/CustomStrings.dat",4) ;网上获取百度源码并加载到mshtml,4 utf8编码转换
+_MHNavigate($doc, "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat",4) ;网上获取百度源码并加载到mshtml,4 utf8编码转换
 Local $su = _IEQuery($doc,"td","class=source") ;id方法对象
 Local $sText = _IEPropertyGet($su,"outertext") ;取显示文本
 $GZ = StringTrimLeft($sText,14)
-MsgBox(0,"",$GZ)
 Return ($GZ)
 EndFunc 
 
