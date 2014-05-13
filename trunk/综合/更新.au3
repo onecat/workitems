@@ -1,35 +1,3 @@
-#region ACN预处理程序参数(常用参数)
-#PRE_Icon= 										;图标,支持EXE,DLL,ICO
-#PRE_OutFile=									;输出文件名
-#PRE_OutFile_Type=exe							;文件类型
-#PRE_Compression=4								;压缩等级
-#PRE_UseUpx=y 									;使用压缩
-#PRE_Res_Comment= 								;程序注释
-#PRE_Res_Description=							;详细信息
-#PRE_Res_Fileversion=							;文件版本
-#PRE_Res_FileVersion_AutoIncrement=p			;自动更新版本
-#PRE_Res_LegalCopyright= 						;版权
-#PRE_Change2CUI=N                   			;修改输出的程序为CUI(控制台程序)
-;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
-;#PRE_Run_Tidy=                   				;脚本整理
-;#PRE_Run_Obfuscator=      						;代码迷惑
-;#PRE_Run_AU3Check= 							;语法检查
-;#PRE_Run_Before= 								;运行前
-;#PRE_Run_After=								;运行后
-;#PRE_UseX64=n									;使用64位解释器
-;#PRE_Compile_Both								;进行双平台编译
-#endregion ACN预处理程序参数(常用参数)
-#cs ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-	
-	Au3 版本:
-	脚本作者:
-	电子邮件:
-	QQ/TM:
-	脚本版本:
-	脚本功能:
-	
-#ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-
 HotKeySet("!1", "xiaozhan") 
 HotKeySet("!2", "suoxiao") 
 HotKeySet("!3", "ExitScript") 
@@ -42,19 +10,19 @@ HotKeySet("!3", "ExitScript")
 #include <Constants.au3>
 #include <array.au3>
 #include <IE.au3>
+#include <IEEx.au3>
 
 Opt("GUIOnEventMode", 1)
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单.
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘
 
-_IEErrorHandlerRegister()
 
 $oIE = _IECreateEmbedded()
 $gx = GUICreate("更新", 640, 580, _
 		(@DesktopWidth - 640) / 2, (@DesktopHeight - 580) / 2, _
 		$WS_OVERLAPPEDWINDOW + $WS_VISIBLE + $WS_CLIPSIBLINGS + $WS_CLIPCHILDREN)
-$GUIActiveX = GUICtrlCreateObj($oIE, 10, 40, 600, 360)
+$GUIActiveX = GUICtrlCreateObj($oIE, 10, 40, 640, 400)
 
 GUISetState(@SW_HIDE,$gx)
 ;GUISetState() ;显示GUI
@@ -67,33 +35,15 @@ $Ele = _IEGetObjById($oIE,"loginname")
 _IEFormElementSetValue($Ele,$username)
 $Ele = _IEGetObjById($oIE,"loginpwd")
 _IEFormElementSetValue($Ele,$password)
-$Ele = _IETagNameGetCollection($oIE,"INPUT",7)
+$Ele = _IETagNameGetCollection($oIE,"SPAN",18)
 _IEAction($Ele,"click") ;点击
 
+_IELoadWait($oIE,1000)
 
-Sleep(2000)
-_IELinkClickByText($oIE,"简历维护")
-Sleep(2000)
-_IELinkClickByText($oIE,"保 存")
-Sleep(2000)
-_IELinkClickByText($oIE,"访问统计")
- _IELoadWait ($oIE)
+ $Ele = _IEQuery($oIE,"SPAN",'OuterText="刷新简历"')
+;~  If IsObj($Ele) Then MsgBox(64,"对象",$Ele.outerhtml)
+_IEAction($Ele,"click")
 
-;~ ;更新
-;~ $Fonts = _IETagNameGetCollection($oIE,"font")
-;~ For $Font In $Fonts
-;~ 	If StringInStr($Font.outertext,"更新") Then 
-;~ 		_IEAction($Font,"click")
-;~ 		ExitLoop
-;~ 	EndIf
-;~ Next
-
-
-;~  $oForm = _IEGetObjByName($oIE,"更新") ;注意相同name情况,需要第三参数
-;~ _IELinkClickByIndex($oForm, 0)
-;~ MsgBox(0,0,$oForm)
-;~ _IEFormSubmit($oForm)
-;~
 
 GUISetOnEvent( $GUI_EVENT_MINIMIZE, "suoxiao")
 GUISetOnEvent($GUI_EVENT_CLOSE, "_Exit")
