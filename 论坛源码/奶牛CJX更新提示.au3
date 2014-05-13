@@ -32,6 +32,9 @@
 #include <File.au3>
 #Include <WinAPIEx.au3>
 #Include <String.au3>
+#include <IE.au3>
+#include <MSHtml.au3>
+#include <IEEX.au3>
 If  ProcessExists("AdMunch.exe") Then ; 检查记事本进程是否正在运行.
 	bbhdb()
 Else
@@ -54,12 +57,23 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 	EndIf
 EndFunc   ;==>bbhdb
 
+
 Func WLCJXGZ()
-$a=InetRead ( "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat" , 1)
-$array = StringRegExp(BinaryToString($a), '><td class="source">Xlist version (.*?)<br></td></tr', 2)
-$GZ = $array[1]
+Local $doc = _MHDocGetObj() ;创建document对象
+_MHNavigate($doc, "http://code.google.com/p/cjxlist/source/browse/CustomStrings.dat",4) ;网上获取百度源码并加载到mshtml,4 utf8编码转换
+Local $su = _IEQuery($doc,"td","class=source") ;id方法对象
+Local $sText = _IEPropertyGet($su,"outertext") ;取显示文本
+$GZ = StringTrimLeft($sText,14)
+MsgBox(0,"",$GZ)
 Return ($GZ)
 EndFunc 
+
+;~ Func WLCJXGZ()
+;~ $a=InetRead ( "https://code.google.com/p/cjxlist/source/browse/CustomStrings.dat" , 1)
+;~ $array = StringRegExp(BinaryToString($a), '><td class="source">Xlist version (.*?)<br></td></tr', 2)
+;~ $GZ = $array[1]
+;~ Return ($GZ)
+;~ EndFunc 
 
 Func BDCJXGZ();获取本地CJX规则
 	$iPid=ProcessExists("AdMunch.exe")
