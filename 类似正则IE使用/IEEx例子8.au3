@@ -29,41 +29,42 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+;~ 以给定语言执行脚本
+;~ _IEExecScript(IE对象,"执行的脚本",语言 = "javascript")
+;~ 语言支持javascript和vbscript
+ 
+;~ 成功返回1,失败返回0并设置@error值
+;~ @error = 1 无效数据类型
+ 
 #include <WindowsConstants.au3>
-#include "IEEX.au3"
-Opt("GUIResizeMode", 1)
-;修改用户名和密码
-Global $username = ""
-Global $password = ""
+#include <IEEX.au3>
+Opt("GUIResizeMode",1)
+ 
 Global $oIE = _IECreateEmbedded()
-Global $gui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
-GUICtrlCreateObj($oIE, 0, 0, 700, 600)
-_IENavigate($oIE, "http://www.autoitx.com/")
-GUISetState() ;显示窗口
-GUIRegisterMsg($WM_SYSCOMMAND, "WM_SYSCOMMAND")
+Global $hGui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
+ GUICtrlCreateObj($oIE, 0, 0, 700, 600)
+ _IENavigate($oIE,"http://www.baidu.com/")
+ GUISetState() ;显示窗口
+GUIRegisterMsg($WM_SYSCOMMAND,"WM_SYSCOMMAND")
  
-;登录
-Local $Ele = _IEQuery($oIE, "A", 'OuterText="登录"')
-If IsObj($Ele) Then ; 没有对象已经登录
-        _IEAction($Ele, "click")
-        $Ele = _IEWaitEle($oIE, "username")
-        $Ele.value = $username
-        $Ele = _IEWaitEle($oIE, "password3")
-        $Ele.value = $password
-        $Ele = _IEWaitEle($oIE, "loginsubmit")
-        _IEAction($Ele, "click")
-EndIf
+;vbs对话框
+_IEExecScript($oIE,'MsgBox("你好")',"vbscript")
  
-;搜索
-$Ele = _IEWaitEle($oIE, "mn_search")
-_IEAction($Ele, "click")
-$Ele = _IEWaitEle($oIE, "srchtxt")
-$Ele.value = "IEEX"
-$Ele = _IEWaitEle($oIE,"searchsubmit")
-_IEAction($Ele, "click") ;搜索
-_IELoadWait($oIE,1000)
-$Ele = _IEQuery($oIE,"A",'OuterText="IE扩展函数"',2) ;注意最后一个参数使用部分匹配
-_IEAction($Ele, "click")
+;js对话框
+_IEExecScript($oIE,'alert("你好")') ;默认语言
+ 
+;读取cookie
+_IEExecScript($oIE,'alert(document.cookie)')
+ 
+;隐藏滚动条
+Local $hText = 'var temp_h1 = document.body.clientHeight;'& _
+'var temp_h2 = document.documentElement.clientHeight;'& _
+'var isXhtml = (temp_h2<=temp_h1&&temp_h2!=0)?true:false;'& _
+'var htmlbody = isXhtml?document.documentElement:document.body;'& _
+'htmlbody.style.overflow = "hidden";'
+ 
+_IEExecScript($oIE,$hText)
+ 
  
 While 1
         Sleep(100)
@@ -71,7 +72,8 @@ WEnd
  
 Func WM_SYSCOMMAND($hWnd, $sMsg, $sWParam, $slParam)
         Switch $sWParam
-                Case 61536 ;$SC_CLOSE
+                Case 61536  ;$SC_CLOSE
                         Exit
         EndSwitch
-EndFunc   ;==>WM_SYSCOMMAND
+EndFunc
+

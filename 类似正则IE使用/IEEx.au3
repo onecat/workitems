@@ -1,32 +1,81 @@
-;作者：风行者  version 2.1
+;作者：风行者  version 3.1
+;适用于AutoIt Version : 3.3.9++
+
 #include-once
 #include <IE.au3>
 #include <ClipBoard.au3>
 #include <ScreenCapture.au3>
 
+;~ 大部分函数成功返回1，失败返回0并设置@error的值
+;~ @error: 1 - 无效数据类型
+;~ 2 - 无效对象类型
+;~ 3 - 等待加载超时
+;~ 4 - 9 - 其它错误，具体看函数说明
+
 Func _IEExecScript(ByRef $o_object, $o_script, $o_langue = "javascript")
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
 	$o_object.document.parentwindow.execscript($o_script, $o_langue)
 	Return 1
 EndFunc   ;==>_IEExecScript
 
-Func _IESaveImg(ByRef $o_object, ByRef $oImg, $oSaveName)
+Func _IEGet(ByRef $o_object, $o_url, $o_headers, $o_target = "_self", $o_wait = 1)
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
-	If Not IsObj($oImg) Then Return SetError(2, 0, 0)
-	Local $oControlRange = $o_object.Document.body.createControlRange()
-	$oControlRange.add($oImg)
-	Local $ClipData = ClipGet()
-	If Not $oControlRange.execCommand("Copy") Then Return SetError(3, 0, 0)
-	If Not _ClipBoard_IsFormatAvailable($CF_BITMAP) Then Return SetError(4, 0, 0)
-	_ClipBoard_Open(0)
-	Local $hBitmap = _ClipBoard_GetDataEx($CF_BITMAP)
-	_ScreenCapture_SaveImage($oSaveName, $hBitmap)
-	_ClipBoard_Close()
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
+	$o_object.Navigate($o_url, 0, $o_target, Null, $o_headers)
+	If $o_wait Then
+		_IELoadWait($o_object)
+		If @error Then Return SetError(3, 0, 0)
+	EndIf
+	Return 1
+EndFunc   ;==>_IEGet
+
+Func _IEPost(ByRef $o_object, $o_url, $postdata, $o_headers = @CRLF & "Content-Type: application/x-www-form-urlencoded", $o_target = "_self", $o_wait = 1)
+	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
+	$o_object.Navigate($o_url, 0, $o_target, $postdata, $o_headers)
+	If $o_wait Then
+		_IELoadWait($o_object)
+		If @error Then Return SetError(3, 0, 0)
+	EndIf
+	Return 1
+EndFunc   ;==>_IEPost
+
+Func _IESaveImg($o_hwnd, ByRef $o_object, ByRef $oImg, $oSaveName, $flag = 1) ;保存图片，一般用于验证码图片保存
+	If (Not IsObj($o_object)) Or (Not IsObj($oImg)) Then Return SetError(1, 0, 0)
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
+	Local $hCtrl = ControlGetHandle($o_hwnd, "", "Internet Explorer_Server1")
+	If Not IsHWnd($hCtrl) Then Return SetError(4, 0, 0) ;找不到控件句柄
+	
+	Switch $flag
+		Case 1 ;后台 (au3版本不一样，后台可能不成功)
+			Local $oControlRange = $o_object.Document.body.createControlRange()
+			$oControlRange.add($oImg)
+			Local $ClipData = ClipGet()
+			If Not $oControlRange.execCommand("Copy") Then Return SetError(5, 0, 0) ;复制失败
+			If Not _ClipBoard_IsFormatAvailable($CF_BITMAP) Then Return SetError(6, 0, 0) ;不是bmp图片数据
+			If Not _ClipBoard_Open($hCtrl) Then Return SetError(7, 0, 0) ;打开剪贴板失败
+			Local $hBitmap = _ClipBoard_GetDataEx($CF_BITMAP)
+			_ScreenCapture_SaveImage($oSaveName, $hBitmap)
+			_ClipBoard_Close()
+		Case 2 ;前台
+			;截图
+			_IEscrollIntoView($oImg)
+			WinActivate($hCtrl)
+			Sleep(1000)
+			;元素矩形
+			Local $dLeft = $oImg.getBoundingClientRect().left
+			Local $dTop = $oImg.getBoundingClientRect().top
+			Local $dRight = $oImg.getBoundingClientRect().right
+			Local $dBottom = $oImg.getBoundingClientRect().bottom
+			_ScreenCapture_CaptureWnd($oSaveName, $hCtrl, $dLeft, $dTop, $dRight, $dBottom)
+	EndSwitch
 	Return 1
 EndFunc   ;==>_IESaveImg
 
 Func _IEEvalScript(ByRef $o_object, $o_script, $o_langue = "javascript")
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
 	Return $o_object.document.parentwindow.eval($o_script, $o_langue)
 EndFunc   ;==>_IEEvalScript
 
@@ -39,12 +88,15 @@ EndFunc   ;==>_IEDoScript
 
 Func _IEScroll(ByRef $o_object, $o_x, $o_y) ;_IEScroll(IE对象,x坐标,y坐标) 将窗口滚动到自左上角起指定的x和y偏移量
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
+	If Not __IEIsObjType($o_object, "browser") Then Return SetError(2, 0, 0)
 	$o_object.document.parentWindow.scroll($o_x, $o_y)
 	Return 1
 EndFunc   ;==>_IEScroll
 
-;~ 参数 Parameters
 
+;~ object.doScroll( [sScrollAction])
+
+;~ 参数 Parameters
 ;~ sScrollAction Optional. String that specifies how the object scrolls, using one of the following values: scrollbarDown Default. Down scroll arrow is at the specified location.
 ;~ scrollbarHThumb Horizontal scroll thumb or box is at the specified location.
 ;~ scrollbarLeft Left scroll arrow is at the specified location.
@@ -64,62 +116,38 @@ EndFunc   ;==>_IEScroll
 ;~ right Composite reference to scrollbarRight.
 ;~ up Composite reference to scrollbarUp.
 
-Func _IEScrollClick(ByRef $o_object, $sScrollAction)
+;~ _IEScrollClick(滚动条所属对象, 模拟的动作)
+Func _IEScrollClick(ByRef $o_object, $sScrollAction) ;模拟点击滚动条
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
-	Switch $sScrollAction
-		Case "scrollbarHThumb"
-			$o_object.scrollbarHThumb
-		Case "scrollbarLeft"
-			$o_object.scrollbarLeft
-		Case "scrollbarPageDown"
-			$o_object.scrollbarPageDown
-		Case "scrollbarPageLeft"
-			$o_object.scrollbarPageLeft
-		Case "scrollbarPageRight"
-			$o_object.scrollbarPageRight
-		Case "scrollbarPageUp"
-			$o_object.scrollbarPageUp
-		Case "scrollbarRight"
-			$o_object.scrollbarRight
-		Case "scrollbarUp"
-			$o_object.scrollbarUp
-		Case "scrollbarVThumb"
-			$o_object.scrollbarVThumb
-		Case "down"
-			$o_object.down
-		Case "left"
-			$o_object.left
-		Case "right"
-			$o_object.right
-		Case "up"
-			$o_object.up
-		Case "pageDown"
-			$o_object.pageDown
-		Case "pageLeft"
-			$o_object.pageDown
-		Case "pageRight"
-			$o_object.pageDown
-		Case "pageUp"
-			$o_object.pageDown
-	EndSwitch
+	$o_object.doScroll($sScrollAction)
+	Return 1
 EndFunc   ;==>_IEScrollClick
 
-Func _IEScrollGet(ByRef $o_object, $flag)
+Func _IEScrollGet(ByRef $o_object, $sflag = "")
 	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
-	Local $doc = $o_object.document.documentElement
+	If $sflag = "" Then
+		Local $sArray[4]
+		With $o_object
+			$sArray[0] = .scrollLeft
+			$sArray[1] = .scrollTop
+			$sArray[2] = .scrollWidth
+			$sArray[3] = .scrollHeight
+		EndWith
+		Return $sArray
+	EndIf
 	Local $of
-	Switch $flag
-		Case "left"
-			$of = $doc.scrollLeft
-		Case "top"
-			$of = $doc.scrollTop
-		Case "width"
-			$of = $doc.scrollWidth
-		Case "height"
-			$of = $doc.scrollHeight
-		Case Else
-			$of = -1 ;字符串不正确返回-1
-	EndSwitch
+	With $o_object
+		Switch $sflag
+			Case "left"
+				$of = .scrollLeft
+			Case "top"
+				$of = .scrollTop
+			Case "width"
+				$of = .scrollWidth
+			Case "height"
+				$of = .scrollHeight
+		EndSwitch
+	EndWith
 	Return $of
 EndFunc   ;==>_IEScrollGet
 
@@ -129,8 +157,8 @@ Func _IEscrollIntoView(ByRef $o_Ele, $bAlignToTop = False) ;_IEscrollIntoView(元
 	Return 1
 EndFunc   ;==>_IEscrollIntoView
 
-Func _IEWaitEle(ByRef $o_object, $o_id, $complete = True, $TimeOut = 300000) ;_IEWaitEle(IE对象,元素id或name,是否等待加载完成,超时值)
-	If Not IsObj($o_object) Then SetError(1, 0, 0) ;不是对象
+Func _IEWaitEle(ByRef $o_object, $o_id, $complete = True, $TimeOut = $__IELoadWaitTimeout) ;_IEWaitEle(IE对象,元素id或name,是否等待加载完成,超时值)
+	If Not IsObj($o_object) Then Return SetError(1, 0, 0) ;不是对象
 	Local $o_Init = TimerInit()
 	While TimerDiff($o_Init) < $TimeOut
 		$o_doc = _IEDocGetObj($o_object)
@@ -144,11 +172,11 @@ Func _IEWaitEle(ByRef $o_object, $o_id, $complete = True, $TimeOut = 300000) ;_I
 		EndIf
 		Sleep(100)
 	WEnd
-	Return SetError(2, 0, 0) ;超时@error=2
+	Return SetError(3, 0, 0) ;超时@error=3
 EndFunc   ;==>_IEWaitEle
 
-Func _IEWaitQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True, $complete = True, $TimeOut = 300000)
-	If Not IsObj($o_object) Then SetError(1, 0, 0)
+Func _IEWaitQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True, $complete = True, $TimeOut = $__IELoadWaitTimeout)
+	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
 	Local $o_Init = TimerInit()
 	While TimerDiff($o_Init) < $TimeOut
 		$o_doc = _IEDocGetObj($o_object)
@@ -160,11 +188,11 @@ Func _IEWaitQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True,
 		EndIf
 		Sleep(100)
 	WEnd
-	Return SetError(2, 0, 0)
+	Return SetError(3, 0, 0)
 EndFunc   ;==>_IEWaitQuery
 
 Func _IEQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True) ;_IEQuery(IE对象,标签名,属性列表,匹配模式=1,标志)
-	If Not IsObj($o_object) Then SetError(1, 0, 0)
+	If Not IsObj($o_object) Then Return SetError(1, 0, 0)
 	
 	Local $_EleStr = StringSplit($_Elepro, ",")
 	Local $n = $_EleStr[0] + 1
@@ -182,35 +210,11 @@ Func _IEQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True) ;_I
 	Local $IE_pertyGet = ""
 	For $_tmp_obj In $tmp_objs
 		For $j = 1 To $_Ele_Os[0][0]
-			Switch StringLower($_Ele_Os[$j][0])
-				Case "name"
-					$IE_pertyGet = String($_tmp_obj.name)
-				Case "id"
-					$IE_pertyGet = String($_tmp_obj.id)
-				Case "type"
-					$IE_pertyGet = String($_tmp_obj.type)
-				Case "value"
-					$IE_pertyGet = String($_tmp_obj.value)
-				Case "class"
-					$IE_pertyGet = String($_tmp_obj.classname)
-				Case "title"
-					$IE_pertyGet = String($_tmp_obj.title)
-				Case "outertext"
-					$IE_pertyGet = String($_tmp_obj.outertext)
-				Case "outerhtml"
-					$IE_pertyGet = String($_tmp_obj.outerhtml)
-				Case "innertext"
-					$IE_pertyGet = String($_tmp_obj.innertext)
-				Case "innerhtml"
-					$IE_pertyGet = String($_tmp_obj.innerhtml)
-				Case "href"
-					$IE_pertyGet = String($_tmp_obj.href)
-				Case "src"
-					$IE_pertyGet = String($_tmp_obj.src)
-				Case "alt"
-					$IE_pertyGet = String($_tmp_obj.alt)
-			EndSwitch
-			
+			If StringLower($_Ele_Os[$j][0]) = "class" Then
+				$IE_pertyGet = String($_tmp_obj.getAttribute("classname"))
+			Else
+				$IE_pertyGet = String($_tmp_obj.getAttribute(StringLower($_Ele_Os[$j][0])))
+			EndIf
 			Switch $_mod
 				Case 1 ;完全匹配
 					If $IE_pertyGet <> String($_Ele_Os[$j][1]) Then
@@ -237,6 +241,6 @@ Func _IEQuery(ByRef $o_object, $_Eletag, $_Elepro, $_mod = 1, $_Flag = True) ;_I
 			Return SetError(0, 0, $IE_array[1]) ;只返回找到的第一个元素
 		EndIf
 	Else
-		Return SetError(2, 0, 0) ;失败返回0
+		Return SetError(2, 0, 0) ;失败返回0，找不到元素
 	EndIf
 EndFunc   ;==>_IEQuery

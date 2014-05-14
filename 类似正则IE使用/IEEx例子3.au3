@@ -29,41 +29,41 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+
+;保存图片，一般用于验证码图片保存
+;~ _IESaveImg("窗口标题或句柄","IE对象","图片元素对象","保存文件名","标志 = 1") 
+;~ 标志 = 1 默认，后台截图
+;~ 标志 = 2 前台截图，会激活窗口
+ 
+;~ 成功返回1,失败返回0并设置@error的值
+;~ @error:
+;~ @error: 1 - 无效数据类型
+;~ 2 - 无效对象类型
+;~ 4 - 找不到控件句柄
+;~ 5 - 复制失败
+;~ 6 - 不是bmp格式数据
+;~ 7 - 打开剪贴板失败
+ 
 #include <WindowsConstants.au3>
-#include "IEEX.au3"
-Opt("GUIResizeMode", 1)
-;修改用户名和密码
-Global $username = ""
-Global $password = ""
+#include <IEEX.au3>
+Opt("GUIResizeMode",1)
+ 
 Global $oIE = _IECreateEmbedded()
-Global $gui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
-GUICtrlCreateObj($oIE, 0, 0, 700, 600)
-_IENavigate($oIE, "http://www.autoitx.com/")
-GUISetState() ;显示窗口
-GUIRegisterMsg($WM_SYSCOMMAND, "WM_SYSCOMMAND")
+Global $hGui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
+ GUICtrlCreateObj($oIE, 0, 0, 700, 600)
+ _IENavigate($oIE,"http://search.pazx888.com/",0)
+ GUISetState() ;显示窗口
+GUIRegisterMsg($WM_SYSCOMMAND,"WM_SYSCOMMAND")
  
-;登录
-Local $Ele = _IEQuery($oIE, "A", 'OuterText="登录"')
-If IsObj($Ele) Then ; 没有对象已经登录
-        _IEAction($Ele, "click")
-        $Ele = _IEWaitEle($oIE, "username")
-        $Ele.value = $username
-        $Ele = _IEWaitEle($oIE, "password3")
-        $Ele.value = $password
-        $Ele = _IEWaitEle($oIE, "loginsubmit")
-        _IEAction($Ele, "click")
+;保存验证码图片
+ ;没有id,用_IEWaitquery查找验证码
+ 
+Local $img = _IEWaitQuery($oIE,"img","title=看不清楚?点击刷新")
+_IESaveImg($hGui,$oIE,$img,"code.bmp") ;后台截图
+If @error Then ;后台失败改前台截图
+        _IESaveImg($hGui,$oIE,$img,"code.bmp",2)
 EndIf
- 
-;搜索
-$Ele = _IEWaitEle($oIE, "mn_search")
-_IEAction($Ele, "click")
-$Ele = _IEWaitEle($oIE, "srchtxt")
-$Ele.value = "IEEX"
-$Ele = _IEWaitEle($oIE,"searchsubmit")
-_IEAction($Ele, "click") ;搜索
-_IELoadWait($oIE,1000)
-$Ele = _IEQuery($oIE,"A",'OuterText="IE扩展函数"',2) ;注意最后一个参数使用部分匹配
-_IEAction($Ele, "click")
+ShellExecute("code.bmp") ;打开图片看看
  
 While 1
         Sleep(100)
@@ -71,7 +71,7 @@ WEnd
  
 Func WM_SYSCOMMAND($hWnd, $sMsg, $sWParam, $slParam)
         Switch $sWParam
-                Case 61536 ;$SC_CLOSE
+                Case 61536  ;$SC_CLOSE
                         Exit
         EndSwitch
-EndFunc   ;==>WM_SYSCOMMAND
+EndFunc
