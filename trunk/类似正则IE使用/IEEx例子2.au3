@@ -29,41 +29,43 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+
+;根据属性查找元素对象，支持所有元素属性
+;_IEQuery(IE对象,标签名,属性列表,匹配模式=1,标志 = true)
+ 
+;多个属性用逗号分隔，可使用双引号括起属性
+;成功 如果标志为true 返回找到的第一个元素对象，false返回元素数组，$Eles[0]为找到元素数量
+;失败返回0，并设置@error值
+;~ @error:
+;~ 1 - 无效数据类型
+;~ 2 - 找不到元素
+ 
 #include <WindowsConstants.au3>
 #include "IEEX.au3"
-Opt("GUIResizeMode", 1)
-;修改用户名和密码
-Global $username = ""
-Global $password = ""
+Opt("GUIResizeMode",1)
 Global $oIE = _IECreateEmbedded()
-Global $gui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
-GUICtrlCreateObj($oIE, 0, 0, 700, 600)
-_IENavigate($oIE, "http://www.autoitx.com/")
-GUISetState() ;显示窗口
-GUIRegisterMsg($WM_SYSCOMMAND, "WM_SYSCOMMAND")
+$gui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
+ GUICtrlCreateObj($oIE, 0, 0, 700, 600)
+ _IENavigate($oIE,"http://www.baidu.com/")
+ GUISetState() ;显示窗口
+GUIRegisterMsg($WM_SYSCOMMAND,"WM_SYSCOMMAND")
  
-;登录
-Local $Ele = _IEQuery($oIE, "A", 'OuterText="登录"')
-If IsObj($Ele) Then ; 没有对象已经登录
-        _IEAction($Ele, "click")
-        $Ele = _IEWaitEle($oIE, "username")
-        $Ele.value = $username
-        $Ele = _IEWaitEle($oIE, "password3")
-        $Ele.value = $password
-        $Ele = _IEWaitEle($oIE, "loginsubmit")
-        _IEAction($Ele, "click")
-EndIf
+;测试
+Local $Ele = _IEQuery($oIE,"INPUT",'id="kw1"')
+MsgBox(64,"html",$Ele.outerhtml)
+$Ele = _IEQuery($oIE,"INPUT",'value="百度一下"')
+MsgBox(64,"html",$Ele.outerhtml)
+$Ele = _IEQuery($oIE,"A",'outerText="设为主页"',2) ;部分匹配，默认是1完全匹配
+MsgBox(64,"html",$Ele.outerhtml)
+$Ele = _IEQuery($oIE,"A",'outerText="hao\d+"',3) ;正则匹配
+MsgBox(64,"html",$Ele.outerhtml)
  
-;搜索
-$Ele = _IEWaitEle($oIE, "mn_search")
-_IEAction($Ele, "click")
-$Ele = _IEWaitEle($oIE, "srchtxt")
-$Ele.value = "IEEX"
-$Ele = _IEWaitEle($oIE,"searchsubmit")
-_IEAction($Ele, "click") ;搜索
-_IELoadWait($oIE,1000)
-$Ele = _IEQuery($oIE,"A",'OuterText="IE扩展函数"',2) ;注意最后一个参数使用部分匹配
-_IEAction($Ele, "click")
+;返回所有文本有"百度"的连接
+$Eles = _IEQuery($oIE,"A",'outerText="百度"',2,False) ;最后一个参数false返回找到所有元素数组
+;~ $Eles[0] 数组元素个数，其它为元素
+For $i = 1 To $Eles[0]
+        MsgBox(64,"html",$Eles[$i].outerhtml)
+Next
  
 While 1
         Sleep(100)
@@ -71,7 +73,7 @@ WEnd
  
 Func WM_SYSCOMMAND($hWnd, $sMsg, $sWParam, $slParam)
         Switch $sWParam
-                Case 61536 ;$SC_CLOSE
+                Case 61536  ;$SC_CLOSE
                         Exit
         EndSwitch
-EndFunc   ;==>WM_SYSCOMMAND
+EndFunc

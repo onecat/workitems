@@ -29,41 +29,27 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+
+;~ GET自定义头信息跳转到url
+;~ _IEGet(IE对象,"url","头信息",窗口打开方式 = "_self", 等待加载完成 = 1)
+;成功返回1，失败返回0，并设置@error值
+;~ @error:
+;~ 1 - 无效数据类型
+;~ 2 - 找不到元素
+;~ 3 - 等待加载超时
+ 
 #include <WindowsConstants.au3>
-#include "IEEX.au3"
-Opt("GUIResizeMode", 1)
-;修改用户名和密码
-Global $username = ""
-Global $password = ""
+#include <IEEX.au3>
+Opt("GUIResizeMode",1)
 Global $oIE = _IECreateEmbedded()
-Global $gui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
-GUICtrlCreateObj($oIE, 0, 0, 700, 600)
-_IENavigate($oIE, "http://www.autoitx.com/")
-GUISetState() ;显示窗口
-GUIRegisterMsg($WM_SYSCOMMAND, "WM_SYSCOMMAND")
- 
-;登录
-Local $Ele = _IEQuery($oIE, "A", 'OuterText="登录"')
-If IsObj($Ele) Then ; 没有对象已经登录
-        _IEAction($Ele, "click")
-        $Ele = _IEWaitEle($oIE, "username")
-        $Ele.value = $username
-        $Ele = _IEWaitEle($oIE, "password3")
-        $Ele.value = $password
-        $Ele = _IEWaitEle($oIE, "loginsubmit")
-        _IEAction($Ele, "click")
-EndIf
- 
-;搜索
-$Ele = _IEWaitEle($oIE, "mn_search")
-_IEAction($Ele, "click")
-$Ele = _IEWaitEle($oIE, "srchtxt")
-$Ele.value = "IEEX"
-$Ele = _IEWaitEle($oIE,"searchsubmit")
-_IEAction($Ele, "click") ;搜索
-_IELoadWait($oIE,1000)
-$Ele = _IEQuery($oIE,"A",'OuterText="IE扩展函数"',2) ;注意最后一个参数使用部分匹配
-_IEAction($Ele, "click")
+Global $hGui = GUICreate("测试", 700, 600, Default, Default, BitOR($GUI_SS_DEFAULT_GUI, $WS_MAXIMIZEBOX))
+ GUICtrlCreateObj($oIE, 0, 0, 700, 600)
+ ;GEt指定http头信息
+ _IEGet($oIE,"http://www.autoitx.com/","User-Agent: AU3/1.0") 
+ Sleep(2000)
+ _IEGet($oIE,"http://www.baidu.com/","User-Agent: chome/1.0","_blank") ;新窗口打开 
+ GUISetState() ;显示窗口
+GUIRegisterMsg($WM_SYSCOMMAND,"WM_SYSCOMMAND")
  
 While 1
         Sleep(100)
@@ -71,7 +57,7 @@ WEnd
  
 Func WM_SYSCOMMAND($hWnd, $sMsg, $sWParam, $slParam)
         Switch $sWParam
-                Case 61536 ;$SC_CLOSE
+                Case 61536  ;$SC_CLOSE
                         Exit
         EndSwitch
-EndFunc   ;==>WM_SYSCOMMAND
+EndFunc
