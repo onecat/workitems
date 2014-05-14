@@ -1,13 +1,14 @@
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_icon=C:\Users\chtyfox\Desktop\删除CMS数据库.exe|-1
+#PRE_Icon=C:\Users\chtyfox\Desktop\删除CMS数据库.exe
 #PRE_Outfile=C:\Users\chtyfox\Desktop\删除CMS数据库(去掉字符串的方法).exe
 #PRE_Compression=4
 #PRE_UseUpx=n
 #PRE_Res_Comment=安联
 #PRE_Res_Description=安联
-#PRE_Res_Fileversion=1.0.0.1
+#PRE_Res_Fileversion=1.0.0.3
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_LegalCopyright=安联
+#PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
 #Region ACN预处理程序参数(常用参数)
 ;#PRE_Res_Field=AutoIt Version|%AutoItVer%		;自定义资源段
