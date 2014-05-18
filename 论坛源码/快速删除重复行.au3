@@ -48,14 +48,14 @@ For $i = 1 To UBound($file_array)-1
                 $str&=$temp&@CRLF
         EndIf
 Next
-$dif = TimerDiff($begin)
-        $out_file=StringTrimRight($aFile,4)&'_已完成.txt'
-        if FileExists($out_file) then FileDelete($out_file)
-        FileWrite($out_file,$str)
-        ShellExecute($out_file)
-        WinWaitActive("[CLASS:Notepad]")
-        WinSetTitle("[CLASS:Notepad]", "", '处理'&UBound($file_array)&'行'&'     用时'&int($dif)&'毫秒')
-Exit
+;~ $dif = TimerDiff($begin)
+;~         $out_file=StringTrimRight($aFile,4)&'_已完成.txt'
+;~         if FileExists($out_file) then FileDelete($out_file)
+;~         FileWrite($out_file,$str)
+;~         ShellExecute($out_file)
+;~         WinWaitActive("[CLASS:Notepad]")
+;~         WinSetTitle("[CLASS:Notepad]", "", '处理'&UBound($file_array)&'行'&'     用时'&int($dif)&'毫秒')
+;~ Exit
 
 
 #cs

@@ -30,7 +30,7 @@
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 
-$path = @ScriptDir & "\1.txt"
+$path = @ScriptDir & "\2.txt"
 $newfile = StringTrimRight($path, 4) & '_删除空行.txt'
 If FileExists($newfile) Then FileDelete($newfile)
 FileWrite($newfile, _nochongfu($path))
