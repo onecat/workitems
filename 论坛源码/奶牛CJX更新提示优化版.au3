@@ -58,10 +58,12 @@ Func bbhdb();判断网络CJX规则和本地CJX规则
 EndFunc   ;==>bbhdb
 
 Func WLCJXGZ()
+	   WLCJXGZ1()
 	If WLCJXGZ1() =  "" Then
 		WLCJXGZ2()
 		Return(WLCJXGZ2())
 	Else
+		WLCJXGZ1()
 		Return(WLCJXGZ1())
 	EndIf	
 EndFunc	
