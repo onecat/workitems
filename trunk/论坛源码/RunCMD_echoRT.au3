@@ -43,6 +43,7 @@ MsgBox(0,"示例1",_RunEcho("ipconfig"))
  Func _RunEcho($cmd,$var = "")  
         Local $foo = Run(@ComSpec & " /c " & $cmd & "  " & $var,  _
                         @ScriptDir, @SW_HIDE, $STDERR_CHILD + $STDOUT_CHILD)
+						Sleep(500)
         Local $sDat
         While 1
                 $sDat1 = StdoutRead($foo) ;获取数据流
