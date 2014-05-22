@@ -1,6 +1,6 @@
 ; ===============================================================================================================================
 ; isnautoitstudio_plugin.au3 for ISN AUTOIT STUDIO PLUGINS
-; v.0.3 by ISI360
+; v.0.4 by ISI360
 ; ===============================================================================================================================
 #include-once
 #include <MailSlot.au3> ;Es wird ZWINGEND die MailSlot.au3 benötigt!!!
@@ -160,7 +160,7 @@ EndFunc   ;==>_ISNPlugin_Nachricht_lesen
 ;
 ; Name...........: _ISNPlugin_Starte_Funktion_im_ISN
 ; Description ...: Startet eine angegebene Funktion im ISN AutoIt Studio
-; Syntax.........: _ISNPlugin_Starte_Funktion_im_ISN($funcname [,$param1,$param2,$param3,$param4])
+; Syntax.........: _ISNPlugin_Starte_Funktion_im_ISN($funcname [,$param1,$param2,$param3,$param4,$param5,,$param6,$param7])
 ; Parameters ....: $funcname - Name der Funktion die ausgeführt werden soll (zb. "_exit")
 ; Return values .: 0 - Kein $Funcname angegeben!
 ;                  1 - Erfolg
@@ -169,13 +169,16 @@ EndFunc   ;==>_ISNPlugin_Nachricht_lesen
 ; Remarks .......: Es können bis zu 4 Paramenter angegeben werden! [optional]
 ;
 ;==========================================================================================
-Func _ISNPlugin_Starte_Funktion_im_ISN($funcname = "", $param1 = "", $param2 = "", $param3 = "", $param4 = "")
+Func _ISNPlugin_Starte_Funktion_im_ISN($funcname = "", $param1 = "", $param2 = "", $param3 = "", $param4 = "", $param5 = "", $param6 = "", $param7 = "")
 	If $funcname = "" Then Return 0
 	$Parameter = ""
 	If $param1 <> "" Then $Parameter = $Parameter & $param1 & "|"
 	If $param2 <> "" Then $Parameter = $Parameter & $param2 & "|"
 	If $param3 <> "" Then $Parameter = $Parameter & $param3 & "|"
-	If $param4 <> "" Then $Parameter = $Parameter & $param4
+	If $param4 <> "" Then $Parameter = $Parameter & $param4 & "|"
+	If $param5 <> "" Then $Parameter = $Parameter & $param5 & "|"
+	If $param6 <> "" Then $Parameter = $Parameter & $param6 & "|"
+	If $param7 <> "" Then $Parameter = $Parameter & $param7
 	If $Parameter <> "" Then $Parameter = "|" & $Parameter
 	_ISNPlugin_Nachricht_senden("callfunc|" & $funcname & $Parameter)
 	Return 1

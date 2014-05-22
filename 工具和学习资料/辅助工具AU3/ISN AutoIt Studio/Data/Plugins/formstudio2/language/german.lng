@@ -1,6 +1,6 @@
 [plugin]
 language=Deutsch
-version=0.95
+version=0.96
 author=ISI360
 
 
@@ -123,7 +123,7 @@ str116=Farbe:
 str117=Größe:
 str118=Breite:
 str119=Einstellungen
-str120=Kleinstmögliches Control
+str120=Kleinstmögliches Control:
 str121=Pixel (Default 4)
 str122=Controls beim Verschieben automatisch am Raster ausrichten
 str123=Speichern und schließen
@@ -220,3 +220,12 @@ str213=Datei auswählen
 str214=COM-Objekt
 str215=Bild ändern
 str216=Aktion nicht möglich![BREAK]Control ist gesperrt!
+str217=Ausrichtungslinien beim Verschieben der Controls anzeigen
+str218=Resizing:
+str219=Bestimmt wie sich das Control beim Verändern der Fenstergröße verhalten soll
+str220=Control Größenänderung festlegen
+str221=Kombinierte Größenänderungen
+str222=Vertikalen Abstand nach Abstandsraster ausrichten
+str223=Horizontalen Abstand nach Abstandsraster ausrichten
+str224=Abstandsraster:
+str225=Kritischer Fehler aufgetreten![BREAK][BREAK]Cachedatei "%1%" wurde nicht gefunden (evtl. verschoben oder gelöscht)!![BREAK]Bitte das FormStudio 2 schließen und die Datei neu öffnen![BREAK][BREAK]Vor dem schließen bitte NICHT SPEICHERN!

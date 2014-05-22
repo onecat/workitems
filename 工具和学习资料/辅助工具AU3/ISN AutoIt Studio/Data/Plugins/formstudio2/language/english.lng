@@ -1,6 +1,6 @@
 [plugin]
 language=English
-version=0.95
+version=0.96
 author=ISI360
 
 
@@ -67,7 +67,7 @@ str60=Background color:
 str61=Style:
 str62=EXStyle:
 str63=None
-str64=Handle of the GUI:  $
+str64=Handle of the GUI: $
 str65=There was no handle for the specified GUI!
 str66=There was no title for the form input!
 str67=There was no specified height!
@@ -220,3 +220,12 @@ str213=Select file
 str214=COM-Objekt
 str215=Change picture
 str216=Action not possible![BREAK]Control is locked!
+str217=Show Align lines when moving a control
+str218=Resizing:
+str219=Determines how the control should behave when changing the window size
+str220=Control Resizing
+str221=Composite resizing
+str222=Space vertically to spacing grid
+str223=Space horizontally to spacing grid
+str224=Spacing grid:
+str225=Critical error occurred![BREAK][BREAK]Cachefile "%1%" not found (or moved)!![BREAK] Please close the formstudio 2 and reopen your file.[BREAK][BREAK]DO NOT SAVE YOUR WORK, JUST CLOSE THIS TAB!

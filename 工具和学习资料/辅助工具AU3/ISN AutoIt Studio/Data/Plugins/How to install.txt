@@ -1,0 +1,12 @@
+ISN AutoIt Studio Plugin installieren:
+- Inhalt dieses Archives in dein Plugins Verzeichnis extrahieren. (ISN AutoIt Studio\Data\Plugins)
+- Prüfen ob das Plugin in den Programmeinstellungen aktiviert ist.
+- Du findest das Plugin im "Tools" Menü (nur bei erweiterten Plugins)
+PS: Du benötigst ISN AutoIt Studio 0.95 BETA oder höher damit dieses Plugin funktioniert!
+
+How to install a ISN AutoIt Studio Plugin:
+- Just extract the folder from this archiv in your Plugins directory. (ISN AutoIt Studio\Data\Plugins)
+- Check if the plugin is enabled in the settings of ISN AutoIt Studio.
+- You should find your plugin in the "Tools" Menu (only with extended plugins)
+NOTE: This Plugin needs ISN AutoIt Studio 0.95 BETA or higher to work!
+
