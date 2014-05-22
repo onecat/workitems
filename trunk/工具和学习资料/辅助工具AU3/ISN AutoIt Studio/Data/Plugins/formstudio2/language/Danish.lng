@@ -1,6 +1,6 @@
 [plugin]
 language=Dansk
-version=2.63
+version=0.96
 author=Johnny Rex
 
 str1=ISN Form Studio 2
@@ -216,3 +216,6 @@ str210=Tekst og tekst-tilstand
 str211=Ikontilstand, ikon-fil og variabel for ikon placering
 str212=Anvende følgende elementer for alle andre poster:
 str213=Vælg fil
+str214=COM-Objekt
+str215=Ændre billede
+str216=Handling ikke muligt![BREAK]Kontrollen er låst!

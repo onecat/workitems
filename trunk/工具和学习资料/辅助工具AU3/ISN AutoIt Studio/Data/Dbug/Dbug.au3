@@ -69,14 +69,14 @@ $DBGtxtCommand = GUICtrlCreateEdit("", 16, 255, 600, 105)
 ;$DBGtxtCommand = GUICtrlCreateEdit("", 16, 303, 600, 50)
 GUICtrlSetData(-1, _Get_langstr(821))
 GUICtrlSetFont(-1, 9, 400, 0, "Courier New")
-;GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT)
-GUICtrlSetResizing(-1, $GUI_DOCKSIZE+$GUI_DOCKBOTTOM)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT)
+;~ GUICtrlSetResizing(-1, $GUI_DOCKSIZE+$GUI_DOCKBOTTOM)
 GUICtrlSetTip(-1, _Get_langstr(822))
 $DBGtxtResult = GUICtrlCreateEdit("", 16, 360, 600, 209)
 GUICtrlSetData(-1, _Get_langstr(823))
 GUICtrlSetFont(-1, 9, 400, 0, "Courier New")
 ;GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKBOTTOM)
-GUICtrlSetResizing(-1, $GUI_DOCKSIZE+$GUI_DOCKBOTTOM)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT)
 GUICtrlSetTip(-1, _Get_langstr(824))
 $DBGtxtBreakPoint = GUICtrlCreateInput("", 224, 8, 389, 23)
 GUICtrlSetFont(-1, 9, 400, 0, "Courier New")
@@ -88,8 +88,8 @@ GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 1, 50)
 GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 2, 50)
 GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 3, 50)
 GUICtrlSetFont(-1, 9, 400, 0, "Courier New")
-;GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKTOP)
-GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKTOP)
+;~ GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKTOP)
 GUICtrlSetTip(-1, _Get_langstr(827))
 $DBGbtnStep = GUICtrlCreateButton(_Get_langstr(828), 16, 8, 32, 24, BitOR($BS_BITMAP,$WS_GROUP))
 GUICtrlSetImage(-1, "D:\nlrgo\My Documents\My AutoIt Scripts\Dbug\IMAGES\StepInto.bmp", -1)
@@ -161,11 +161,13 @@ GUICtrlSetTip(-1, _Get_langstr(876))
 
 $btnExecute = GUICtrlCreateButton(_Get_langstr(856), 624, 320, 32, 24, BitOR($BS_BITMAP,$WS_GROUP))
 GUICtrlSetImage(-1, "D:\nlrgo\My Documents\My AutoIt Scripts\Dbug\IMAGES\Execute.bmp", -1)
-GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
+;~ GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
+GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKTOP+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetTip(-1, _Get_langstr(857))
 $btnClearResults = GUICtrlCreateButton(_Get_langstr(870), 624, 352, 32, 24, BitOR($BS_BITMAP,$WS_GROUP))
 GUICtrlSetImage(-1, "D:\nlrgo\My Documents\My AutoIt Scripts\Dbug\IMAGES\Erase.bmp", -1)
-GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
+;~ GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
+GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKTOP+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetTip(-1, _Get_langstr(858))
 
 $DBGchkSetOnTop = GUICtrlCreateCheckbox(_Get_langstr(859), 624, 40, 32, 24, BitOR($BS_CHECKBOX,$BS_PUSHLIKE,$WS_TABSTOP))
@@ -216,7 +218,7 @@ WinSetOnTop($frmDBUG, '', 1)
 Func Dbug($lnr = @ScriptLineNumber, $case = -5, $exp = 0, $exp2 = 0)	;main function
 	;ConsoleWrite('DBUG(' & $lnr & ') case: ' & $case & ' exp: ' & $exp & ' exp2: ' & $exp2 & @CRLF)
 
-	Local $Msg, $brk, $sel, $editActive, $in, $out, $var, $val, $hEdit, $items, $fx, $CurExpr, $max, $item, $scope, $vname, $breaknow
+	Local $Msg, $brk, $sel, $editActive, $in, $out, $var, $val, $hEdit, $items, $fx, $CurExpr, $max, $item, $scope, $vname, $breaknow, $tmp
 
 	Switch $case
 		Case -9 ;loop
@@ -355,6 +357,11 @@ Func Dbug($lnr = @ScriptLineNumber, $case = -5, $exp = 0, $exp2 = 0)	;main funct
 					EndIf
 
 				Case $btnExit
+					_SCISendMessage($DBGhSci, 2045, 3) ;delete markers
+					_SCISendMessage($DBGhSci, 2045, 1) ;delete markers
+					Exit
+					
+				case -3 
 					_SCISendMessage($DBGhSci, 2045, 3) ;delete markers
 					_SCISendMessage($DBGhSci, 2045, 1) ;delete markers
 					Exit
