@@ -1,0 +1,40 @@
+<regexlist>
+
+<regexitem><description>非负整数</description><regex><![CDATA[^\d+$]]></regex></regexitem>
+<regexitem><description>非负浮点数</description><regex><![CDATA[^\d+(\.\d+)?$]]></regex></regexitem>
+<regexitem><description>正浮点数</description><regex><![CDATA[^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$]]></regex></regexitem>
+<regexitem><description>非正浮点数</description><regex><![CDATA[^((-\d+(\.\d+)?)|(0+(\.0+)?))$]]></regex></regexitem>
+<regexitem><description>负浮点数</description><regex><![CDATA[^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$]]></regex></regexitem>
+<regexitem><description>浮点数</description><regex><![CDATA[^(-?\d+)(\.\d+)?$]]></regex></regexitem>
+<regexitem><description>浮点数(两位小数)</description><regex><![CDATA[^(-?\d+)(\.\d{0,2})?$]]></regex></regexitem>
+<regexitem><description>由26个英文字母组成的字符串</description><regex><![CDATA[^[A-Za-z]+$]]></regex></regexitem>
+<regexitem><description>由26个英文字母的大写组成的字符串</description><regex><![CDATA[^[A-Z]+$]]></regex></regexitem>
+<regexitem><description>由26个英文字母的小写组成的字符串</description><regex><![CDATA[^[a-z]+$]]></regex></regexitem>
+<regexitem><description>由数字和26个英文字母组成的字符串</description><regex><![CDATA[^[A-Za-z0-9]+$]]></regex></regexitem>
+<regexitem><description>由数字、26个英文字母或者下划线组成的字符串</description><regex><![CDATA[^\w+$]]></regex></regexitem>
+<regexitem><description>两个字符串之间的字符串</description><regex><![CDATA[a((.|\n)*?)b]]></regex></regexitem>
+<regexitem><description>任意字符串(长度1-16)</description><regex><![CDATA[^.{1,16}$]]></regex></regexitem>
+
+<regexitem><description>金额</description><regex><![CDATA[^(-?\d+)(\.\d{0,2})?$]]></regex></regexitem>
+<regexitem><description>EMail地址</description><regex><![CDATA[^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$]]></regex></regexitem>
+<regexitem><description>网址</description><regex><![CDATA[^([a-zA-z]+://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$]]></regex></regexitem>
+<regexitem><description>IP地址</description><regex><![CDATA[^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$]]></regex></regexitem>
+<regexitem><description>HTML标记</description><regex><![CDATA[<.+?>]]></regex></regexitem>
+
+<regexitem><description>中文字符(双字节)</description><regex><![CDATA[^[\x80-\xff]+$]]></regex></regexitem>
+<regexitem><description>空行</description><regex><![CDATA[\n[\s| ]*\r]]></regex></regexitem>
+<regexitem><description>首尾空格</description><regex><![CDATA[(^\s*)|(\s*$)]]></regex></regexitem>
+<regexitem><description>帐号(字母开头，允许5-16字节，允许字母数字下划线)</description><regex><![CDATA[^[a-zA-Z][a-zA-Z0-9_]{4,15}$]]></regex></regexitem>
+<regexitem><description>密码(长度3-8)</description><regex><![CDATA[[\x21-\x7E]{3,8}]]></regex></regexitem>
+<regexitem><description>国内电话号码</description><regex><![CDATA[(\d{3}-|\d{4}-)?(\d{8}|\d{7})?]]></regex></regexitem>
+<regexitem><description>手机号码</description><regex><![CDATA[^[0-9]{11}$]]></regex></regexitem>
+<regexitem><description>腾讯QQ号码</description><regex><![CDATA[^[1-9]*[1-9][0-9]*$]]></regex></regexitem>
+<regexitem><description>中国邮政编码</description><regex><![CDATA[[1-9]\d{5}(?!\d)]]></regex></regexitem>
+<regexitem><description>身份证</description><regex><![CDATA[^\d{14}\d{3}?\w$]]></regex></regexitem>
+<regexitem><description>年龄(最大129岁)</description><regex><![CDATA[^1[0-2]\d|\d{1,2}$]]></regex></regexitem>
+
+<regexitem><description>日期(YYYYMMDD)</description><regex><![CDATA[^(19|20)\d\d+(0[1-9]|1[012])+(0[1-9]|[12][0-9]|3[01])]]></regex></regexitem>
+<regexitem><description>日期(严格匹配合法日期YYYY-MM-DD)</description><regex><![CDATA[^((((19|20)(([02468][048])|([13579][26]))-02-29))|((20[0-9][0-9])|(19[0-9][0-9]))-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((01,3-9])|(1[0-2]))-(29|30)))))$]]></regex></regexitem>
+<regexitem><description>时间(不含日期)</description><regex><![CDATA[^([0-1]?[0-9]|2[0-3])(:([0-5][0-9])){0,2}$]]></regex></regexitem>
+<regexitem><description>时间(含日期)</description><regex><![CDATA[^(19|20)\d{2}[/\s\-\.]*(0[1-9]|1[0-2]|[1-9])[/\s\-\.]*(0[1-9]|3[01]|[12][0-9]|[1-9])[\s] *(2[0-3]|[01]?\d)(:[0-5]\d){0,2}$]]></regex></regexitem>
+</regexlist>
