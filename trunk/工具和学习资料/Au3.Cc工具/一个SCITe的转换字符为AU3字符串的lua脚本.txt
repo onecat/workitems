@@ -1,0 +1,26 @@
+摘自ACN版本的lua
+内容（添加在AutoItTool.lua中）
+function AutoItTools:txt2au3()
+        local word = editor:GetSelText()
+        if word == nil or string.len(word) < 1 then
+                print("额，你什么都没选，转换什么捏...\n")
+                return true
+        end
+        word=string.gsub(word,"'","''")
+        word=string.gsub(word,"[\r\n]+",'\' & @CRLF & _\r\n\'')
+        word="$string = _ \n'" .. word .. "'"
+        editor:ReplaceSel(word)
+        print("貌似转换成功,如有问题,请按下CTRL+Z...\n")
+        return true
+end
+
+
+然后修改属性文件au3.properties将功能加入SCITE的调用
+command.name.35.$(au3)=Convert Txt2au3string
+command.mode.35.$(au3)=subsystem:lua,savebefore:no
+command.shortcut.35.$(au3)=Ctrl+K
+command.35.$(au3)=InvokeTool AutoItTools.txt2au3
+
+
+但是菜单还是英文，擦擦,然后在SCITE的安装目录locale.properties加入一行(汉字随便改，改成什么“xxx是不礼貌的”也是可以的)
+Convert Txt2au3string=转换文本到AutoIt字符串
