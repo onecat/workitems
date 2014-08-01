@@ -222,7 +222,6 @@ While 1
 			
 		Case $Button20
 		Case $Button21
-			#cs
 			;系统注册表优化
 			; 2禁用桌面清理向导
 			RegWrite('HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\CleanupWiz')
@@ -2965,7 +2964,6 @@ While 1
 			RegWrite("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\lanmanserver\parameters", "autosharewks", "REG_DWORD", "00000000")
 			RegWrite("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem", "aConfigFileAllocSize", "REG_DWORD", "000001f4")
 			MsgBox(64, "提示", "加速成功!")
-			#ce
 		Case $Button27
 			_RunDos(@SystemDir & "\gpedit.msc");打开组策略
 			
