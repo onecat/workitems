@@ -1,0 +1,24 @@
+<body id="plugin" onkeydown="if(event.keyCode==27) return false;">
+<!-- JiaThis Button BEGIN -->
+<script src="http://v2.jiathis.com/code_mini/jiathis_r.js?type=left&move=0&btn=l5.gif&uid=891305" type="text/javascript" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="header">
+<div class="wrap s_clear">
+<div class="top_bg">
+<div class="top_bg_right">
+<!--**********************************************-->
+<div id="umenu">
+<cite><a href="space-uid-25421.html" class="noborder">教程专用</a><span id="loginstatus"><a href="member.php?action=switchstatus" title="我要隐身" onclick="ajaxget(this.href, 'loginstatus');doane(event);">在线</a></span></cite>
+<span class="pipe">&nbsp;</span>
+<a id="myprompt" href="notice.php" class="new" onmouseover="showMenu({'ctrlid':this.id})">提醒</a>
+<span id="myprompt_check"></span>
+<a href="pm.php" id="pm_ntc" >短消息</a>
+<a id="task_ntc" href="task.php" >论坛任务</a>
+<span class="pipe"></span><a href="vip/9.html" target="_blank"><font color=FFFF00>精币充值</font></a>
+<a href="memcp.php">个人中心</a>
+<a href="logging.php?action=logout&amp;formhash=e8c92942">退出</a>
+</div>
+<!--**********************************************-->
+<h6><a href="index.php" title="精易论坛 - "><img src="templates/jinlan/images/logo.gif" alt="精易论坛 - " border="0" /></a></h6>z-

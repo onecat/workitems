@@ -35,11 +35,11 @@ ControlFocus($Gui, "", $ExitButton)
 
 While 1
     _CheckInput($GUI, $Input_1, "点击这里输入内容", $DEFAULTINPUTDATA_1, $MARK_1)
-    _CheckInput($GUI, $Input_2, "AU3最佳中文论坛", $DEFAULTINPUTDATA_2, $MARK_2)
-    _CheckInput($GUI, $Input_3, "www.autoit.net.cn", $DEFAULTINPUTDATA_3, $MARK_3)
+     _CheckInput($GUI, $Input_2, "AU3最佳中文论坛", $DEFAULTINPUTDATA_2, $MARK_2)
+    _CheckInput($GUI, $Input_3, "http://www.autoitx.com", $DEFAULTINPUTDATA_3, $MARK_3)
     Switch GUIGetMsg()
 		Case $aboutButton
-	      ShellExecute("www.autoit.net.cn")
+	      ShellExecute("http://www.autoitx.com")
         Case $ExitButton, -3
             Exit
     EndSwitch

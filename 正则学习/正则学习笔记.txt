@@ -1,0 +1,745 @@
+#cs
+正则学习笔记---感谢deercao和所有的正则资料提供者
+
+====================================================================================================
+学习流程：
+了解部分：
+定义：字符串（文本）处理语言。
+功能：1匹配字符串：就是判断字符串里是否有某个子字符串存在；2替换字符串：用某个字符串替换字符串中的子字符串。
+掌握部分：
+元字符；零宽断言的4中表达方式；平衡组/递归匹配
+工具：推荐AFAN的正则学习助手
+精通之路：不断实践与求助和探讨z再实践
+=====================================================================================================
+
+1、正则基础知识
+正则表达式就是个字符(串)处理语言，是用来“查找匹配的字符串和对匹配的字符串进行替换“。
+或者说正则表达式就是用“一个字符串描述某种特征”，来验证“其它字符串是否符合这个特征”，即对“符合特征的字符串进行查找和替换”
+正则表达式是由”元字符和普通字符“组成。普通字符由“字母 数字 汉字 下划线  以及没有特殊意义的标点符号”组成；元字符由诸如
+\d  \w  .  * + 等有特殊意义的符号组成。
+网页、程序或文件中有关文本内容的处理部分都可以应用正则表达式完成。
+在正则表达式中，元字符有特殊功能，如\w匹配“数字、字母、下划线、汉字”，这个在afan的正则表达式工具中有详细说明。
+
+占有字符和零宽度的概念： 例 stringregexp(字符串,"正则表达式模式")
+如果”正则表达式模式匹配了“字符串中的内容”并且匹配的内容被保存到默认的或自定义的组里，就说明“正则表达式模式”是------占有字符
+如果”正则表达式模式"只是匹配位置或其匹配的内容没有被保存到默认的或自定义的组里，就说明“正则表达式模式”是------零宽度
+
+占有字符互斥：一个字符同一时间只能由一个“正则表达式模式”匹配
+零宽度非互斥：一个位置同一时间可由多个“正则表达式模式”匹配
+换句话说“正则表达式模式”或者是“占有字符”或是“零宽度”
+
+2、字符分类：用[]括起来的就是一个字符分类，无论[]有多少个字符，同一时间只能匹配[]中的某一个字符。
+         大多数元字符在[]中失去原有意义，只能作为一个普通的文本字符，注意  \ ^ - : []在[]里还是元字符，即保留其特殊意义。
+                 
+                 在[]里是区分大小写的。如"abc"用[Abc]只能匹配出 b c，用(?i)[Abc]能匹配出 a b c .
+                 
+                 - 不是元字符，例[-0-9]前一个 - 是一个普通字符，匹配本身，0-9中的-表示范围，[0-9]相当于[1234567890]         
+        如[aeu]匹配 a 或 e 或 u   , [.?!] 匹配 .   或   ？  或  ！ ，此刻的字符类里的元字符就不代表特殊的含义了。
+                [^a1<]表示除“a”、“1”、“<”外的其它任意一个字符
+                ([^\r]+) 我以前理解为”排除回车符号的至少一个什么字符的匹配“不如”匹配一个及以上非回车的字符“好理解,而且要注意其中
+                ()的适用场景，用不用他效果有时差别真的很大！
+                “<[^>]*>”中“[^>]*”表示0个或任意多个不是“>”的字符
+                [\u4e00-\u9fa5] 匹配汉字？AUTOIT不支持吗？
+    匹配a.b@163.com练习时，用\w+[._-]*\w*@\w+[.]\w+  用\w+[_-.]*\w*@\w+[.]\w+竟然不好使 ？
+3、分支结构(Alternation)  :     用 |  表示，就是多条件匹配
+    如用 \d{7}-\d{3}|\d{7} 匹配1234556-010或1234556，但注意别写成 \d{7}|\d{7}-\d{3}，因为它只能匹配连续的7位数字，
+        我的理解是“在进行多条件匹配时，要把最大的匹配范围写到最前面，然后依次减小匹配范围”
+        
+        备注：以前自己理解错了，举的例子是 101-0234556或1234556 用 \d{7}|\d{3}-\d{7}进行匹配，这样无论\d{7}|\d{3}-\d{7}
+               还是\d{3}-\d{7}|\d{7}都匹配相同结果
+        
+4、分组 ：用  () 括起来就是一个分组，用()标记“子表达式的开始和结束”
+
+    重点掌握：捕获与非捕获
+        用()将正则表达式模式括起来，那么正则表达式模式匹配的内容会被捕获，那如果不想捕获，可以使用 ?:   ?!  ?= 非捕获标志
+        
+        备注：只有 ?:非捕获标志在AU3好使，其他的捕获标志应该是其它语言的吧？
+        
+        例：想捕获 this 和 thas
+        Local $str="At this point the remaining pattern matches, so thas is the match returned"
+        Local $result=StringRegExp($str,"th(i|a)s",3) 因为用了()，所以i|a匹配的内容被捕获，结果显示的结果是 i a，不是 this thas
+    Local $result=StringRegExp($str,"th(?:i|a)s",3) 用了 ?: ，(i|a)匹配的内容不捕获，最后显示的匹配结果就是想要的 this thas
+    _ArrayDisplay($result)
+
+     如用于IP地址的匹配模式  (\d{1,3}\.){3}\d{1,3},分组()里的内容意思是”匹配1-3位的数字后面跟个.  的形式重复3次，
+         最后再跟1个1-3位的数字。
+        分组还可以后向引用 ，对此部分要加强理解，看 example9 示例
+        分组号是从 1 、2 逐次命名的，当没有使用()时，\0代表“整个正则表达式匹配的内容”。
+        组名可用（？<GroupName>)定义，如(\d{1,3}\.){3}\d{1,3}中的组可(?<Group1>\d{3}\.)定义，引用则用\k<Group1>，完整语法为
+        (?<Group1>\d{3}\.){3}\k<Group1> ，其中的 < >可用单引号 '  ' 替换，则变成了 (?'Group1'\d{3}\.){3}\k'Group1'  .
+        注意：对于组的组号分配 是先从未定义的组开始分配组号，然后才对定义的组进行组号分配，所以已定义的组的组号一定大于未定义组的组号
+    
+        分组的3种语法：前2中语法称作“捕获组”，第3种称作“非捕获组”，也好理解，就看是否有“组”生成
+    (exp)   匹配exp，并捕获文本到自动分配组号的组里
+        (?<GroupName>exp)  匹配exp，并捕获文本到 自定义的<GroupName>组里
+        组的反向应用一定是应用在以上的捕获组里
+        
+        (?:exp)  匹配exp，但不给组分配组号，也不捕获文本到组里，但它将捕获的内容保存到最终的整个表达式的匹配结果中
+        
+5、零宽断言(也有称作环视---Look Around) ---注意：很难理解！谁有好的例子呢？
+     str(?=exp)   str之后是能出现与exp匹配的内容
+        str(?!exp)   Str之后不能出现与exp匹配的内容
+        (?<=exp)str  str之前是能出现与exp匹配的内容
+        (?<!exp)str  Str之前不能出现与exp匹配的内容        
+        注意：环视是零宽度的，他们匹配的是位置
+        
+6、注释：语法为 (?#comments)
+         注释不能写在转义符" \ "和被转义字符之间，在注释内的" \ "是普通字符
+    例 2[0-4]\d(?#200-249)|25[0-5](?#250-255)|[01]?\d\d?(?#0-199)。
+
+7、懒惰匹配和贪婪匹配        例  用 a.*b  匹配  aabab
+        贪婪模式是最大匹配模式，a.*b匹配以a开头以b结尾中间有任意数量字符的单词，则贪婪匹配整个字符串aabab而不是aab或ab
+        懒惰模式是在保证成功匹配的情况下进行最小匹配，a.*?b则匹配  aab(第1至第3个字母)  和  ab(第4至第5个字母) 
+        为什么懒惰模式不是匹配 ab(第2至第3个字母)，因最先匹配优于贪婪和懒惰匹配模式，懒惰模式下该例最先匹配aab，然后是 ab(第4至第5个字母) 
+    懒惰模式的几种常用语法
+         *? 重复任意次，但尽可能少重复 
+     +? 重复1次或更多次，但尽可能少重复 
+     ?? 重复0次或1次，但尽可能少重复 
+     {n,m}? 重复n到m次，但尽可能少重复 
+     {n,}? 重复n次以上，但尽可能少重复 
+         
+         补充理解：限定符说明
+ 
+        {m, n}?    表达式尽量只匹配m次，最多重复n次。
+    {m, }?     表达式尽量只匹配m次，最多可以匹配任意次。
+    ??         表达式尽量不匹配，最多匹配1次，相当于 {0, 1}?
+    +?         表达式尽量只匹配1次，最多可匹配任意次，相当于 {1, }?
+    *?         表达式尽量不匹配，最多可匹配任意次，相当于 {0, }?            
+   “占有模式”限定符：
+在限定符之后添加加号(+)，则使限定符成为“占有模式”。占有模式的限定符，总是尽可能多的匹配。与“贪婪模式”不同的是，
+即使之后的表达式匹配失败，“占有模式”也不会“让出”自己能够匹配的字符。
+限定符说明
+    {m, n}+      表达式尽可能重复n次，至少重复m次。
+    {m, }+       表达式尽可能的多匹配，至少重复m次。
+    ?+           表达式尽可能匹配1次，也可以不匹配，相当于 {0, 1}+
+    ++           表达式尽可能的多匹配，至少匹配1次，相当于 {1, }+
+    *+           表达式尽可能的多匹配，最少可以不匹配，相当于 {0, }+
+
+8、量词(Quantifier) 或称"匹配次数限定符" ：匹配量词前面子表达式(我喜欢把它称作正则表达式模式)的次数。
+        通常量词是贪婪匹配，如用\d{4,5}匹配字符串123456789，先看匹配5位数字的情况，没有再看4位数字的匹配情况，匹配的结果：12345 6789
+        在量词后加?，则变成懒惰模式，上例的匹配结果：1234 5678，注意贪婪模式和懒惰模式的例子
+        
+        
+9、定位符  ：用来描述字符串或单词的边界，如 ^  $  \b，注意不能对"定位符使用量词或限定符",
+            它要求它在匹配结果中所处位置的左右两边，其中一边是 "\w" 范围，另一边是 "\W" 的范围。
+
+        例：@@@abc  该字符串单词第1个边界处位于最后1个@和a之间，因此  .\b. 匹配结果是  @a
+
+10、平衡组和递归匹配  ---  根本没读懂？如果朋友有这方面的AUTOIT应用的例子，请提供！
+11.其他
+可以使用 "\xXX" 和 "\uXXXX" 表示一个字符（"X" 表示一个十六进制数）
+
+形式
+ 字符范围
+\xXX
+ 编号在 0 ~ 255 范围的字符，比如：空格可以使用 "\x20" 表示 
+\uXXXX
+ 任何字符可以使用 "\u" 再加上其编号的4位十六进制数表示，比如："\u4E2D
+ 
+
+技巧：
+1       匹配所有字符  [\s\S]     或     .(?s) 备注：(?s)(?#让.可匹配任意字符含换行)
+2      匹配邮件      \w+(?:[-+.]\w+)*@\w+(?:[-.]\w+)*\.\w+([-.]\w+)*   这个摘自资料测试不好使，
+                        一般邮件用：\w+[_-.]*[\w]*@\w+[.]\w+     或   (?ms)^.+@.+\..+$        
+3     \cx           匹配由 x 指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。x 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 'c' 字符。 
+4     \Q...\E   以\Q开始以\E结尾，可将中间的字符转义为普通字符，如 \Q.+\E可以将中间的.+转义为普通字符
+5.   匹配年月日   \d{4}[年|\-|\.]\d{1,2}[月|\-|\.]\d{1,2}日?
+6.  (?s)(?#可以让.匹配任意单个字符，包括\n)
+    (?m)(?#行内匹配模式，^或$匹配换行符内的东西,注意每一行尾可以理解为 ...$\n\r 形式,因此在用到(?m)多行匹配模式时,应先将硬回车\r
+             清空,之后才能用$来匹配每一行的尾部)
+        (?ms)(?#多行匹配和 . 匹配任意字符）
+        (?i)(?#不区分大小写)
+        [^\x00-\xff]+(?#一个以上全角字符，如果是全中文文本，就匹配文本的每一句，去掉后面的 + ，匹配每一个汉字)
+        \n[\s|]*\r(?#匹配空行，自己也曾经用\s\r成功匹配空行）
+7.   匹配出简单的HTML标记     <(\S*?)[^>]*>.*?</>|<.*? />
+8.   匹配出常用的URL     [a-zA-z]+://[^\s]*
+9.   匹配出中国邮遍      ^[1-9]\d{5}(?!\d)
+10.  匹配身份证         ^\d{17}[\d|X]|\d{15}$
+11.  \V 任何一个非垂直空白字符的字符,相当于匹配一行内的任意字符
+     \v  垂直空白字符，匹配诸如  \r \n  之类
+     当想匹配某个特征行时，例匹配所有‘以i开始的行’，用  (?ms)^i\V+ 
+
+
+
+
+曾经犯过的错误：
+1。对于元字符匹配的是”字符  位置  数量“理解混乱；
+
+示例目录
+;example1  匹配数字
+;example2  匹配单词或汉字
+;example3  以下是对 ^的排除功能进行练习------------------------------------重点掌握
+;example4   零宽断言4种语法的例子
+;example5   零宽断言的4种语法练习
+;examplp6  懒惰和贪婪模式,理解并不容易
+;example7  对[]加深理解，无论[]里有多少个字符，都只匹配其中的一个字符，没有匹配时，就可以匹配“空格  , "等字符
+;example8  |   分支结构学习，通常用(|)来限定分支匹配范围，如果没有()，那么|作用范围就是 | 两侧整体
+;example9  捕获组的反向引用的练习;结合  |  作的反向引用练习
+;example10  非捕获组  (?:exp)  的练习
+;example11  匹配”用户名 口令 URL email"练习
+;example12   匹配网页源码的相关内容
+
+;example13  我的第一个正则替换学习示例，呵呵，afan别生气，我才知道怎么用AuHelper练习正则替换了！
+
+;example14对于使用(?m)多行模式后，进行行尾部替换的练习
+           对于一个文本，进行某特定行匹配；对于一个文本，进行都段文本匹配
+;example15  精确匹配文本行练习
+=======================================================
+#ce
+;example1  匹配数字
+#include <array.au3>
+Local $Str="我想匹配出字符串中的数字部分，" & @CRLF & _
+                   "第1个数字：4869579" & @CRLF & _
+           "第1个数字：010-4869579" & @CRLF & _
+                   "第2个数字：0201-48695795" & @CRLF & _
+                   "第2个数字：(010)-4895795" & @CRLF & _
+                   "第2个数字：010)-4895795" & @CRLF & _
+                   "第2个数字：(0201)-48695795" & @CRLF & _
+                   "第3个数字：230604198001025771" & @CRLF & _
+                   "第4个数字：23060419800102577A" & @CRLF & _
+                   "第4个数字：23060419800102577X" & @CRLF & _
+                   "第5个数字：230604198001026" & @CRLF & _
+                   "第6个数字：177608" & @CRLF & _
+                   "第7个数字：2010年12月17日"
+Local  $Result=StringRegExp($Str,"\d{18}|[(]?\d{1,3}[)]?[-]\d{1,7}|[(]?\d{1,4}[)]?[-]\d{1,8}|\d{17}\w+|\d{15}|\d{7}",3)
+;注意多条件书写的顺序，由左及右：大范围->小范围 
+_ArrayDisplay($Result) ;OK
+Local  $Result=StringRegExp($Str,"\d{3}-\d{7}|\d{4}-\d{8}",3)
+_ArrayDisplay($Result) ;OK
+Local  $Result=StringRegExp($Str,"\(?0\d{2}[) -]?\d{8}",3);匹配结果不好！
+_ArrayDisplay($Result)
+Local  $Result=StringRegExp($Str,"\(0\d{2}\)[-]?\d{7}|\(0\d{3}\)[-]?\d{8}",3);匹配结果不好！
+_ArrayDisplay($Result)
+Local  $Result=StringRegExp($Str,"\d{17}[\d|X]|\d{15}",3)
+;问题：23060419800102577a，只匹配前15位数字，难道是第一个条件\d{17}[\d|X]不匹配就用\d{15}，结果显示其匹配的结果？结果是这样的。
+;X，还以为是个元字符，有什么特殊含义！就是一个普通的匹配字符，[X]匹配X ，想多了！
+_ArrayDisplay($Result) ;OK
+Local $Result=StringRegExp($Str,"\b[1-9]\d{5}\b",3)
+;Local $Result=StringRegExp($Str,"[^\d][1-9]\d{5}$");条条大路通罗马，感谢lpxx 补充：现在看来\b\d{6}\b和这个没什么不同！
+;Local $Result=StringRegExp($Str,"[1-9]\d{5}",3) 这个提取不精确，只要是连续的6位数字它都匹配
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\d{4}[年|\-|\.]\d{1,2}[月|\-|\.]\d{1,2}日",3)
+_ArrayDisplay($Result)
+
+;example2  匹配单词或汉字
+Local $Str="HI hi,I'm a newuser for autoit,his name is zgk!please 多多指教,邹国奎英语实在是说不过去,ahiha!"
+Local $Result=StringRegExp($Str,"hi",3);提取hi不精确，连单词里的hi部分也匹配
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\bhi\b",3);提取hi精确，区分大小写 
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\b(?i)hi\b",3);(?i)表示不区分大小写，这样HI也可以匹配了，(?-i)表示区分大小写
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"[^\x00-\xff]+(?#一个以上全角字符)",3)
+;如果标点符号是在全角字符下输入，那该正则一行行匹配，否则就一句句匹配
+_ArrayDisplay($Result)
+
+;example3  以下是对 ^的排除功能进行练习------------------------------------重点掌握
+Local $Num="192.168.1.10"
+Local $Result=StringRegExp($Num,'[^.]+',3);补充：这里的[^.]更有分割的味道
+Local $Result=StringRegExp($Num,'[^.]？',3);因为[^.]至少要匹配个东西，而?是不匹配或匹配1次，所以，该匹配结果多出了3个空白处
+Local $Result=StringRegExp($Num,'[^.]*',3);*是匹配0个或任意个，在 . 出同样匹配出3个空白处
+_ArrayDisplay($Result)
+
+Local $Num="Default Gateway:       192.168.1.1"
+Local $Result=StringRegExp($Num,'Default Gateway:\h*[^\r]+',3);\h匹配水平空白字符
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Num,'Default Gateway:\h*([^\r]+)',3)
+_ArrayDisplay($Result)
+;很神奇的()，加上就只匹配字符串中的IP，不加就匹配整个字符串？   该例非常值得学习与思考  [^]与 () 的配合使用！
+;补充：要知道(exp)或(?<groupname>exp)都是匹配exp并捕获文本到默认组或自定义组里啊！
+
+Local $Num="Sharon Lee Smith, Design Works Incorporated, CA, 95012"
+Local $Result=StringRegExp($Num,'([^,]*),([^,]*),([^,]*),(.*)',3);补充：用 [^,]+  比这个更简洁
+;Local $Result=StringRegExp($Num,'([^,]*),\w*',3)
+;Local $Result=StringRegExp($Num,"(([^,]*),){3}(.*)",3)
+_ArrayDisplay($Result)
+Local $Num="Alexander Weatherworth, The Crafts Store, CA, 95014"
+Local $Result=StringRegExp($Num,'[^,]*',3)
+;用*就会匹配出 4  个空格字符，因为当*表示0个数量，那[^,]*是不匹配任何字符，而[^,]又必须匹配一个字符，空格就被匹配出来
+;如果将*改成+，那[^,]+是至少匹配一个非,字符，就自然不可能匹配空白字符了，[^,]+和([^,]+)这里效果是一样的。
+_ArrayDisplay($Result)
+;那如果我想匹配出----   Alexander Weatherworth, The Crafts Store  
+Local $result=StringRegExp($str,"Alexander Weatherworth, [^,]+",3)
+;"Alexander Weatherworth,匹配本身， [^,]+至少匹配一个非,字符，到The Crafts Store,中的,时，就自然停止匹配了，想要的匹配结果就得到了
+;如果只想匹配出---   The Crafts Store
+Local $result=StringRegExp($str,"Alexander Weatherworth, ([^,]+)",3)
+;加 () 就OK，()的作用目前还没明白，当个公式记吧。---答：用()会自动捕获他里面表达式匹配的内容，所以匹配的是  The Crafts Store
+;如果不想匹配他，用Alexander Weatherworth, (?:[^,]+)，那将和上面的结果一样。
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+Local $FilePath="c:\test\test2\test.txt"
+Local $Result=StringRegExp($FilePath,"[^\\]+",3) 
+;感觉就象Local $Result1=StringSplit($FilePath,"\"),但如何用正则提取“文件路径 文件名 文件后缀”？不想用StringRegExpReplace()完成？
+_ArrayDisplay($Result)
+#cs
+总结(感谢afan)：
+1.以上2例都是通过 [^] 来排除某个符号 .  or  ,  最后通过 + 来完成，注意不能用 * 代替  +，否则当 *匹配0次时，[^.]会匹配“空格或制表符”
+#ce
+
+;example4   零宽断言4种语法的例子
+;(?=exp)  匹配exp前面的内容（正向预搜索-感谢3mile)
+Local $Str="南京银行对同洲电子说：你也算3网融合的巨头，一直在阳痿！" & @CRLF & _
+           "同洲电子对南京银行说：你也算银行的佼者，到处叫爹！" & @CRLF & _
+                   "nian jing yinhan  to tong  zhou dian zi said:i am your father. a ha!"
+Local $Result=StringRegExp($Str,".*(?=a)",3)
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,".*(?=到处叫爹)",3);用 [^\x00-\xff]+(?=到处叫爹) 匹配和这个差不多，但前面的“空白处 " ”都没了
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\w+(?=到处叫爹)",3)
+;问题:  .*就能实现“正向预搜索，  \w+就无任何反应？
+;理解 ：.*将 匹配范围定义到 ”行“，\w+将匹配范围定义到”单词“，不知道这样理解是否正确？但这样理解确实解释的通。比如
+;\w+(?=到处叫爹) ,”到处叫爹"根本就不是一个单词，如果把它改成"diedaochujiaodie"，那么就会匹配出 '  die  '   来，真费劲
+_ArrayDisplay($Result)
+Local  $Str="1234567 12345698"
+Local  $Result=StringRegExp($Str,"(?:(?<=\d)\d{3})+\b",3);如果想从后往前3个数字做处理不如添加 , 可用他
+_ArrayDisplay($Result,"从给定的字符串后3个数字一组")
+
+
+#cs上面的正则对这个文本怎么不好使？
+===========================================================================
+Interface List
+0x1 ........................... MS TCP Loopback interface
+0x2 ...00 50 56 c0 00 08 ...... VMware Virtual Ethernet Adapter for VMnet8
+0x3 ...d8 5d 4c 70 db b3 ...... Realtek RTL8139 Family PCI Fast Ethernet NIC - 数据包计划程序微型端口
+===========================================================================
+===========================================================================
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric
+          0.0.0.0          0.0.0.0      192.168.1.1     192.168.1.7          20
+        127.0.0.0        255.0.0.0        127.0.0.1       127.0.0.1          1
+      192.168.1.0    255.255.255.0      192.168.1.7     192.168.1.7          20
+      192.168.1.7  255.255.255.255        127.0.0.1       127.0.0.1          20
+    192.168.1.255  255.255.255.255      192.168.1.7     192.168.1.7          20
+    192.168.128.0    255.255.255.0    192.168.128.1   192.168.128.1          20
+    192.168.128.1  255.255.255.255        127.0.0.1       127.0.0.1          20
+  192.168.128.255  255.255.255.255    192.168.128.1   192.168.128.1          20
+        224.0.0.0        240.0.0.0      192.168.1.7     192.168.1.7          20
+        224.0.0.0        240.0.0.0    192.168.128.1   192.168.128.1          20
+  255.255.255.255  255.255.255.255      192.168.1.7     192.168.1.7          1
+  255.255.255.255  255.255.255.255    192.168.128.1   192.168.128.1          1
+Default Gateway:       192.168.1.1
+===========================================================================
+Persistent Routes:
+  None
+  
+  要求提取出”   Default Gateway: “   后面的   IP地址
+#ce
+Local   $file=FileOpen(@ScriptDir&"\temp.txt")
+Local   $str=FileRead($file)
+Local  $result=StringRegExp($str,"Default Gateway:\h*([^\r]+)",3)
+#cs
+\h* 匹配任意数量水平空白字符
+[^\r]排除回车符，应该是以 \r 为分割点取前面的部分----我的理解有问题？
+[^\r]+  匹配若干个不是回车的字符(感谢水木子)，这样确实能把它前面的内容提取出来，关键在于如何不匹配   Default Gateway: 加上后面的
+0或多个空白水平符号，这时的 ()  ，就很关键，加上它就可以不匹配出，但该怎么理解它呢？
+水木子老大给的解释：()把希望匹配的内容分组，这样就能匹配出自己的需要了，我觉得()和[^\r]在适用场景理解为分割点，正则表达式模式
+匹配的是分割点后面的内容，这样更好理解，呵呵！（补充：其实就是(exp)或(?<groupname>exp)的"捕获"知识应用）
+
+补例：
+Local $Str="abcdef12345    54321   abcdef"
+Local $result=StringRegExp($Str,"\h\d+\h",3);匹配”空白字符及中间的数字“
+_ArrayDisplay($result)
+Local $result=StringRegExp($Str,"(\h\d+\h)",3)
+;匹配”空白字符之间的数字---注意，已经不匹配空白字符“了，这就是()的作用，()把希望 单独匹配 的内容分组
+_ArrayDisplay($result)
+
+其实  Local  $result=StringRegExp($str,"Default Gateway:\h*([^\s]+)",3)  更好理解，以 "空白符号为分割点取后面的部分“
+Local  $result=StringRegExp($str,"Default Gateway:\h*([^\r].*)",3) 将 + 改成  .*  ，也行
+#ce
+_ArrayDisplay($result)
+Local  $result=StringRegExp($str,"\s\d+\.\d+\.\d+\.\d+\r",3)
+_ArrayDisplay($result)
+Local  $result=StringRegExp($str,"(?<=\s)\d+\.\d+\.\d+\.\d+(?=\s)",3);扩展一下，提取其中的所有IP形式
+_ArrayDisplay($result)
+Local  $result=StringRegExp($str,"(?<=\s)((\d+\.){3}\d+)(?=\s)",3);为什么不能将上面的正则模式改为这个模式？
+_ArrayDisplay($result)
+
+;example5   零宽断言的4种语法练习
+Local $Str="南京银行对同洲电子说：你也算3网融合的巨头，一直在阳痿！" & @CRLF & _
+           "同洲电子对南京银行说：你也算银行的佼者，到处叫爹！" & @CRLF & _
+                        "nian jing yinhan  to tong  zhou dian zi said:i am your father.a ha!"  & @CRLF & _
+                        "nian jing yinhang  to tong  zhou dian zi said:i Am your father.测试空格前后匹配    a     ha!" & @CRLF & _
+                        "abc123  ABC123  zhou dian zi said:i am your father.a ha!" 
+Local $Result=StringRegExp($Str,"\bam\b",3);匹配单词 am ，OK！
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\b(?i)am\b",3);不区分大小写匹配单词 am Am，OK！
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\w+(?=a)",3);往前预匹配”  单词中有字母a的前面的内容   “，OK！
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"\.*(?=\ba\b)",3);往前预匹配”  单词中有字母a的前面的内容   “，OK！
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"(?<=a)\w+",3);往后预匹配”  单词中有字母a的后面的内容   “，OK！
+;问题：只想匹配出  ha!  后面的 !      该怎么做？
+;答：(?<=ha).*   或   (?<=ha)\w+
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"ha([^a].*)",3)
+;;利用字符类的排除功能获得了 ”匹配的ha(不包括ha)后面的-行内容“   ，又加深了 [^] 与  ()  的应用，其实可以这样理解，如果 ([^a]),那么
+;就是以匹配的内容ha后的 a 为分割点，捕获分割点后面的内容---应该是a后面的----一行内容
+;没有()将会匹配以  ha (包括ha)开头的之后的行内容
+;补充：这么解释有些牵强，ha(.*)也行啊，(?<=ha).*更好理解呀！看来要不断阅读笔记纠正之前的错误理解啊！
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"ha[^a].*",3)
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,".*(?=ha)",3)
+_ArrayDisplay($Result)
+;匹配 ha 之前的行内容
+;如果把 .*  改成 \w+ 就只能匹配单词中有ha部分的前面的内容了，差距咋这么大呢？一不小心头就大！！！
+Local $Result=StringRegExp($Str,".*(?=一直在阳痿)",3)
+_ArrayDisplay($Result)
+Local $Result=StringRegExp($Str,"(?<=一直在阳痿).*",3)
+_ArrayDisplay($Result)
+Local $Str="123  1123 1244441 abci iabc abciedf"  
+Local $result=StringRegExp($Str,"(?!i)\w+",3);(?!i)右侧不能出现i
+_ArrayDisplay($result)                        
+Local $result=StringRegExp($str,"(?!1)\d+",3);(?!1)右侧不能出现1
+_ArrayDisplay($result)
+Local $result=StringRegExp($Str,"\w+(?<!i)",3);(?!i)左侧侧不能出现i
+_ArrayDisplay($result)        
+#cs
+(?<=<(\w+)>).*(?=<\/\1>)  的解释：
+匹配不包含属性的简单HTML标签内里的内容
+#ce
+
+;examplp6  懒惰和贪婪模式,理解并不容易
+Local $Str="aabab"
+Local $result=StringRegExp($Str,"a.*b",3);贪婪匹配---能匹配时进行最大范围的匹配
+_ArrayDisplay($result)
+Local $result=StringRegExp($Str,"a.*?b",3);加了?就变成了懒惰匹配
+_ArrayDisplay($result)
+Local $Str="<div>aaa</div><div>bbb</div>"  
+Local $result=StringRegExp($Str,"<div>.*</div>",3)
+_ArrayDisplay($result)        
+Local $result=StringRegExp($Str,"<div>.*?</div>",3)
+_ArrayDisplay($result)        
+Local $Str="123456789"  
+Local $result=StringRegExp($Str,"\d{4,5}",3);量词{4,5}执行贪婪匹配,先匹配连续5位数字，没有了连续5位数字匹配，再匹配连续4位数字
+_ArrayDisplay($result)        
+Local $result=StringRegExp($Str,"\d{4,5}?",3);量词在?作用下变成懒惰匹配，先从指定的最小范围匹配 
+_ArrayDisplay($result)        
+
+Local $str="dxxxdxxxd"
+Local $result=StringRegExp($str,"(d)(\w+)",3)
+_ArrayDisplay($result,"第1次匹配结果")
+Local $result=StringRegExp($str,"(d)(\w+)(d)",3)
+;\w+虽然可以匹配出最后字母d，但为了整个表达式的匹配，他可以让出匹配的最后字母d而由后面的(d)来匹配他
+_ArrayDisplay($result,"第1次匹配结果")
+Local $result=StringRegExp($str,"(d)(\w+?)(d)",3)
+;\w+?虽然是懒惰匹配，按道理应该匹配第1个字母d后的第1个" x  ",但为了后面的(d)完成匹配,\w+?将匹配出"  xxx  "
+_ArrayDisplay($result,"第1次匹配结果")
+
+;example7  对[]加深理解，无论[]里有多少个字符，同一时间都只匹配其中的一个字符，没有匹配时，就可以匹配“空格  , "等字符
+Local $Str="Windows2003"
+Local $result=StringRegExp($Str,"[0-9][0-9]",3);匹配结果  20 03
+_ArrayDisplay($result)
+Local $result=StringRegExp($Str,"[^inW]",3);匹配结果 除了inW，字符串中的字符都匹配
+_ArrayDisplay($result)
+Local $result=StringRegExp($Str,"\w\s\d",3);匹配”任意字符后跟空格再跟0-9中的任意1个数字
+_ArrayDisplay($result)
+
+;example8  |   分支结构学习，通常用(|)来限定分支匹配范围，如果没有()，那么|作用范围就是 | 两侧整体
+;补充：匹配范围大的表达式写到  | 左面，即“匹配范围从大到小排列”
+Local $Str="cccb"
+Local $result=StringRegExp($Str,"^aa|b$",3);匹配结果  b
+_ArrayDisplay($result)
+Local $str = "Mrs Smith"
+Local $result = StringRegExp($str, "Mr|Mrs", 3);如果左端的Mr匹配成功，也就意味着“整个正则表达式模式”匹配成功，则|右侧的Mrs将被忽略
+_ArrayDisplay($result, '标志=2例子')
+Local $result = StringRegExp($str, "Mrs|Mr", 3);如果想即匹配Mrs又匹配Mr，则将最大范围的正则表达式模式放到最左端
+_ArrayDisplay($result, '标志=2例子')
+
+
+;example9  捕获组的反向引用的练习
+Local $str="abaabbba"
+Local $result=StringRegExp($str,"(a|b)\1",3)
+;为什么匹配的不是 aa 而是 a  b 呢？ 补充：用了(exp)吗！不仅匹配exp而且还捕获到了内容到默认组
+_ArrayDisplay($result);因为_ArrayDisplay($result)返回的是组(a|b)匹配的内容，不是返回“组的反向引用”匹配的内容(感谢3mile)
+Local $result=StringRegExpReplace($str,"(a|b)\1","")
+MsgBox(0,"应用组的反向引用后再被替换的结果",$result);因为(a|b)\1匹配结果：  aa  bb  ，被""替换后变成 abba
+Local $str = "abaa"
+Local $result = StringRegExp($str, "(a|b)\1", 2)
+_ArrayDisplay($result, '标志=2例子')
+
+Local $str = "abaabb"
+Local $result = StringRegExp($str, "(a|b)\1", 4)
+For $i = 0 To UBound($result) - 1
+        _ArrayDisplay($result[$i], '标志=4例子')
+Next
+
+Local  $str="'Hello'"& '"World"'
+Local  $result=StringRegExp($str,"('|")(.*?)(\1)",3)
+;目的是分别匹配出 单引号和双引号内的单词
+_ArrayDisplay($result)
+
+#include <array.au3>
+$out=''
+$s=StringRegExp('aa bbbb abcdefg ccccc 111121111 999999999','\b((\w)\2+)\b',3)
+;取重复字符串,\b((\w)\2{1,})\b也行，(\w)的括号只是捕获了某个字符，而最外围的括号是捕获整个表达式的匹配的内容
+For $i =0 To UBound($s)-1 Step 2;注意步长的设置
+        $out&=$s[$i]&@CRLF
+Next
+MsgBox(0,0,$out)
+;注意  (\w)\1{2,}  和(\w){3,}的区别，前者是对“同一个字符重复字数的匹配”，后者是对“拥有若干个字符的字符串的匹配”
+
+#include <array.au3>
+Local  $str="'Hello'"& '"World"'
+Local  $result=StringRegExp($str,"('|"&'")(.*?)(\1)',3)
+;分别将单双引号下的单词捕获并显示，注意单双引号的转义，一定要将他们分开
+_ArrayDisplay($result)
+
+
+;example10  非捕获组  (?:exp)  的练习，注意和(exp)及不带括号的exp正则表达式模式的比较
+Local $str="010-4394369"
+Local $result=StringRegExp($str,"(?:\d{3})-(\d{7})",3);匹配连续的7位数字
+_ArrayDisplay($result)
+
+Local $str = "At this point the remaining pattern matches, so this is the match returned"
+Local $result = StringRegExp($str, "(.*)(\w+)$", 3)
+;匹配结果是“整个字符串”和“最后一个字母d"
+;解释：  .*作为一个组(.*)会先匹配整个字符串
+;然后在一个字符一个字符回退进行匹配，(\w+)匹配至少一个字符，$表示匹配字符串的尾端位置，自然是匹配”d"
+;^(\w+)  匹配行首单词；(\w+)$匹配行尾单词
+_ArrayDisplay($result, '显示匹配结果')
+
+Local $str = "At this point the remaining pattern matches, so this is the match returned"
+Local $result = StringRegExp($str, "(.*)\b(\w+)$", 3)
+;匹配结果是“整个字符串”和“最后一个单词returned"
+;解释： .*作为一个组(.*)会先匹配整个字符串
+;再一个字符一个字符回退进行匹配，\b由后往前匹配第一个单词的分界处，(\w+)匹配至少一个字符，$表示匹配字符串的尾端位置
+_ArrayDisplay($result, '显示匹配结果')
+Local $str = "At this point the remaining pattern matches, so this is the match returned"
+Local $result = StringRegExp($str, ".*\b(\w+)$", 3)
+;匹配结果是最后一个单词returned"
+;解释： .*会先匹配整个字符串，但此刻他没有被分组 ，所以其匹配的内容没有被捕获
+;再一个字符一个字符回退进行匹配，\b由后往前匹配第一个单词的分界处，(\w+)匹配最后一个单词开始的任意数量字符，$表示匹配字符串的尾端位置
+_ArrayDisplay($result, '显示匹配结果')
+Local $result = StringRegExp($str, ".*\s(.*)", 3); 同样能匹配最后一个单词
+_ArrayDisplay($result, '显示匹配结果')
+
+;==========下面这个例子要重点理解
+Local $str="At this point the remaining pattern matches, so this is the match returned"
+;分析该字符串的结构："...前略\s\bmatch\b\s\breturned\b$"  ==-感谢 Pcbar
+Local $result=StringRegExp($str,".*\b(.+)$",3)
+;注意如果将(.+)更改为(.*)，returned就无法被匹配出来，因为*是匹配0个或更多个它前面表达式所匹配的内容，
+;所以*可以匹配“空白或字符串尾部的$"，他们都是”不可见字符“，所以匹配的结果就是什么都看不到----那前面的“* 可以匹配 $"就是错误的！
+;  注意 . 是匹配除了 \n 之外的字符，所以它不能匹配诸如  \n \f \v  \t \s \b ^ $ 这样用来匹配  位置  的元字符
+_ArrayDisplay($result)
+
+;example11
+#cs
+
+文本内容如下：
+干县令，其于大达亦远矣。”“县”乃古“悬”字，高也；“令”，美也，“干”，追求。是说举着细小的钓竿钓绳，奔走于灌溉用的沟渠之间，只能钓到泥鳅之类的小鱼，而想获得大鱼可就难了。靠修饰琐屑的言论以求高名美誉，那和玄妙的大道相比，可就差得远了。春秋战国时，学派林立，百家争鸣，许多学人策士为说服王侯接受其思想学说，往往设譬取喻，征引史事，巧借神话，多用寓言，以便修饰言说以增强文章效果。庄子认为此皆微不足道，故谓之“小说”，即“琐屑之言，非道术所在”“浅识小道”，也就是琐屑浅薄的言论与小道理之意，正是小说之为小说的本来含义。
+希望能匹配出用户名：3-16位（有大小写字母_ -)组成；希望能匹配出密码：6-18位（组成同用户名标准）
+user1: 1983_zougk
+user2: yanghh-200019
+pw1:   a123_vb-new
+pw2:   mylo_ve_-1979
+temp@sina.com  temp a@sina.com  temp_1980@emai.com.cn temp+1980@emai.com.cn
+wu@sohu.com.cn 
+china_pepwoman@pchina.com.cn
+http://www.sohu.com   http://www.sina.com.cn  http://192.161.1.72
+干县令，其于大达亦远矣。
+
+#ce
+Local $Str
+_Openfile("新建文本文档.txt")
+;$Results=StringRegExp($Str,"\b[0-9a-zA-Z_-]{8,16}\b",3)
+$Results = StringRegExp($Str, "\b[0-9a-zA-Z_-]{8,16}\b", 3)
+;_ArrayDisplay($Results,"匹配出用户名")
+$Results = StringRegExp($Str, "\s[0-9a-zA-Z_-]{8,16}\s", 3);又忘了,   \b 是匹配位置； \s 是匹配空白字符，制表符等
+;_ArrayDisplay($Results,"匹配出用户名")
+;$Results=StringRegExp($Str,"\b(?![a-z0-9_\.-]+)@(?![\da-z\.-]+)\.(?![a-z\.]{2,6})\b",3)
+$Results=StringRegExp($Str,"[a-zA-Z]+://\w+\.\w+(?:[.]\w+)*",3)
+_ArrayDisplay($Results,"匹配URL")
+$Results=StringRegExp($Str,"\w+([\_\-\+\.]\w+)*@\w+(?:[-.]\w+)* ",3)
+_ArrayDisplay($Results,"匹配email")
+$Results=StringRegExp($Str,"(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",3)
+_ArrayDisplay($Results,"匹配IP")
+$Results=StringRegExp($Str,"(?:25[0-5]|2[0-4]\d|[01]?\d\d?\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)",3)
+;2[0-4]\d(?#200-249)|25[0-5](?#250-255)|[01]?\d\d?(?#0-199)
+_ArrayDisplay($Results,"匹配IP")
+;以上匹配IP的正则表达式有个问题，就是如256.193.1.1的非法IP虽然没被匹配，但会截取其中的部分如56.193.1.1被匹配出，所以
+;在表达式最前加个\b就OK！\b(?:25[0-4]|2[0-4][0-9]|[10]?[0-9][0-9]?\.){3}(?:25[0-4]|2[0-4][0-9]|[10]?[0-9][0-9]?)---感谢pcbar
+
+Func _Openfile($txtfile)
+        $Open=FileOpen($txtfile)
+    If    $Open=-1 Then
+            MsgBox(0,"错误提示","文件没有被打开或打开时发生错误")
+            Exit
+    EndIf
+    ;Local $Str=FileRead($Open)        
+        $Str=FileRead($Open)        ;滥用 Local 就无法显示，找了半天啊！
+        FileClose($Open)
+EndFunc
+
+;example12   匹配网页源码的相关内容
+#include <array.au3>
+;匹配网页源码的相关内容，注意匹配关键词的大小写，当然也可以匹配<div></div>形式内容
+$sUrl = 'http://www.sohu.com'
+$oHTTP = ObjCreate('microsoft.xmlhttp');通过一个指定的类名microsoft.xmlhttp引用一个COM对象
+;$oHTTP = 0 清除被引用的COM对象
+$oHTTP.Open('get', $sUrl, False);利用COM对象的get方法获得$sUrl地址的网页源码信息
+$oHTTP.Send();发送请求
+$sReturnStr = BinaryToString($oHTTP.responseBody, 4);标志 = 4, 二进制 数据原先为 UTF8 编码
+;$Result=StringRegExp($sReturnStr,'<SCRIPT.+?</SCRIPT>',3)
+$Result=StringRegExp($sReturnStr,'<script.+?</script>',3)
+_ArrayDisplay($Result,"测试afan提供的正则显示<SCRIPT>...</SCIRPT>")
+
+$Result=StringRegExp($sReturnStr,'(?ms)\<script\s*src\=.*?\>.*?\<\/script\>',3)
+;(?ms) 没弄明白？---(?ms) 多行匹配模式，这样 .也可以匹配 \n了，感谢Sxd
+;其实=前不用\也行，不明白3mile为什么用它？
+_ArrayDisplay($Result,"测试3mile提供的正则显示<SCRIPT>...</SCIRPT>")
+
+$Result=StringRegExp($sReturnStr,'(<script.*>.*<\/script>?)',3)
+;这个正则表达式的懒惰匹配?用不用结果都一样
+_ArrayDisplay($Result,"测试xowen  提供的正则显示<SCRIPT>...</SCIRPT>")
+$Result=StringRegExp($sReturnStr,'<script.*>(?:(?!script)[\s\S])*</script>',3)
+;这个正则匹配的内容最全
+;首先<script.*>能匹配<script ...>形式的内容
+;<script>...</script>之间肯定不能在出现script所以用(?!script)
+;[\s\S]匹配空格或非空字符，为了不捕获组里正则表达式匹配的内容用了?:，为了尽可能全的匹配<script>...</script>之间的内容用了*
+;补充：  \s\S相当于 . 既匹配任意字符
+_ArrayDisplay($Result,"测试xuzhenjun130 提供的正则显示<SCRIPT>...</SCIRPT>") 
+
+;example13
+Local  $Str="foo(10,7,2)"
+$filelist1=StringRegExpReplace($Str,"foo\(([^,]*),([^,]*),([^)]*)\)","foo($2,$3,$1)")
+MsgBox(0,"",$filelist1)
+;$filelist1=StringRegExpReplace($Str,"(\d+),(\d+),(\d+)","$2,$3,$1")  这个更精辟
+
+Local  $Str="asdadas123asdasdas456asdasdasd789asdasd";将字符串中的数字用[]括起来
+Local  $Result=StringRegExpReplace($Str,"\d{3}","[\0]");补充：将\d{3}改为\d+更好一些
+;理解：因为没有使用()，所以用 \0表示“ \d{3} "所匹配的内容，学习资料写的 $Result=StringRegExpReplace($Str,"\d{3}","[\0\1\2]")
+;      中的\1 \2没有意义，这样书写的目的或许是为了”让替换对应的内容看起来更工整吧？“
+MsgBox(0,"",$Result)
+Local  $Result=StringRegExpReplace($Str,"\d{3}","\1");有意思，这也是一种替换思路
+;理解：\1没有什么意义，但要删除$Str里的数字，可以如上行用，当然，\1换成\2  \3  \n 都行
+MsgBox(0,"",$Result)
+Local  $Result=StringRegExpReplace($Str,"\d{3}","[\1]")
+;理解：\要删除$Str里的数字，并用  []  标记数字的位置，但这里用[\n]却出现了用“n替换了相关数字而不是清除数字”，而用具体数字如
+;[\7]却可以清除数字即在数字的地方只出现  [ ] 标识而不是[n]
+MsgBox(0,"",$Result)
+
+Local  $Str="asdadas123asdasdas456asdasdasd789asdasd";目的是想让数字之间用 - 连接，即  1-2-3 形式
+Local  $Result=StringRegExpReplace($Str,"\d","\0-")
+MsgBox(0,"",$Result)
+Local  $Result1=StringRegExpReplace($Result,"(\d)-(\D)","$1$2")
+MsgBox(0,"",$Result1)
+;以下是水木子提供的方法
+$sText = 'asdadas123asdasdas456asdasdasd78912354asdasd'
+$sRer = StringRegExpReplace($sText, '(\d)(?=\d)', '$1-');其实利用组的“反向引用）更改为 \1- 也能达到同样效果
+;理解：以(\d)开头，找到第1个数字并以组形式存在，(?=\d)零宽断言，找到与他里面\d之前匹配的内容，当然匹配的内容一定也是数字
+;      到了最后一个数字，因为他后面的是字母，所以(\d)(?=\d)是将每一组数字的最后1位排除了，这样$1-就完成了要求
+MsgBox(0, '', $sRer)
+;example14  对于使用(?m)多行模式后，进行行尾部替换的练习
+$Str="2334 12345"& _
+     "23345"
+$Result=StringRegExpReplace($str,"345$|(345)(?=\r)","");清除所有尾部是345的部分
+MsgBox(0,"",$result)
+$Str="12345 1265345"& @CRLF & _
+     "23345"
+$Result1=StringRegExp($str,"\d*(?:345$)|\d*(?:345)(?=\r)",3);匹配出所有尾部是345的部分
+_ArrayDisplay($Result1)
+
+$str='12345 65412345'&@CRLF & _
+'2564345'&@CRLF & _
+'556312345'
+$temp=StringRegExpReplace($str,'\r','');先清空在(?m)行内匹配模式下$不能匹配的硬回车\r
+MsgBox(0,'去掉\r',$temp)
+$fin=StringRegExpReplace($temp,'(?m)345$','');之后才能用$匹配每一行的尾部
+MsgBox(0,0,$fin)
+;afan给的另一方法
+Local $Str = _
+                '12345 1265345' & @CRLF & _
+                '2345' & @CRLF & _
+                '23434' & @CRLF
+;MsgBox(0, '原字符串', $Str)
+Local $Test = StringRegExpReplace($str, '345(?=\v|$)', ''); 匹配“任何的垂直空白字符或$之前的345，然后用 ' ' 替换掉它”
+MsgBox(0, '替换结果', $Test)
+;下面是匹配某特定行
+Local  $str="this is a apple."&@CRLF& _ ;注意多行字符串的定义不要少了  @crlf
+            "this is a red red apple."&@CRLF& _
+            "i love regex!"&@CRLF& _
+            "ilove regular expressions?"&@CRLF&  _
+                        "this is a fat"&@CRLF& _
+            "<very>fat</very> pig."
+Local  $result=StringRegExp($str,"(?ms)^i\V+",3);行内匹配，(?ms)^i.*?\r\n  (受教3mile)
+_ArrayDisplay($result)
+Local  $result=StringRegExpReplace($str,"(?ms)^i\V+","")
+;补充：更改为  (?ms)^i\V+\r\n 就解决了下面的缺点;也可以 (?ms)^i\V+\v+，但使用\v+会将文本中”原有空行“也删除(受教love5173)
+;用指定  空 内容  替换   （(?ms)^i\V+）匹配的内容
+;缺点：被替换处显示对应空行，如何实现删除指定行而不出现空白呢？
+MsgBox(0,"",$result)
+Local  $result=StringRegExpReplace($str,"\s\r",""); 删除文本中的原有空行
+MsgBox(0,"",$result)
+;下面是匹配文本中某一段文本内容
+Local  $str="this is a apple."&@CRLF& _ ;注意多行字符串的定义不要少了  @crlf
+            "this is a red red apple."&@CRLF& _
+                        "    "&@crlf& _
+            "i love regex!"&@CRLF& _
+            "ilove regular expressions?"&@CRLF&  _
+                        "this is a fat"&@CRLF& _
+            "<very>fat</very> pig."
+Local  $result=StringRegExp($str,"(?ms)^i[\s\S]+fat",3);更改为   (?ms)^i[\s\S]+?fat  达到目的
+;既然我要截取从i开始到第1个fat，而(?ms)^i  fat已经基本能完成，只要让他们中间匹配部分为懒惰模式不就解决了吗！
+_ArrayDisplay($result)
+;example15  精确匹配文本行练习
+#include <array.au3>
+Local  $str="this is a red fox"&@crlf& _
+            "this is a blue firefox"&@CRLF& _
+                        "this is a pig"&@crlf& _
+                        "a red fox"
+Local  $result=StringRegExp($str,"(?:^this is )?a (?:red fox|blue firefox|pig)",1);只返回第1个匹配项目的树组
+_ArrayDisplay($result )
+Local  $result=StringRegExp($str,"(?:^this is )?a (?:red fox|blue firefox|pig)",2);说是返回完整匹配的数组，其实和使用1结果一样
+_ArrayDisplay($result )
+Local  $result=StringRegExp($str,"((?m)(?:^this is )?a (?:red fox|blue firefox|pig))",3);返回全局匹配的数组
+_ArrayDisplay($result )
+Local  $result=StringRegExp($str,"(?m)(?:^this is )?a (?:red fox|blue firefox|pig)",3);返回全局匹配的数组
+_ArrayDisplay($result )
+;注意以下2个表达式，在afan的reghelper测试正常，但在AU3竟然没有任何结果显示？
+Local  $result=StringRegExp($str,"((?m)(?:^this is )?a (?:red fox|blue firefox|pig))",4);返回完整匹配的数组和全局匹配的数组
+_ArrayDisplay($result )
+Local  $result=StringRegExp($str,"(?m)(?:^this is )?a (?:red fox|blue firefox|pig)",4);返回完整匹配的数组和全局匹配的数组
+_ArrayDisplay($result )   
+#cs
+修改如下
+for $i=0 to UBound($result)-1
+        _ArrayDisplay($result[$i])
+Next
+#include <array.au3>
+Local  $str="this is a red fox"&@crlf& _
+            "this is a blue firefox"&@CRLF& _
+                        "this is a pig"&@crlf& _
+                        "a red fox"
+Local  $result=StringRegExp($str,"(this is )?a (red fox|blue firefox|pig)",4);返回完整匹配的数组和全局匹配的数组
+;~ for $temp in $result
+;~      _ArrayDisplay($temp )
+;~ Next 
+for $i=0 to UBound($result)-1
+        _ArrayDisplay($result[$i])
+Next
+这个例子得好好看看-受教3mile
+#include <array.au3>
+Local  $str="this is a red fox"&@crlf& _
+            "this is a blue firefox"&@CRLF& _
+                        "this is a pig"&@crlf& _
+                        "a red fox"
+Local  $result=StringRegExp($str,"((?m)(^this is )?a (red fox|blue firefox|pig))",3);返回完整匹配的数组和全局匹配的数组
+_ArrayDisplay($result)
+local $str_result
+MsgBox(0,"",UBound($result)-1)
+for $i=0 to UBound($result)-1 step 3;共3组，只取第一组
+        $str_result&=$result[$i]&@CRLF
+Next
+msgbox(0,0,$str_result)
+又精简了一步（受教afan)
+#include <Array.au3>
+Local $Str = _
+                'this is a red fox' & @CRLF & _
+                'this is a blue firefox' & @CRLF & _
+                'this is a pig' & @CRLF & _
+                'a red fox'
+Local $Test = StringRegExp($str, '(?m)(?:^this is )?a (?:red|blue|pig)\V*', 3) 看来对\V的理解和用法还得多实践
+_ArrayDisplay($Test, UBound($Test))
+#ce

@@ -1,11 +1,11 @@
 #RequireAdmin
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Icon=J:\ADMuncher最终汉化版\CJX规则更新小助手 V1.0 by ilv.exe
-#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V3.5 by xiaozhan.exe
+#PRE_icon=J:\ADMuncher最终汉化版\CJX规则更新小助手.exe|-1
+#PRE_Outfile=C:\Users\chtyfox\Desktop\CJX规则更新小助手 V4.0 by xiaozhan.exe
 #PRE_Compression=4
 #PRE_Res_Comment=小站制作 by xiaozhan
 #PRE_Res_Description=小站制作 by xiaozhan
-#PRE_Res_Fileversion=3.5.0.0
+#PRE_Res_Fileversion=4.0.0.0
 #PRE_Res_LegalCopyright=小站制作 by xiaozhan
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -43,7 +43,7 @@
 #Include <Misc.au3>
 #include <GuiButton.au3>
 #include <ButtonConstants.au3>
-
+;#include <MsgBoxConstants.au3>
 
 $ui = HotKeySet("^u", "ljgx")
 $qi = HotKeySet("^q", "yctptb")
@@ -51,8 +51,8 @@ $qw = HotKeySet("^w", "xianshi")
 Opt("TrayIconHide", 0)
 Opt("TrayMenuMode", 1) ;没有默认的（暂停脚本和退出）菜单. 
 Opt("trayOnEventMode", 1) ;应用 OnEvent 函数于系统托盘.
-Global Const $STM_SETIMAGE = 0x0172
-Global Const $STM_GETIMAGE = 0x0173
+;~ Global Const $STM_SETIMAGE = 0x0172
+;~ Global Const $STM_GETIMAGE = 0x0173
 Global $time = 6
 Global $hForm, $Pic, $hPic, $hBitmap, $hObj, $hImage, $pStream, $bData, $hData, $pData, $tData, $Width, $Height, $Lenght
 Local $size , $get
@@ -62,13 +62,13 @@ If Not FileExists("AdMunch.exe") Then;检测文件是否存在
     Exit
 EndIf
 
-If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开   
+If _Singleton("CJX规则更新小助手.exe", 1) = 0 Then ;检测自己本身是否多开  
 	Exit
 EndIf
 
 
 #Region ### START Koda GUI section ### Form=
-$Form1 = GUICreate("CJX规则更新小助手", 336, 255, -1, -1, $WS_SYSMENU)
+$Form1 = GUICreate("CJX规则更新小助手", 336, 250, -1, -1, $WS_SYSMENU)
 $MenuItem = GUICtrlCreateMenu("选项")
 $kjqd = GUICtrlCreateMenuItem("开机启动", $MenuItem)
 $zdgx = GUICtrlCreateMenuItem("自动更新", $MenuItem)
@@ -86,7 +86,9 @@ $Progress1 = GUICtrlCreateProgress(8, 112, 186, 17)
 $Button1 = GUICtrlCreateButton("立即更新", 8, 160, 73, 33,$WS_GROUP)
 GUICtrlSetState(-1, $GUI_DEFBUTTON)
 $Button2 = GUICtrlCreateButton("清理浏览器缓存", 95, 160, 95, 33)
-$Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 168, 130, 17)
+$Button3 = GUICtrlCreateButton("代理更新CJX规则", 208, 140, 98, 20)
+$Button4 = GUICtrlCreateButton("备用代理更新CJX规则", 200, 180, 122, 20)
+$Label5 = GUICtrlCreateLabel("程序制作 by xiaozhan", 200, 164, 130, 17)
 ;Global $iClose = GUICtrlCreateButton("N M 都什么破网速", 199, 185, 132, 20)
 GUICtrlSetColor($Label5, 0xFF00FF)
 $Label6 = GUICtrlCreateLabel("",  126, 136, 68, 17,$SS_CENTER)
@@ -163,6 +165,10 @@ While 1
 			ljgx()
 		Case $Button2
 			qlhc()
+		Case $Button3
+			DLGZ()
+		Case $Button4
+			DLGX()	
 	EndSwitch
 WEnd
 
@@ -390,6 +396,7 @@ While 1
 	EndSwitch
 WEnd
 EndFunc
+
 Func kjqd();开机启动
 	$bt = _WinAPI_GetProcessName()
 	If BitAND(GUICtrlRead($kjqd), $GUI_UNCHECKED) = $GUI_UNCHECKED Then
@@ -578,6 +585,7 @@ Func THJGZ();更新奶牛CJX规则
 		FileDelete(@ScriptDir & "\CustomStrings.dat")
 		FileCopy(@TempDir & "\update.dat", @ScriptDir & "\CustomStrings.dat", 1)
 		FileDelete(@TempDir & "\update.dat")	
+		FileDelete(@ScriptDir & "\log.txt")
 EndFunc   ;==>THJGZ
 
 Func YZXPD();已经最新规则判断奶牛进程
@@ -591,12 +599,12 @@ Func GBNNJC();更新规则判断奶牛进程和刷新规则版本号
 		ShellExecute("AdMunch.exe", "", @ScriptDir)
 	Else
 		Run(@ScriptDir & "\AdMunch.exe");暂时就这样
-		WinWait("Ad Muncher 4.93 参数配置", "",2)
-		Local $aPos = WinGetPos("Ad Muncher 4.93 参数配置")
-		WinSetState("Ad Muncher 4.93 参数配置", "", @SW_HIDE)
-		WinMove("Ad Muncher 4.93 参数配置", "", -100, -100, -100, -100)
-		WinMove("Ad Muncher 4.93 参数配置", "", $aPos[0], $aPos[1], $aPos[2], $aPos[3])
-		WinClose("Ad Muncher 4.93 参数配置")
+		WinWait("Ad Muncher 4.94 参数配置", "",2)
+		Local $aPos = WinGetPos("Ad Muncher 4.94 参数配置")
+		WinSetState("Ad Muncher 4.94 参数配置", "", @SW_HIDE)
+		WinMove("Ad Muncher 4.94 参数配置", "", -100, -100, -100, -100)
+		WinMove("Ad Muncher 4.94 参数配置", "", $aPos[0], $aPos[1], $aPos[2], $aPos[3])
+		WinClose("Ad Muncher 4.94 参数配置")
 	EndIf
 EndFunc	
 
@@ -682,7 +690,6 @@ Func BDCJXGZ();获取本地CJX规则
 			Return ($BDCJXGZ)
 			ExitLoop
 			;MsgBox(4096, "最右边三个字符为:", $GZ)
-
 		EndIf
 
 	Next
@@ -707,6 +714,114 @@ Func CJXGZGX();更新规则自定义规则合并
 	FileWrite($bFile2, $FinalString)
 	FileClose($bFile2)
 EndFunc   ;==>CJXGZGX
+
+;代理更新规则-------------------------------------------------------------
+Func DLGZ()
+	BDCJXGZ()
+	GUICtrlSetData($Label2, "正在更新中")
+	GUICtrlSetColor($Label2, 0x3399FF)
+	DLGZX()
+	CJXBAK()
+	bbhdb()
+EndFunc
+
+Func DLGZX()
+	$urlP="203.208.46.170:80"
+	$urlP1="203.208.46.200:80"
+	$urlP2="203.208.46.202:80"
+	$urlP3="203.208.46.207:80"
+	$urlP4="203.208.46.222:80"
+	Local $iPing = Ping(StringTrimRight($urlP,3), 250)
+	Local $iPing1 = Ping(StringTrimRight($urlP1,3), 250)
+	Local $iPing2 = Ping(StringTrimRight($urlP2,3), 250)
+	Local $iPing3 = Ping(StringTrimRight($urlP3,3), 250)
+	Local $iPing4 = Ping(StringTrimRight($urlP4,3), 250)
+    If $iPing Then ; 如果返回值大于 0，则显示下面的消息.
+		SetProxyget($urlP)
+	ElseIf $iPing1 Then
+		SetProxyget($urlP1)
+	 ElseIf $iPing2 Then
+		SetProxyget($urlP2)
+	 ElseIf $iPing3 Then
+		SetProxyget($urlP3)
+	 ElseIf $iPing4 Then
+		SetProxyget($urlP4)
+	Else
+		GUICtrlSetData($Label2, "更新失败")
+		GUICtrlSetColor($Label2, 0x3399FF)
+		MsgBox(0,"代理","代理失败" & @CRLF & "请使用备用代理更新CJX规则")	
+    EndIf
+EndFunc 
+
+
+
+Func SetProxyget($Proxy)
+$oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
+$oHTTP.SetProxy(2,$Proxy);设置代理
+$oHTTP.Open("GET",'http://cjxlist.googlecode.com/svn/CustomStrings.dat') ;发送
+$oHTTP.Send()
+$return = $oHTTP.responsetext
+$oHTTP=0
+If $return<>"" Then 
+FileWrite(@TempDir & "\update.dat",$return);注意先删除原来的
+EndIf
+EndFunc
+
+;备用代理更新规则-------------------------------------------------------------
+Func DLGX()
+	BDCJXGZ()
+	If FileExists("CustomStrings.dat") Then
+		FileCopy(@ScriptDir & "\CustomStrings.dat", @ScriptDir & "\temp.dat", 1)
+		FileDelete(@ScriptDir & "\CustomStrings.dat")
+	EndIf
+		Dl()
+		FileMove(@ScriptDir & "\CustomStrings.dat", @TempDir & "\update.dat", 1)
+		FileMove(@ScriptDir & "\temp.dat", @ScriptDir & "\CustomStrings.dat", 1)
+		CJXBAK()
+		bbhdb()
+EndFunc	
+
+Func Dl();必须带有CJX的wget.exe这个文件
+	$CJX = "cjxlist.googlecode.com/svn/CustomStrings.dat"
+	$urlP="203.208.46.170:80"
+	$urlP1="203.208.46.200:80"
+	$urlP2="203.208.46.202:80"
+	$urlP3="203.208.46.207:80"
+	$urlP4="203.208.46.222:80"
+	
+	Local $iPing = Ping(StringTrimRight($urlP,3), 250)
+	Local $iPing1 = Ping(StringTrimRight($urlP1,3), 250)
+	Local $iPing2 = Ping(StringTrimRight($urlP2,3), 250)
+	Local $iPing3 = Ping(StringTrimRight($urlP3,3), 250)
+	Local $iPing4 = Ping(StringTrimRight($urlP4,3), 250)
+    If $iPing Then ; 如果返回值大于 0，则显示下面的消息.
+        RunWait(@ComSpec & ' /c ' & 'wget -N -t 3 -e "http_proxy=http://' & $urlP & '" ' &  'http://' & $CJX & ' -o log.txt', '', @SW_HIDE)
+		ProcessClose("wget.exe")
+		FileDelete(@ScriptDir & "\log.txt")
+	ElseIf $iPing1 Then
+		RunWait(@ComSpec & ' /c ' & 'wget -N -t 3 -e "http_proxy=http://' & $urlP1 & '" ' &  'http://' & $CJX & ' -o log.txt', '', @SW_HIDE)
+		ProcessClose("wget.exe")
+		FileDelete(@ScriptDir & "\log.txt")
+	ElseIf $iPing2 Then
+		RunWait(@ComSpec & ' /c ' & 'wget -N -t 3 -e "http_proxy=http://' & $urlP2 & '" ' &  'http://' & $CJX & ' -o log.txt', '', @SW_HIDE)
+		ProcessClose("wget.exe")
+		FileDelete(@ScriptDir & "\log.txt")
+	ElseIf $iPing3 Then
+		RunWait(@ComSpec & ' /c ' & 'wget -N -t 3 -e "http_proxy=http://' & $urlP3 & '" ' &  'http://' & $CJX & ' -o log.txt', '', @SW_HIDE)
+		ProcessClose("wget.exe")
+		FileDelete(@ScriptDir & "\log.txt")
+	ElseIf $iPing4 Then
+		RunWait(@ComSpec & ' /c ' & 'wget -N -t 3 -e "http_proxy=http://' & $urlP4 & '" ' &  'http://' & $CJX & ' -o log.txt', '', @SW_HIDE)
+		ProcessClose("wget.exe")
+		FileDelete(@ScriptDir & "\log.txt")
+	Else
+        GUICtrlSetData($Label2, "更新失败")
+		GUICtrlSetColor($Label2, 0x3399FF)
+		MsgBox(0,"代理","代理失败" & @CRLF & "等待程序更新")	
+    EndIf
+EndFunc	
+
+
 
 ;~ Func _xun()
 ;~ 	Switch GUIGetMsg()
