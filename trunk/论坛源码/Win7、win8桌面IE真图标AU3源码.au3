@@ -29,7 +29,19 @@
 	脚本功能:
 	
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-#include <GUIConstantsEx.au3>
+
+#Region ;**** 参数创建于 ACNWrapper_GUI ****
+#PRE_Icon=..\..\..\..\Program Files\Internet Explorer\iexplore.exe
+#PRE_Outfile=Windows桌面IE图标.exe
+#PRE_Compression=4
+#PRE_Res_Comment=Windows桌面IE图标
+#PRE_Res_Description=iTianKong.Com-苹果控
+#PRE_Res_Fileversion=1.2.0.1
+#PRE_Res_LegalCopyright=苹果控
+#PRE_Res_requestedExecutionLevel=None
+#PRE_Run_Tidy=y
+#EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
+#include <GUIConstantsEx.au3 >
 Opt("GUIOnEventMode", 1) ; 切换为 OnEvent 模式
 Opt("TrayMenuMode", 1)
 Select
@@ -55,63 +67,56 @@ Select
 		GUICtrlSetOnEvent($hidebutton, "HideButton")
 		GUICtrlSetOnEvent($showbutton, "ShowButton")
 EndSelect
-		GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEClicked") ;设置窗口关闭事件Show And hide
-		GUISetState(@SW_SHOW)
+GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEClicked") ;设置窗口关闭事件Show And hide
+GUISetState(@SW_SHOW)
 While 1
 	Sleep(1000) ; 不做任何事
 WEnd
-;### Tidy Error: Func statement without parentheses ().
 Func ShowButton()
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "", "REG_SZ", "Internet Explorer")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "InfoTip", "REG_SZ", "@C:\Windows\system32\ieframe.dll,-881")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "LocalizedString", "REG_SZ", "@C:\WINDOWS\system32\ieframe.dll.mui,-880")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\DefaultIcon", "", "REG_SZ", "C:\Windows\system32\ieframe.dll,-190")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\InProcServer32", "", "REG_SZ", "C:\Windows\system32\ieframe.dll")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\InProcServer32", "ThreadingModel", "REG_SZ", "Apartment")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell", "", "REG_SZ", "OpenHomePage")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\NoAddOns", "", "REG_SZ", "在没有加载项的情况下启动(&N)")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\NoAddOns\Command", "", "REG_SZ", "C:\ProgramFiles\Internet Explorer\iexplore.exeabout : NoAdd - ons")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\OpenHomePage", "", "REG_SZ", "打开主页(&H)")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\OpenHomePage\Command", "", "REG_SZ", "C:\ProgramFiles\Internet Explorer\iexplore.exe")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties", "", "REG_SZ", "属性(&R)")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties", "Position", "REG_SZ", "bottom")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties\command", "", "REG_SZ", "Rundll32.exe Shell32.dll, Control_RunDLLInetcpl.cpl")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex", "", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\ContextMenuHandlers", "", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\ContextMenuHandlers\ieframe", "", "REG_SZ", "{871C5380-42A0-1069-A2EA-08002B30309D}")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\MayChangeDefaultMenu", "", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "", "REG_SZ", "C:\Windows\system32\ieframe.dll,-190")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideAsDeletePerUser", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideFolderVerbs", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "WantsParseDisplayName", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideOnDesktopPerUser", "REG_SZ", "")
-RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "Attributes", "REG_DWORD", "0x00000030")
-RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{871C5380-42A0-1069-A2EA-08002B30308D}", "", "REG_SZ", "")
-RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30308D}", "REG_DWORD", "0x00000000")
-DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
-;### Tidy Error: "endfunc" is likely missing it's opening statement. next line creates a negative tablevel.
-EndFunc   ;==>
-;### Tidy Error: Func statement without parentheses ().
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "", "REG_SZ", "InternetExplorer")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "InfoTip", "REG_SZ", "@C:\Windows\system32\ieframe.dll,-881")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}", "LocalizedString", "REG_SZ", "@C:\WINDOWS\system32\ieframe.dll.mui,-880")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\DefaultIcon", "", "REG_SZ", "C:\Windows\system32\ieframe.dll,-190")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\InProcServer32", "", "REG_SZ", "C:\Windows\system32\ieframe.dll")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\InProcServer32", "ThreadingModel", "REG_SZ", "Apartment")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell", "", "REG_SZ", "OpenHomePage")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\NoAddOns", "", "REG_SZ", "在没有加载项的情况下启动(&N)")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\NoAddOns\Command", "", "REG_SZ", "C:\ProgramFiles\Internet Explorer\iexplore.exeabout : NoAdd - ons")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\OpenHomePage", "", "REG_SZ", "打开主页(&H)")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\OpenHomePage\Command", "", "REG_SZ", "C:\ProgramFiles\InternetExplorer\iexplore.exe")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties", "", "REG_SZ", "属性(&R)")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties", "Position", "REG_SZ", "bottom")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\shell\Properties\command", "", "REG_SZ", "Rundll32.exeShell32.dll, Control_RunDLLInetcpl.cpl")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex", "", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\ContextMenuHandlers", "", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\ContextMenuHandlers\ieframe", "", "REG_SZ", "{871C5380-42A0-1069-A2EA-08002B30309D}")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\Shellex\MayChangeDefaultMenu", "", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "", "REG_SZ", "C:\Windows\system32\ieframe.dll,-190")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideAsDeletePerUser", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideFolderVerbs", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "WantsParseDisplayName", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "HideOnDesktopPerUser", "REG_SZ", "")
+	RegWrite("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}\ShellFolder", "Attributes", "REG_DWORD", "0x00000030")
+	RegWrite("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{871C5380-42A0-1069-A2EA-08002B30308D}", "", "REG_SZ", "")
+	RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30308D}", "REG_DWORD", "0x00000000")
+	DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
+EndFunc   ;==>ShowButton
 Func HideButton()
-RegDelete("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}")
-RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{871C5380-42A0-1069-A2EA-08002B30308D}")
-RegDelete("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30308D}")
-RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000001")
-DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
-;### Tidy Error: "endfunc" is likely missing it's opening statement. next line creates a negative tablevel.
-EndFunc   ;==>
-;### Tidy Error: Func statement without parentheses ().
+	RegDelete("HKEY_CLASSES_ROOT\CLSID\{871C5380-42A0-1069-A2EA-08002B30308D}")
+	RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{871C5380-42A0-1069-A2EA-08002B30308D}")
+	RegDelete("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30308D}")
+	RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000001")
+	DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
+EndFunc   ;==>HideButton
 Func XShowButton()
-RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000000")
-DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
-;### Tidy Error: "endfunc" is likely missing it's opening statement. next line creates a negative tablevel.
-EndFunc   ;==>
-;### Tidy Error: Func statement without parentheses ().
+	RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000000")
+	DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
+EndFunc   ;==>XShowButton
 Func XHideButton()
-RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000001")
-DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
-;### Tidy Error: "endfunc" is likely missing it's opening statement. next line creates a negative tablevel.
-EndFunc   ;==>
+	RegWrite("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", "{871C5380-42A0-1069-A2EA-08002B30309D}", "REG_DWORD", "0x00000001")
+	DllCall("shell32.dll", "none", "SHChangeNotify", "long", 0x8000000, "int", 0, "ptr", 0, "ptr", 0)
+EndFunc   ;==>XHideButton
+
 Func CLOSEClicked()
 	Exit
 EndFunc   ;==>CLOSEClicked

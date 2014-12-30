@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GB2312" ?>
+ <syslog company="COMPANY" product="PRODUCT">
+  <event>
+   <type>sign</type>
+   <srcip>192.168.3.99</srcip>
+   <dstip>192.168.3.74</dstip>
+   <srcport>2329</srcport>
+   <dstport>21</dstport>
+   <protocol>ftp</protocol>
+   <time>2006-2-20 14:44:25</time>
+   <engine>192.168.3.59</engine>
+   <digest>用户名称=yanfa5;</digest>
+  </event>
+ </syslog> 

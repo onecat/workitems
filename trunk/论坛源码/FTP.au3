@@ -1,239 +1,69 @@
-;===============================================================================
-;
-; Function Name:    _FTPOpen()
-; Description:      Opens an FTP session.
-; Parameter(s):     $s_Agent      	- Random name. ( like "myftp" )
-;                   $l_AccessType 	- I dont got a clue what this does.
-;                   $s_ProxyName  	- ProxyName.
-;                   $s_ProxyBypass	- ProxyByPasses's.
-;                   $l_Flags       	- Special flags.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - Returns an indentifier.
-;                   On Failure - 0  and sets @ERROR
-; Author(s):        Wouter van Kesteren.
-;
-;===============================================================================
+#Region ;**** 由 AccAu3Wrapper_GUI 创建指令 ****
+#AccAu3Wrapper_Icon=C:\Documents and Settings\Administrator\桌面\FTP.ico
+#AccAu3Wrapper_OutFile=ftp.exe
+#AccAu3Wrapper_Res_Language=2052
+#AccAu3Wrapper_Res_requestedExecutionLevel=None
+#EndRegion ;**** 由 AccAu3Wrapper_GUI 创建指令 ****
+#include <ButtonConstants.au3>
+#include <EditConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <StaticConstants.au3>
+#include <WindowsConstants.au3>
+#Region ### START Koda GUI section ### Form=
+$Form1 = GUICreate("网吧存储系统", 275, 150, 771, 497)
+$Button1 = GUICtrlCreateButton("注册账号", 48, 16, 75, 25)
+$Button2 = GUICtrlCreateButton("修改密码", 160, 16, 75, 25)
+$Label1 = GUICtrlCreateLabel("账号：", 24, 64, 52, 25)
+$User = GUICtrlCreateInput("", 80, 56, 89, 21)
+$Label2 = GUICtrlCreateLabel("密码：", 24, 96, 44, 25)
+$Pass = GUICtrlCreateInput("", 80, 88, 89, 21)
+$bLogin = GUICtrlCreateButton("登 陆", 176, 72, 75, 25)
+$Label3 = GUICtrlCreateLabel("请勿上传违法内容！打不开请多点几次！", 24, 120, 236, 25)
+GUISetState(@SW_SHOW)
+#EndRegion ### END Koda GUI section ###
 
-Func _FTPOpen($s_Agent, $l_AccessType = 1, $s_ProxyName = '', $s_ProxyBypass = '', $l_Flags = 0)
-	
-	Local $ai_InternetOpen = DllCall('wininet.dll', 'long', 'InternetOpen', 'str', $s_Agent, 'long', $l_AccessType, 'str', $s_ProxyName, 'str', $s_ProxyBypass, 'long', $l_Flags)
-	If @error OR $ai_InternetOpen[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-		
-	Return $ai_InternetOpen[0]
-	
-EndFunc ;==> _FTPOpen()
+While 1
+	$nMsg = GUIGetMsg()
+	Switch $nMsg
+		Case $GUI_EVENT_CLOSE
+			Exit
+		case $bLogin;点击登录按钮
+			$username = GUICtrlRead ($User)
+			$password = GUICtrlRead ($Pass);密码
+			LOGIN($username,$password);登陆函数
+	EndSwitch
+	Switch $nMsg
 
-;===============================================================================
-;
-; Function Name:    _FTPConnect()
-; Description:      Connects to an FTP server.
-; Parameter(s):     $l_InternetSession	- The Long from _FTPOpen()
-;                   $s_ServerName 		- Server name/ip.
-;                   $s_Username  		- Username.
-;                   $s_Password			- Password.
-;                   $i_ServerPort  		- Server port ( 0 is default (21) )
-;					$l_Service			- I dont got a clue what this does.
-;					$l_Flags			- Special flags.
-;					$l_Context			- I dont got a clue what this does.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - Returns an indentifier.
-;                   On Failure - 0  and sets @ERROR
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
+                Case $GUI_EVENT_CLOSE
 
-Func _FTPConnect($l_InternetSession, $s_ServerName, $s_Username, $s_Password, $i_ServerPort = 0, $l_Service = 1, $l_Flags = 0, $l_Context = 0)
-	
-	Local $ai_InternetConnect = DllCall('wininet.dll', 'long', 'InternetConnect', 'long', $l_InternetSession, 'str', $s_ServerName, 'int', $i_ServerPort, 'str', $s_Username, 'str', $s_Password, 'long', $l_Service, 'long', $l_Flags, 'long', $l_Context)
-	If @error OR $ai_InternetConnect[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-			
-	Return $ai_InternetConnect[0]
-	
-EndFunc ;==> _FTPConnect()
-;===============================================================================
-;
-; Function Name:    _FTPGetFile()
-; Description:      Gets a file on an FTP server.
-; Parameter(s):     $l_FTPSession    - The Long from _FTPConnect()
-;                   $s_LocalFile     - The local file.
-;                   $s_RemoteFile      - The remote Location for the file.
-;                   $l_Flags        - Special flags.
-;                   $l_Context      - I dont got a clue what this does.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
+                        Exit
 
-Func _FTPGetFile($l_FTPSession, $s_LocalFile, $s_RemoteFile, $l_Flags = 0, $l_Context = 0)
+                Case $Button1
 
-    Local $ai_FTPGetFile = DllCall('wininet.dll', 'int', 'FtpGetFile', 'long', $l_FTPSession, 'str', $s_LocalFile, 'str', $s_RemoteFile, 'long', $l_Flags, 'long', $l_Context)
-    If @error OR $ai_FTPGetFile[0] = 0 Then
-        SetError(-1)
-        Return 0
-    EndIf
-    
-    Return $ai_FTPGetFile[0]
-    
-EndFunc;==> _FTPGetFile()
-
-;===============================================================================
-;
-; Function Name:    _FTPPutFile()
-; Description:      Puts an file on an FTP server.
-; Parameter(s):     $l_FTPSession	- The Long from _FTPConnect()
-;                   $s_LocalFile 	- The local file.
-;                   $s_RemoteFile  	- The remote Location for the file.
-;                   $l_Flags		- Special flags.
-;                   $l_Context  	- I dont got a clue what this does.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
+                        ShellExecute("http://192.168.0.250:88/reg.asp")
 
 
-Func _FTPPutFile($l_FTPSession, $s_LocalFile, $s_RemoteFile, $l_Flags = 0, $l_Context = 0)
 
-	Local $ai_FTPPutFile = DllCall('wininet.dll', 'int', 'FtpPutFile', 'long', $l_FTPSession, 'str', $s_LocalFile, 'str', $s_RemoteFile, 'long', $l_Flags, 'long', $l_Context)
-	If @error OR $ai_FTPPutFile[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-	
-	Return $ai_FTPPutFile[0]
-	
-EndFunc ;==> _FTPPutFile()
+        EndSwitch
 
-;===============================================================================
-;
-; Function Name:    _FTPDelFile()
-; Description:      Delete an file from an FTP server.
-; Parameter(s):     $l_FTPSession	- The Long from _FTPConnect()
-;                   $s_RemoteFile  	- The remote Location for the file.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
 
-Func _FTPDelFile($l_FTPSession, $s_RemoteFile)
-	
-	Local $ai_FTPPutFile = DllCall('wininet.dll', 'int', 'FtpDeleteFile', 'long', $l_FTPSession, 'str', $s_RemoteFile)
-	If @error OR $ai_FTPPutFile[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-	
-	Return $ai_FTPPutFile[0]
-	
-EndFunc ;==> _FTPDelFile()
+	Switch $nMsg
 
-;===============================================================================
-;
-; Function Name:    _FTPRenameFile()
-; Description:      Renames an file on an FTP server.
-; Parameter(s):     $l_FTPSession	- The Long from _FTPConnect()
-;                   $s_Existing 	- The old file name.
-;                   $s_New  		- The new file name.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
+                Case $GUI_EVENT_CLOSE
 
-Func _FTPRenameFile($l_FTPSession, $s_Existing, $s_New)
-	
-	Local $ai_FTPRenameFile = DllCall('wininet.dll', 'int', 'FtpRenameFile', 'long', $l_FTPSession, 'str', $s_Existing, 'str', $s_New)
-	If @error OR $ai_FTPRenameFile[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-	
-	Return $ai_FTPRenameFile[0]
-	
-EndFunc ;==> _FTPRenameFile()
+                        Exit
 
-;===============================================================================
-;
-; Function Name:    _FTPMakeDir()
-; Description:      Makes an Directory on an FTP server.
-; Parameter(s):     $l_FTPSession	- The Long from _FTPConnect()
-;                   $s_Remote 		- The file name to be deleted.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
+                Case $Button2
 
-Func _FTPMakeDir($l_FTPSession, $s_Remote)
-	
-	Local $ai_FTPMakeDir = DllCall('wininet.dll', 'int', 'FtpCreateDirectory', 'long', $l_FTPSession, 'str', $s_Remote)
-	If @error OR $ai_FTPMakeDir[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-	
-	Return $ai_FTPMakeDir[0]
-	
-EndFunc ;==> _FTPMakeDir()
+                        ShellExecute("http://192.168.0.250:88/")
 
-;===============================================================================
-;
-; Function Name:    _FTPDelDir()
-; Description:      Delete's an Directory on an FTP server.
-; Parameter(s):     $l_FTPSession	- The Long from _FTPConnect()
-;                   $s_Remote 		- The Directory to be deleted.
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
 
-Func _FTPDelDir($l_FTPSession, $s_Remote)
-	
-	Local $ai_FTPDelDir = DllCall('wininet.dll', 'int', 'FtpRemoveDirectory', 'long', $l_FTPSession, 'str', $s_Remote)
-	If @error OR $ai_FTPDelDir[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-		
-	Return $ai_FTPDelDir[0]
-	
-EndFunc ;==> _FTPDelDir()
 
-;===============================================================================
-;
-; Function Name:    _FTPClose()
-; Description:      Closes the _FTPOpen session.
-; Parameter(s):     $l_InternetSession	- The Long from _FTPOpen()
-; Requirement(s):   DllCall, wininet.dll
-; Return Value(s):  On Success - 1
-;                   On Failure - 0
-; Author(s):        Wouter van Kesteren
-;
-;===============================================================================
-
-Func _FTPClose($l_InternetSession)
-	
-	Local $ai_InternetCloseHandle = DllCall('wininet.dll', 'int', 'InternetCloseHandle', 'long', $l_InternetSession)
-	If @error OR $ai_InternetCloseHandle[0] = 0 Then
-		SetError(-1)
-		Return 0
-	EndIf
-	
-	Return $ai_InternetCloseHandle[0]
-	
-EndFunc ;==> _FTPClose()
+        EndSwitch
+WEnd
+Func LOGIN($username,$password);登陆函数
+	;定义登录FTP
+	$Url="ftp://" & $Username & ":" & $password & "@192.168.0.250:8888"
+	;打开FTP
+	$oIE = Run("C:\WINDOWS\explorer.exe " & $Url & "")
+EndFunc

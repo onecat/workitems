@@ -30,14 +30,15 @@
 
 #ce �ߣߣߣߣߣߣߣߣߣߣߣߣߣߣ߽ű���ʼ�ߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣߣ�
 
-#include <Constants.au3>
+;#include <Constants.au3>
 #include <APIConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <INet.au3>
 #include <WinAPI.au3>
 #include <WinAPIEx.au3>
 #include <Memory.au3>
-#include <GDIPlusex.au3>
+#include <GDIPlus.au3>
+;#include <GDIPlusex.au3>
 ;~ #include <Array.au3>
  
 $s_FontFile = "CodeFont.txt"

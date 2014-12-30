@@ -34,7 +34,7 @@
   #Include <File.au3>
   #Include <Array.au3>
   Local $var ,$pathfile,$pa
-  $_Path = "C:\Users\xiaozhan\Desktop\×ÓµçÄÔ"
+  $_Path = "C:\Users\chtyfox\Desktop\°å¶Ë"
   _FileReadDir($_Path)
 Func _FileReadDir($_Path)
         $Folder = _FileListToArray($_Path, "*", 2)

@@ -1,7 +1,8 @@
+#NoTrayIcon
 #Region ;**** 参数创建于 ACNWrapper_GUI ****
-#PRE_Outfile=N:\脚源包\workitems\P2P\lorex\p2p.exe
+#PRE_Outfile=p2p.exe
 #PRE_Compression=4
-#PRE_Res_Fileversion=1.0.0.14
+#PRE_Res_Fileversion=1.0.0.20
 #PRE_Res_Fileversion_AutoIncrement=p
 #PRE_Res_requestedExecutionLevel=None
 #EndRegion ;**** 参数创建于 ACNWrapper_GUI ****
@@ -25,13 +26,16 @@
  脚本功能: 
 
 #ce ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿脚本开始＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-#NoTrayIcon
 ;~ #include 'msgboxDJS_UDF.au3'
 ;~ $msg = MsgBoxDJS(0 + 48 + 4, '等待读取lorex ID状态', '等待读取lorex ID状态，' & @CRLF & '请不要做其他操作' & @CRLF & '如果不能自动关闭请手动点“是”', 9, 2)
 ;~ If $msg = 6 Then 
-	Sleep(9000)
-	ProcessClose ("cmd.exe")
-	ProcessClose ("OsnClientApp.exe")
+	Sleep(12*1000)
+	BlockInput ( 1 ) 
+	WinActivate ("C:\Windows\system32\cmd.exe")
+	WinClose  ("C:\Windows\system32\cmd.exe")
+	BlockInput ( 0 ) 
+;~ 	ProcessClose ("cmd.exe")
+	ProcessClose ("P2PClientApp.exe")
 ;~ EndIf
 
 	

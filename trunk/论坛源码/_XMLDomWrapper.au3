@@ -190,7 +190,8 @@ Func _XMLFileOpen($strXMLFile, $strNameSpc = "", $iVer = -1, $bValOnParse = True
 		Return -1
 	EndIf
 	;Tom Hohmann 2008/02/29
-	Return 1
+	;Return 1
+	Return $objDoc
 EndFunc   ;==>_XMLFileOpen
 ;===============================================================================
 ; Function Name:	 _XMLLoadXML
@@ -252,6 +253,7 @@ Func _XMLLoadXML($strXML,$strNameSpc="", $iVer = -1, $bValOnParse = True)
 	EndIf
 	;Tom Hohmann 2008/02/29
 	Return 1
+	Return $objDoc
 EndFunc   ;==>_MSXMLLoadXML
 
 ;===============================================================================
